@@ -5,7 +5,6 @@ import React from 'react';
 function Home() {
   return (
     <div>
-      <h4>Home</h4>
       <p>When this site was a blog I never wrote anything on it, so now it&apos;s just somewhere I&apos;m going to play with fun technology. I&apos;m also building it from scratch rather than using a UI framework, which is why it looks a little spare.</p>
       <p>To render its &lt;10 views, this static SPA so far uses:</p>
       <ul>
