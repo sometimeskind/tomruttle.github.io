@@ -35,11 +35,11 @@ export default function render(locals: { path: string }) {
           <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.2/build/grids-responsive-min.css">
         <!--<![endif]-->
 
-        <link rel="stylesheet" type="text/css" href="/main.css">
+        <link rel="stylesheet" type="text/css" href="/css/main.css">
       </head>
       <body>
         <div id="${APP_CONTAINER}" class="container">${appMarkup}</div>
-        <script async src="/main.js"></script>
+        <script async src="/js/main.js"></script>
       </body>
     </html>
   `;
