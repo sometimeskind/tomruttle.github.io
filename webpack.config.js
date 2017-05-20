@@ -5,6 +5,7 @@ const precss = require('precss');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const SUPPORTED_BROWSERS = ['last 2 versions', 'ie 9', 'ie 10'];
 
@@ -81,7 +82,7 @@ module.exports = (env) => [
   }),
 
   merge.smart(sharedConfig, {
-    entry: './src/client/index.js',
+    entry: ['babel-polyfill', './src/client/index.js'],
 
     output: {
       path: path.resolve(__dirname, 'dist', 'js'),
@@ -116,6 +117,7 @@ module.exports = (env) => [
 
     plugins: [
       new ExtractTextPlugin('../css/main.css'),
+      env === 'analyse' ? new BundleAnalyzerPlugin() : null,
     ],
   }),
 ];
