@@ -10,9 +10,11 @@ import App from '../common/components/app';
 
 import './main.css';
 
+import type { AppPropsType } from '../common/types';
+
 const container = document.getElementById(APP_CONTAINER);
 
-const props = window[APP_STATE_PROP];
+const props: AppPropsType = window[APP_STATE_PROP];
 
 render((
   <BrowserRouter>

@@ -17,3 +17,7 @@ export type PostType = {
 }
 
 export type ImportPostType = { fileName: FileNameType, words: WordsType };
+
+export type AppPropsType = {
+  posts: Array<PostType>,
+};
