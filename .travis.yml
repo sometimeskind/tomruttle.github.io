@@ -1,0 +1,15 @@
+language: node_js
+branches:
+  only:
+  - master
+cache: yarn
+install: yarn
+script: yarn build
+deploy:
+  target_branch: master
+  local_dir: dist
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  on:
+    branch: master
