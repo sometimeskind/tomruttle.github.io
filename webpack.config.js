@@ -5,7 +5,6 @@ const precss = require('precss');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const WatchIgnorePlugin = require('watch-ignore-webpack-plugin');
 
 const SUPPORTED_BROWSERS = ['last 2 versions', 'ie 9', 'ie 10'];
 
@@ -15,7 +14,7 @@ const sharedConfig = {
   },
 
   resolve: {
-    extensions: ['.js', '.jsx', '.css', '.md'],
+    extensions: ['.js', '.jsx'],
   },
 
   module: {
@@ -32,22 +31,6 @@ const sharedConfig = {
           plugins: ['transform-object-rest-spread'],
         },
       },
-      {
-        test: /\.md$/,
-        use: [
-          {
-            loader: 'html-loader',
-            options: {
-              removeComments: false,
-              collapseWhitespace: false,
-            },
-          },
-          {
-            loader: 'markdown-loader',
-            options: {},
-          },
-        ],
-      },
     ],
   },
 };
@@ -63,8 +46,32 @@ module.exports = (env) => [
       libraryTarget: 'umd',
     },
 
+    resolve: {
+      extensions: ['.md'],
+    },
+
+    module: {
+      rules: [
+        {
+          test: /\.md$/,
+          use: [
+            {
+              loader: 'html-loader',
+              options: {
+                removeComments: false,
+                collapseWhitespace: false,
+              },
+            },
+            {
+              loader: 'markdown-loader',
+              options: {},
+            },
+          ],
+        },
+      ],
+    },
+
     plugins: [
-      new WatchIgnorePlugin([path.resolve(__dirname, 'dist')]),
       new CleanWebpackPlugin(['dist'], { watch: true }),
       new StaticSiteGeneratorPlugin({
         crawl: true,
@@ -81,6 +88,10 @@ module.exports = (env) => [
     },
 
     devtool: env === 'dev' ? 'inline-source-map' : false,
+
+    resolve: {
+      extensions: ['.css'],
+    },
 
     module: {
       rules: [
