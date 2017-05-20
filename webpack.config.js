@@ -36,88 +36,100 @@ const sharedConfig = {
   },
 };
 
-module.exports = (env) => [
-  merge.smart(sharedConfig, {
-    entry: {
-      static: './src/server/index.js',
-    },
+module.exports = (env) => {
+  const clientPlugins = [new ExtractTextPlugin('../css/main.css')];
 
-    output: {
-      path: path.resolve(__dirname, 'dist'),
-      libraryTarget: 'umd',
-    },
+  if (env === 'analyse') {
+    clientPlugins.push(new BundleAnalyzerPlugin());
+  }
 
-    resolve: {
-      extensions: ['.md'],
-    },
+  return [
+    merge.smart(sharedConfig, {
+      entry: {
+        static: './src/server/index.js',
+      },
 
-    module: {
-      rules: [
-        {
-          test: /\.md$/,
-          use: [
-            {
-              loader: 'html-loader',
-              options: {
-                removeComments: false,
-                collapseWhitespace: false,
-              },
-            },
-            {
-              loader: 'markdown-loader',
-              options: {},
-            },
-          ],
-        },
-      ],
-    },
+      output: {
+        path: path.resolve(__dirname, 'dist'),
+        libraryTarget: 'umd',
+      },
 
-    plugins: [
-      new CleanWebpackPlugin(['dist'], { watch: true }),
-      new StaticSiteGeneratorPlugin({
-        crawl: true,
-        entry: 'static',
-      }),
-    ],
-  }),
+      resolve: {
+        extensions: ['.md'],
+      },
 
-  merge.smart(sharedConfig, {
-    entry: ['babel-polyfill', './src/client/index.js'],
-
-    output: {
-      path: path.resolve(__dirname, 'dist', 'js'),
-    },
-
-    devtool: env === 'dev' ? 'inline-source-map' : false,
-
-    resolve: {
-      extensions: ['.css'],
-    },
-
-    module: {
-      rules: [
-        {
-          test: /\.css$/,
-          use: ExtractTextPlugin.extract({
+      module: {
+        rules: [
+          {
+            test: /\.md$/,
             use: [
-              { loader: 'css-loader', options: { sourceMap: true, importLoaders: 1 } },
               {
-                loader: 'postcss-loader',
+                loader: 'html-loader',
                 options: {
-                  sourceMap: true,
-                  plugins() { return [precss, autoprefixer({ browsers: SUPPORTED_BROWSERS })]; },
+                  removeComments: false,
+                  collapseWhitespace: false,
                 },
               },
+              {
+                loader: 'markdown-loader',
+                options: {},
+              },
             ],
-            fallback: 'style-loader',
-          }),
-        },
-      ],
-    },
+          },
+        ],
+      },
 
-    plugins: [
-      new ExtractTextPlugin('../css/main.css'),
-      env === 'analyse' ? new BundleAnalyzerPlugin() : null,
-    ],
-  }),
-];
+      plugins: [
+        new CleanWebpackPlugin(['dist']),
+        new StaticSiteGeneratorPlugin({
+          crawl: true,
+          entry: 'static',
+        }),
+      ],
+    }),
+
+    merge.smart(sharedConfig, {
+      entry: ['./src/client/index.js'],
+
+      output: {
+        path: path.resolve(__dirname, 'dist', 'js'),
+      },
+
+      devtool: env === 'dev' ? 'inline-source-map' : false,
+
+      resolve: {
+        extensions: ['.css'],
+      },
+
+      externals: {
+        react: 'React',
+        'react-dom': 'ReactDOM',
+        'react-router': 'ReactRouter',
+        'react-router-dom': 'ReactRouterDOM',
+      },
+
+      module: {
+        rules: [
+          {
+            test: /\.css$/,
+            use: ExtractTextPlugin.extract({
+              use: [
+                { loader: 'css-loader', options: { sourceMap: true, importLoaders: 1 } },
+                {
+                  loader: 'postcss-loader',
+                  options: {
+                    sourceMap: true,
+                    plugins() { return [precss, autoprefixer({ browsers: SUPPORTED_BROWSERS })]; },
+                  },
+                },
+              ],
+              fallback: 'style-loader',
+            }),
+          },
+        ],
+      },
+
+      plugins: clientPlugins,
+    }),
+  ];
+};
