@@ -1,44 +1,63 @@
+$containerWidth: 1024px;
+
+.pure-g div,
+.pure-g section,
+.pure-g aside {
+  box-sizing: border-box;
+}
+
 .container {
-  font-size: 22px;
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 20px;
+  font-size: 16px;
+  line-height: 1.3em;
+  padding: 1em;
   color: #555;
 
   .pure-menu-selected.pure-menu-link,
   .pure-menu-selected.pure-menu-link:visited {
     background-color: inherit;
-    color: #111;
+    color: OrangeRed;
   }
 
   .pure-menu-link:hover,
   .pure-menu-selected.pure-menu-link:hover {
     background-color: inherit;
-    color: #999;
+    color: OrangeRed;
   }
 
   header {
-    text-align: center;
+    max-width: $containerWidth;
 
-    h2 {
-      a {
-        color: #111;
-        text-decoration: none;
-        font-weight: bold;
+    .header-container {
+      padding-left: 1em;
+
+      h2 {
+        a {
+          color: #111;
+          text-decoration: none;
+          font-weight: bold;
+        }
       }
     }
 
     nav {
-      margin: 0 0 20px 0;
-
       ul {
         padding: 0;
         margin: 0;
-
-        .pure-menu-item {
-          text-align: center;
-        }
       }
+    }
+  }
+
+  .main {
+    max-width: $containerWidth;
+
+    aside.sidenav {
+      text-align: right;
+      padding-top: 3.4em;
+      padding-right: 1em;
+    }
+
+    .content {
+      padding-left: 1em;
     }
   }
 }

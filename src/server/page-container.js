@@ -26,7 +26,7 @@ export default (props: AppPropsType, appMarkup: string) => `
       <link rel="stylesheet" type="text/css" href="/css/main.css">
     </head>
     <body>
-      <div id="${APP_CONTAINER}" class="container">${appMarkup}</div>
+      <div id="${APP_CONTAINER}">${appMarkup}</div>
       <script type="text/javascript">
         window["${APP_STATE_PROP}"]=${serialize(props, { json: true })}
       </script>
