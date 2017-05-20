@@ -3,19 +3,29 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router';
+import serialize from 'serialize-javascript';
 
-import { APP_CONTAINER } from '../common/constants';
+import postArray from './require-posts';
+import getPosts from './get-posts';
+
+import { APP_CONTAINER, APP_STATE_PROP } from '../common/constants';
 
 import App from '../common/components/app';
 
+const posts = getPosts(postArray);
+
 export default function render(locals: { path: string }) {
   const context = {};
+
+  const props = {
+    posts,
+  };
 
   const appMarkup = renderToString(
     <StaticRouter
       location={locals.path}
       context={context}
-    ><App /></StaticRouter>
+    ><App {...props} /></StaticRouter>
   );
 
   return `
@@ -39,6 +49,9 @@ export default function render(locals: { path: string }) {
       </head>
       <body>
         <div id="${APP_CONTAINER}" class="container">${appMarkup}</div>
+        <script type="text/javascript">
+          window["${APP_STATE_PROP}"]=${serialize(props, { json: true })}
+        </script>
         <script async src="/js/main.js"></script>
       </body>
     </html>

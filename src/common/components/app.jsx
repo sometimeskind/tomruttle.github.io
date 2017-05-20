@@ -7,7 +7,9 @@ import Home from './home';
 import Words from './words';
 import About from './about';
 
-function App() {
+import type { PostType } from '../types';
+
+function App({ posts }: { posts: Array<PostType> }) {
   return (
     <div className="pure-g">
       <header className="pure-u-1">
@@ -26,7 +28,7 @@ function App() {
 
       <div className="pure-u-1">
         <Route exact path="/" component={Home} />
-        <Route path="/words/:path?" component={Words} />
+        <Route path="/words/:path?" render={() => <Words posts={posts} />} />
         <Route path="/about" component={About} />
       </div>
     </div>

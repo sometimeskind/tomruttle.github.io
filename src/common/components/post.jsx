@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type { PostType } from '../get-posts';
+import type { PostType } from '../types';
 
 function createMarkup(html) {
   return { __html: html };

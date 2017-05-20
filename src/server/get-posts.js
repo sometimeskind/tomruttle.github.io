@@ -3,30 +3,10 @@
 import yaml from 'js-yaml';
 import pathParse from 'path-parse';
 
-import postArray from './require-posts';
+import type { ImportPostType, MetadataType, FileTitleType } from '../common/types';
 
 const OPEN_METADATA = '<!--';
 const CLOSE_METADATA = '-->';
-
-type FileNameType = string;
-type FileTitleType = string;
-type WordsType = string;
-
-type MetadataType = {
-  fileName: FileNameType,
-  date: string,
-  title: FileTitleType,
-  path: string,
-};
-
-export type PostType = {
-  metadata: MetadataType,
-  words: WordsType,
-}
-
-type ImportPostType = { fileName: FileNameType, words: WordsType };
-
-const posts: Array <ImportPostType> = postArray;
 
 export function parseMetadata({ fileName, words: raw }: ImportPostType) {
   let parsedMetadata: MetadataType | {} = {};
@@ -57,6 +37,6 @@ export function parseMetadata({ fileName, words: raw }: ImportPostType) {
   return { words, metadata: { ...metadata, date: new Date(metadata.date).toUTCString() } };
 }
 
-export default posts
+export default (posts: Array<ImportPostType>) => posts
   .map((post) => parseMetadata(post))
   .sort((a, b) => new Date(b.metadata.date).getTime() - new Date(a.metadata.date).getTime());
