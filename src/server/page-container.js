@@ -47,6 +47,8 @@ export default (props: AppPropsType, appMarkup: string) => `
       `}
 
       <script async src="/js/main.js"></script>
+      <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+      <script async defer src="https://buttons.github.io/buttons.js"></script>
     </body>
   </html>
 `;

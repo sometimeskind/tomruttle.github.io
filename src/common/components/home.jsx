@@ -17,6 +17,11 @@ function Home() {
         <li>Others...</li>
       </ul>
       <p>The source is <a href="https://github.com/tomruttle/www.tomruttle.com" rel="noopener noreferrer" target="_blank">here</a> if you want to check it out.</p>
+      <p>
+        <a href="https://twitter.com/tomruttle" className="twitter-follow-button" data-show-count="false">Follow @tomruttle</a>
+        &nbsp;
+        <a href="https://github.com/tomruttle" className="github-button" aria-label="Follow @tomruttle on GitHub">Follow @tomruttle</a>
+      </p>
     </div>
   );
 }
