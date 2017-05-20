@@ -1,12 +1,13 @@
 // @flow
 
 import yaml from 'js-yaml';
-import pathParse from 'path-parse';
+import path from 'path';
 
-import type { ImportPostType, MetadataType, FileTitleType } from '../common/types';
+import type { ImportPostType, MetadataType } from '../common/types';
 
 const OPEN_METADATA = '<!--';
 const CLOSE_METADATA = '-->';
+const MARKDOWN_EXTENSION = '.md';
 
 export function parseMetadata({ fileName, words: raw }: ImportPostType) {
   let parsedMetadata: MetadataType | {} = {};
@@ -23,7 +24,7 @@ export function parseMetadata({ fileName, words: raw }: ImportPostType) {
     }
   }
 
-  const { name: fileTitle }: { name: FileTitleType } = pathParse(fileName);
+  const fileTitle = path.basename(fileName, MARKDOWN_EXTENSION);
 
   const defaultMetadata = {
     fileName,
