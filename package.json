@@ -9,7 +9,7 @@
   "scripts": {
     "lint": "eslint --ext .js,.jsx .",
     "typecheck": "flow check",
-    "build": "webpack --env=prod -p && rm dist/static.js && echo www.tomruttle.com > dist/CNAME",
+    "build": "webpack --env=prod -p && rm dist/static.js",
     "watch": "webpack --env=dev --watch",
     "dev": "http-server ./dist",
     "precommit": "yarn lint && yarn typecheck"
