@@ -14,7 +14,7 @@ import type { AppPropsType } from '../common/types';
 
 const posts = getPosts(postArray);
 
-export default function render(locals: { path: string, webpackStats: { compilation: { assets: { [filename: string]: string } } } }) {
+export default function render(locals: { path: string, filenames?: Array<string>, webpackStats: { compilation: { assets: { [filename: string]: string } } } }) {
   const context = {};
 
   const props: AppPropsType = { posts };
@@ -26,9 +26,10 @@ export default function render(locals: { path: string, webpackStats: { compilati
     ><App {...props} /></StaticRouter>
   );
 
-  const filenames = Object.keys(locals.webpackStats.compilation.assets);
+  const filenames = locals.filenames || Object.keys(locals.webpackStats.compilation.assets);
 
   const assets = {
+    vendorJS: filenames.find((asset) => asset.startsWith('vendor.') && asset.endsWith('.js')) || null,
     mainJS: filenames.find((asset) => asset.startsWith('main.') && asset.endsWith('.js')) || 'main.js',
     mainCSS: filenames.find((asset) => asset.startsWith('main.') && asset.endsWith('.css')) || 'main.css',
   };

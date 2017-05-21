@@ -6,9 +6,10 @@ import { APP_CONTAINER, APP_STATE_PROP } from '../common/constants';
 
 import type { AppPropsType } from '../common/types';
 
-type assetsType = {
+export type assetsType = {
   mainJS: string,
   mainCSS: string,
+  vendorJS: ?string,
 }
 
 export default ({ props, appMarkup, assets }: { props: AppPropsType, appMarkup: string, assets: assetsType }) => `
@@ -30,6 +31,7 @@ export default ({ props, appMarkup, assets }: { props: AppPropsType, appMarkup: 
         window["${APP_STATE_PROP}"]=${serialize(props, { json: true })}
       </script>
 
+      ${assets.vendorJS ? `<script src="/${assets.vendorJS}"></script>` : ''}
       <script async src="/${assets.mainJS}"></script>
 
       <script>

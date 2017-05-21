@@ -4,7 +4,7 @@ branches:
   - master
 cache: yarn
 install: yarn
-script: yarn build
+script: yarn build-prod
 deploy:
   local_dir: dist
   provider: pages
