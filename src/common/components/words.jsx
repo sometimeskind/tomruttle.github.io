@@ -17,7 +17,7 @@ function Words({ posts }: { posts: Array<PostType> }) {
       {posts.map(({ metadata, words }) => (
         <Route
           key={metadata.fileName}
-          path={`/words/${metadata.path}`}
+          path={`/words/${metadata.path}/`}
           render={() => <section dangerouslySetInnerHTML={createMarkup(words)} />}
         />
       ))}

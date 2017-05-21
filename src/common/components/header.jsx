@@ -15,7 +15,7 @@ export default function Header() {
         <nav>
           <ul className="pure-menu pure-menu-horizontal">
             <li className="pure-menu-item"><NavLink className="pure-menu-link" activeClassName="pure-menu-selected" to="/" exact>Home</NavLink></li>
-            <li className="pure-menu-item"><NavLink className="pure-menu-link" activeClassName="pure-menu-selected" to="/words">Words</NavLink></li>
+            <li className="pure-menu-item"><NavLink className="pure-menu-link" activeClassName="pure-menu-selected" to="/words/">Words</NavLink></li>
           </ul>
         </nav>
       </div>

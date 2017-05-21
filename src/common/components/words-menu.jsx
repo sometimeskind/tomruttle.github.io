@@ -15,7 +15,7 @@ function WordsMenu({ posts }: { posts: Array<PostType> }) {
       <ul className="pure-menu-list">
         {posts.map(({ metadata }) => (
           <li className="pure-menu-item" key={metadata.path}>
-            <NavLink className="pure-menu-link" activeClassName="pure-menu-selected" to={`/words/${metadata.path}`}>{metadata.title}</NavLink>
+            <NavLink className="pure-menu-link" activeClassName="pure-menu-selected" to={`/words/${metadata.path}/`}>{metadata.title}</NavLink>
           </li>
         ))}
       </ul>
