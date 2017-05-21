@@ -12,6 +12,15 @@ export default (props: AppPropsType, appMarkup: string) => `
     <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="A homepage for Tom Ruttle" />
+
+      <!-- Google Tag Manager -->
+      <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-WJLGX7R');</script>
+      <!-- End Google Tag Manager -->
 
       <title>HELLO</title>
 
@@ -27,6 +36,11 @@ export default (props: AppPropsType, appMarkup: string) => `
       <link rel="stylesheet" type="text/css" href="/css/main.css">
     </head>
     <body>
+      <!-- Google Tag Manager (noscript) -->
+      <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WJLGX7R"
+      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+      <!-- End Google Tag Manager (noscript) -->
+
       <div id="${APP_CONTAINER}">${appMarkup}</div>
       <script type="text/javascript">
         window["${APP_STATE_PROP}"]=${serialize(props, { json: true })}
