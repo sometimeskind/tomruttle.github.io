@@ -138,11 +138,6 @@ hr {
         @mixin hidden-text;
       }
 
-      .twitter-button:hover,
-      .github-button:hover {
-        border: 1px solid black;
-      }
-
       .twitter-button {
         background: transparent url('/images/twitter.svg') no-repeat 0 0;
       }
