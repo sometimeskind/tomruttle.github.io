@@ -15,7 +15,7 @@ export default class Home extends PureComponent {
           <li>Flow typing</li>
           <li>Travis CI, which rebuilds the static assets on git push</li>
           <li>Cloudflare, which does exciting CDN/TLS/DNSSEC/Caching things</li>
-          <li>Others...</li>
+          <li>Other</li>
         </ul>
         <p>The source is <a href="https://github.com/tomruttle/www.tomruttle.com" rel="noopener noreferrer" target="_blank">here</a> if you want to check it out.</p>
       </div>
