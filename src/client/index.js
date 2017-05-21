@@ -9,6 +9,7 @@ import { APP_CONTAINER, APP_STATE_PROP } from '../common/constants';
 import App from '../common/components/app';
 
 import './main.css';
+import './require-images';
 
 import type { AppPropsType } from '../common/types';
 

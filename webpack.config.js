@@ -30,7 +30,7 @@ const sharedConfig = {
             ['env', { loose: true, modules: false, targets: { browsers: SUPPORTED_BROWSERS } }],
             'react',
           ],
-          plugins: ['transform-object-rest-spread'],
+          plugins: ['transform-object-rest-spread', 'transform-class-properties'],
         },
       },
     ],
@@ -111,6 +111,15 @@ module.exports = (env) => {
 
       module: {
         rules: [
+          {
+            test: /\.(jpe?g|gif|png|svg|woff|ttf|wav|mp3)$/,
+            use: [
+              {
+                loader: 'file-loader',
+                options: { name: '../images/[name].[ext]', useRelativePath: env === 'prod' },
+              },
+            ],
+          },
           {
             test: /\.css$/,
             use: ExtractTextPlugin.extract({

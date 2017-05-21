@@ -1,11 +1,24 @@
-@import "../../vendor/offsets.css";
+@import "../../assets/css/offsets.css";
 
 $containerWidth: 64em;
 $highlightColor: OrangeRed;
 
+@define-mixin hidden-text {
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
 hr {
   border-top: 1px solid #efefef;
 }
+
+.clear-fix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
 
 .pure-g div,
 .pure-g section,
@@ -20,6 +33,8 @@ hr {
   color: #555;
   max-width: $containerWidth;
   min-width: 20em;
+  height: 100%;
+  position: relative;
 
   .pure-menu-link {
     white-space: inherit;
@@ -60,6 +75,7 @@ hr {
 
   .main {
     padding: 0em 1em;
+    display: block;
 
     aside {
       .sidenav.no-content {
@@ -80,6 +96,8 @@ hr {
 
     @media screen and (min-width: 48em) {
       aside {
+        float: left;
+
         .sidenav.no-content {
           display: block;
         }
@@ -87,7 +105,6 @@ hr {
         .sidenav {
           text-align: right;
           padding: 3.9em 1em 1em 0;
-          float: left;
 
           .sidenav-header {
             display: none;
@@ -107,7 +124,30 @@ hr {
 
     .footer-content {
       margin-top: 2em;
-      padding-bottom: 2em
+      padding-bottom: 2em;
+      text-align: right;
+
+      .twitter-button,
+      .github-button {
+        display: inline-block;
+        width: 2em;
+        height: 2em;
+        margin-left: 1em;
+        @mixin hidden-text;
+      }
+
+      .twitter-button:hover,
+      .github-button:hover {
+        border: 1px solid black;
+      }
+
+      .twitter-button {
+        background: transparent url('/images/twitter.svg') no-repeat 0 0;
+      }
+
+      .github-button {
+        background: transparent url('/images/github.svg') no-repeat 0 0;
+      }
     }
   }
 }
