@@ -7,6 +7,8 @@ const StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin'
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const cssImport = require('postcss-import');
+const glob = require('glob-all');
+const PurifyCSSPlugin = require('purifycss-webpack');
 
 const SUPPORTED_BROWSERS = ['last 2 versions', 'ie 9', 'ie 10'];
 
@@ -38,7 +40,15 @@ const sharedConfig = {
 };
 
 module.exports = (env) => {
-  const clientPlugins = [new ExtractTextPlugin('../css/main.css')];
+  const clientPlugins = [
+    new ExtractTextPlugin('../css/main.css'),
+    new PurifyCSSPlugin({
+      paths: glob.sync([
+        path.join(__dirname, 'src', 'server', 'page-container.js'),
+        path.join(__dirname, 'src', 'common', 'components', '*.jsx'),
+      ]),
+    }),
+  ];
 
   if (env === 'analyse') {
     clientPlugins.push(new BundleAnalyzerPlugin());
