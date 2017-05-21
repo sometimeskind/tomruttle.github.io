@@ -6,7 +6,12 @@ import { APP_CONTAINER, APP_STATE_PROP } from '../common/constants';
 
 import type { AppPropsType } from '../common/types';
 
-export default ({ props, appMarkup, jsFilename, cssFilename }: { props: AppPropsType, appMarkup: string, jsFilename: string, cssFilename: string }) => `
+type assetsType = {
+  mainJS: string,
+  mainCSS: string,
+}
+
+export default ({ props, appMarkup, assets }: { props: AppPropsType, appMarkup: string, assets: assetsType }) => `
   <!DOCTYPE html>
   <html lang="en">
     <head>
@@ -17,7 +22,7 @@ export default ({ props, appMarkup, jsFilename, cssFilename }: { props: AppProps
       <title>HELLO</title>
 
       <link rel="icon" type="image/png" href="https://emojipedia-us.s3.amazonaws.com/cache/7d/1c/7d1c2a029746effc30399feaddcc0007.png" />
-      <link rel="stylesheet" type="text/css" href="/${cssFilename}">
+      <link rel="stylesheet" type="text/css" href="/${assets.mainCSS}">
     </head>
     <body>
       <div id="${APP_CONTAINER}">${appMarkup}</div>
@@ -25,7 +30,7 @@ export default ({ props, appMarkup, jsFilename, cssFilename }: { props: AppProps
         window["${APP_STATE_PROP}"]=${serialize(props, { json: true })}
       </script>
 
-      <script async src="/${jsFilename}"></script>
+      <script async src="/${assets.mainJS}"></script>
 
       <script>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

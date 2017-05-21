@@ -26,9 +26,12 @@ export default function render(locals: { path: string, webpackStats: { compilati
     ><App {...props} /></StaticRouter>
   );
 
-  const assets = Object.keys(locals.webpackStats.compilation.assets);
-  const jsFilename = assets.find((asset) => asset.startsWith('main.') && asset.endsWith('.js')) || 'main.js';
-  const cssFilename = assets.find((asset) => asset.startsWith('main.') && asset.endsWith('.css')) || 'main.css';
+  const filenames = Object.keys(locals.webpackStats.compilation.assets);
 
-  return pageContainer({ props, appMarkup, jsFilename, cssFilename });
+  const assets = {
+    mainJS: filenames.find((asset) => asset.startsWith('main.') && asset.endsWith('.js')) || 'main.js',
+    mainCSS: filenames.find((asset) => asset.startsWith('main.') && asset.endsWith('.css')) || 'main.css',
+  };
+
+  return pageContainer({ props, appMarkup, assets });
 }
