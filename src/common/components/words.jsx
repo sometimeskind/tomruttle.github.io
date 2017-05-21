@@ -25,7 +25,7 @@ function Words({ posts }: { posts: Array<PostType> }) {
         render={() => (
           <section>
             <h4>Words</h4>
-            <p>Select a post from the left-hand menu, fool!</p>
+            <p>Select a post and read it, fool!</p>
           </section>
         )}
       />

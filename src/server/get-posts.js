@@ -3,11 +3,12 @@
 import yaml from 'js-yaml';
 import path from 'path';
 
+import { MARKDOWN_EXTENSION } from './constants';
+
 import type { ImportPostType, MetadataType } from '../common/types';
 
 const OPEN_METADATA = '<!--';
 const CLOSE_METADATA = '-->';
-const MARKDOWN_EXTENSION = '.md';
 
 export function parseMetadata({ fileName, words: raw }: ImportPostType) {
   let parsedMetadata: MetadataType | {} = {};

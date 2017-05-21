@@ -6,6 +6,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const cssImport = require('postcss-import');
 
 const SUPPORTED_BROWSERS = ['last 2 versions', 'ie 9', 'ie 10'];
 
@@ -119,7 +120,7 @@ module.exports = (env) => {
                   loader: 'postcss-loader',
                   options: {
                     sourceMap: true,
-                    plugins() { return [precss, autoprefixer({ browsers: SUPPORTED_BROWSERS })]; },
+                    plugins() { return [cssImport, precss, autoprefixer({ browsers: SUPPORTED_BROWSERS })]; },
                   },
                 },
               ],

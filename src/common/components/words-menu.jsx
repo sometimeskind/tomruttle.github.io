@@ -8,6 +8,10 @@ import type { PostType } from '../types';
 function WordsMenu({ posts }: { posts: Array<PostType> }) {
   return (
     <nav className="custom-restricted-width">
+      <div className="sidenav-header">
+        <hr className="pure-u-1-2" />
+        <h4>Posts List</h4>
+      </div>
       <ul className="pure-menu-list">
         {posts.map(({ metadata }) => (
           <li className="pure-menu-item" key={metadata.path}>

@@ -38,6 +38,7 @@
     "husky": "^0.13.3",
     "js-yaml": "^3.8.4",
     "markdown-loader": "^2.0.0",
+    "postcss-import": "^10.0.0",
     "postcss-loader": "^2.0.5",
     "precss": "^1.4.0",
     "react": "^15.5.4",
