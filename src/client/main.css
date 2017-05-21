@@ -1,3 +1,5 @@
+@import "purecss/build/pure.css";
+@import "purecss/build/grids-responsive.css";
 @import "../../assets/css/offsets.css";
 
 $containerWidth: 64em;

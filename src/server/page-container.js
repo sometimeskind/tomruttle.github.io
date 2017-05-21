@@ -25,14 +25,6 @@ export default (props: AppPropsType, appMarkup: string) => `
       <title>HELLO</title>
 
       <link rel="icon" type="image/png" href="https://emojipedia-us.s3.amazonaws.com/cache/7d/1c/7d1c2a029746effc30399feaddcc0007.png" />
-      <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.2/build/pure-min.css" integrity="sha384-UQiGfs9ICog+LwheBSRCt1o5cbyKIHbwjWscjemyBMT9YCUMZffs6UqUTd0hObXD" crossorigin="anonymous">
-      <!--[if lte IE 8]>
-        <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.2/build/grids-responsive-old-ie-min.css">
-      <![endif]-->
-      <!--[if gt IE 8]><!-->
-        <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.2/build/grids-responsive-min.css">
-      <!--<![endif]-->
-
       <link rel="stylesheet" type="text/css" href="/css/main.css">
     </head>
     <body>

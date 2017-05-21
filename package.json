@@ -44,6 +44,7 @@
     "postcss-import": "^10.0.0",
     "postcss-loader": "^2.0.5",
     "precss": "^1.4.0",
+    "purecss": "^0.6.2",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-height": "^3.0.0",
