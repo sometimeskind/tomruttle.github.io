@@ -2,8 +2,10 @@
 
 import { Component } from 'react';
 
+import type { Element } from 'react';
+
 type ScrollToTopProps = {
-  location?: string,
+  children: Element<*>,
 };
 
 export default class ScrollToTop extends Component {
@@ -13,13 +15,11 @@ export default class ScrollToTop extends Component {
     location: '',
   }
 
-  componentDidUpdate(prevProps: ScrollToTopProps) {
-    if (this.props.location !== prevProps.location) {
-      window.scrollTo(0, 0);
-    }
+  componentDidUpdate() {
+    window.scrollTo(0, 0);
   }
 
   render() {
-    return null;
+    return this.props.children;
   }
 }

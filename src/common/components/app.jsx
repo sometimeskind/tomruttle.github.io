@@ -29,7 +29,7 @@ class App extends Component {
     return (
       <div className="pure-g container">
         <Header />
-        <div className="main pure-u-1" style={{ height: this.state.height }}>
+        <div className="main pure-u-1" style={this.state.height ? { height: this.state.height } : {}}>
           <ReactHeight className="clear-fix" onHeightReady={this.setHeight}>
             <Main posts={this.props.posts} />
           </ReactHeight>

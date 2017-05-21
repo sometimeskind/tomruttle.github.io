@@ -3,6 +3,7 @@
 @import "../../assets/css/offsets.css";
 
 $containerWidth: 64em;
+$containerMinWidth: 16em;
 $highlightColor: OrangeRed;
 
 @define-mixin hidden-text {
@@ -33,7 +34,7 @@ hr {
   padding: 1em;
   color: #555;
   max-width: $containerWidth;
-  min-width: 20em;
+  min-width: $containerMinWidth;
   height: 100%;
   position: relative;
 
