@@ -43,6 +43,7 @@ module.exports = (env) => {
   const clientPlugins = [
     new ExtractTextPlugin('../css/main.css'),
     new PurifyCSSPlugin({
+      minimize: true,
       paths: glob.sync([
         path.join(__dirname, 'src', 'server', 'page-container.js'),
         path.join(__dirname, 'src', 'common', 'components', '*.jsx'),
