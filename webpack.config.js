@@ -47,6 +47,7 @@ module.exports = (env) => {
       paths: glob.sync([
         path.join(__dirname, 'src', 'server', 'page-container.js'),
         path.join(__dirname, 'src', 'common', 'components', '*.jsx'),
+        path.join(__dirname, 'src', 'client', 'components', '*.jsx'),
       ]),
     }),
   ];

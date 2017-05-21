@@ -7,6 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { APP_CONTAINER, APP_STATE_PROP } from '../common/constants';
 
 import App from '../common/components/app';
+import ScrollToTop from './components/scroll-to-top';
 
 import './main.css';
 import './require-images';
@@ -19,7 +20,9 @@ const props: AppPropsType = window[APP_STATE_PROP];
 
 render((
   <BrowserRouter>
-    <App {...props} />
+    <ScrollToTop>
+      <App {...props} />
+    </ScrollToTop>
   </BrowserRouter>
 ), container, () => {
   console.log('app rendered');
