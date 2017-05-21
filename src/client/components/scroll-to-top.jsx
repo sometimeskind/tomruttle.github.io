@@ -1,20 +1,25 @@
+// @flow
+
 import { Component } from 'react';
 
-import type { Element } from 'react';
+type ScrollToTopProps = {
+  location?: string,
+};
 
 export default class ScrollToTop extends Component {
-  props: {
-    location: string,
-    children: Element<*>,
+  props: ScrollToTopProps
+
+  static defaultProps = {
+    location: '',
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: ScrollToTopProps) {
     if (this.props.location !== prevProps.location) {
       window.scrollTo(0, 0);
     }
   }
 
   render() {
-    return this.props.children;
+    return null;
   }
 }

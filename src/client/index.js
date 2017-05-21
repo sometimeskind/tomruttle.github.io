@@ -20,9 +20,8 @@ const props: AppPropsType = window[APP_STATE_PROP];
 
 render((
   <BrowserRouter>
-    <ScrollToTop>
-      <App {...props} />
-    </ScrollToTop>
+    <ScrollToTop />
+    <App {...props} />
   </BrowserRouter>
 ), container, () => {
   console.log('app rendered');
