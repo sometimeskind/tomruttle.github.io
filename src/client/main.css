@@ -13,12 +13,11 @@ hr {
   border-top: 1px solid #efefef;
 }
 
-.clear-fix:after {
+.clear-fix::after {
   content: "";
   display: table;
   clear: both;
 }
-
 
 .pure-g div,
 .pure-g section,
@@ -74,7 +73,7 @@ hr {
   }
 
   .main {
-    padding: 0em 1em;
+    padding: 0 1em;
     display: block;
 
     aside {
@@ -133,6 +132,7 @@ hr {
         width: 2em;
         height: 2em;
         margin-left: 1em;
+
         @mixin hidden-text;
       }
 
