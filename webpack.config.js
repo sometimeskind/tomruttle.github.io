@@ -67,6 +67,7 @@ const getServerPlugins = (filenames) => [
   new WorkboxPlugin({
     globDirectory: 'dist',
     staticFileGlobs: ['**/*.{html,js,css,svg,jpeg,png}'],
+    globIgnores: ['server*.js'],
     swDest: path.join(__dirname, 'dist', 'sw.js'),
   }),
 ];
