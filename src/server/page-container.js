@@ -15,10 +15,19 @@ export type assetsType = {
 const description = 'A homepage for Tom Ruttle';
 const title = 'HELLO';
 
+const article = `
+  <meta property="og:type" content="article" />
+  <meta property="article:author" content="https://www.twitter.com/tomruttle">
+`;
+
+const website = `
+  <meta property="og:type" content="website" />
+`;
+
 export default ({ props, appMarkup, assets, path }: { props: AppPropsType, appMarkup: string, assets: assetsType, path: string }) => `
   <!DOCTYPE html>
   <html lang="en">
-    <head>
+      <head prefix="og: http://ogp.me/ns#${path.includes('/words/') ? ' article: http://ogp.me/ns/article#' : ''}">
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta name="description" content="${description}" />
@@ -27,7 +36,8 @@ export default ({ props, appMarkup, assets, path }: { props: AppPropsType, appMa
       <meta name="twitter:site" content="@tomruttle" />
       <meta name="twitter:creator" content="@tomruttle" />
 
-      <meta property="og:type" content="website" />
+      ${path.includes('/words/') ? article : website}
+
       <meta property="og:url" content="https://www.tomruttle.com${path}" />
       <meta property="og:title" content="${title}" />
       <meta property="og:description" content="${description}" />
