@@ -5,21 +5,21 @@ import path from 'path';
 
 import { MARKDOWN_EXTENSION } from './constants';
 
-import type { ImportPostType, MetadataType } from '../common/types';
+import type { ImportPostType, MetadataType, PostType } from '../common/types';
 
 const OPEN_METADATA = '<!--';
 const CLOSE_METADATA = '-->';
 
-export function parseMetadata({ fileName, words: raw }: ImportPostType) {
+export function parseMetadata({ fileName, words: raw }: ImportPostType): PostType {
   let parsedMetadata: MetadataType | {} = {};
-  let words = raw;
+  let words = raw.trim();
 
-  if (raw.startsWith(OPEN_METADATA)) {
-    const metaString = raw.substring(OPEN_METADATA.length, raw.indexOf(CLOSE_METADATA));
+  if (words.startsWith(OPEN_METADATA)) {
+    const metaString = words.substring(OPEN_METADATA.length, words.indexOf(CLOSE_METADATA));
 
     try {
       parsedMetadata = yaml.safeLoad(metaString);
-      words = raw.substr(metaString.length + OPEN_METADATA.length + CLOSE_METADATA.length);
+      words = words.substr(metaString.length + OPEN_METADATA.length + CLOSE_METADATA.length).trim();
     } catch (err) {
       // throw the error away.
     }
@@ -40,5 +40,6 @@ export function parseMetadata({ fileName, words: raw }: ImportPostType) {
 }
 
 export default (posts: Array<ImportPostType>) => posts
+  .filter(({ fileName }) => typeof fileName === 'string')
   .map((post) => parseMetadata(post))
   .sort((a, b) => new Date(b.metadata.date).getTime() - new Date(a.metadata.date).getTime());
