@@ -1,5 +1,5 @@
 {
-  "short_name": "tomruttle.com",
+  "short_name": "tomruttle",
   "name": "Hello. It's tomruttle.com.",
   "icons": [
     {
@@ -31,7 +31,7 @@
       "src": "/images/monster-384x384.4a3a9.png",
       "sizes": "384x384",
       "type": "image/png"
-    },  
+    },
     {
       "src": "/images/monster-512x512.0edfc.png",
       "sizes": "512x512",
