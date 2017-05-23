@@ -15,7 +15,7 @@ export type assetsType = {
 const description = 'A homepage for Tom Ruttle';
 const title = 'HELLO';
 
-export default ({ props, appMarkup, assets }: { props: AppPropsType, appMarkup: string, assets: assetsType }) => `
+export default ({ props, appMarkup, assets, path }: { props: AppPropsType, appMarkup: string, assets: assetsType, path: string }) => `
   <!DOCTYPE html>
   <html lang="en">
     <head>
@@ -28,7 +28,7 @@ export default ({ props, appMarkup, assets }: { props: AppPropsType, appMarkup: 
       <meta name="twitter:creator" content="@tomruttle" />
 
       <meta property="og:type" content="website" />
-      <meta property="og:url" content="https://www.tomruttle.com/" />
+      <meta property="og:url" content="https://www.tomruttle.com${path}" />
       <meta property="og:title" content="${title}" />
       <meta property="og:description" content="${description}" />
       <meta property="og:image" content="https://www.tomruttle.com/images/monster.b8494.jpeg" />

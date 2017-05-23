@@ -18,7 +18,7 @@ export default class Home extends PureComponent {
           <li>Service worker and App Manifest</li>
           <li>Other</li>
         </ul>
-        <p>The source is <a href="https://github.com/tomruttle/www.tomruttle.com" rel="noopener noreferrer" target="_blank">here</a> if you want to check it out.</p>
+        <p>The source is <a href="https://github.com/tomruttle/www.tomruttle.com" rel="me noopener noreferrer" target="_blank">here</a> if you want to check it out.</p>
       </div>
     );
   }

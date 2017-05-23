@@ -34,5 +34,5 @@ export default function render(locals: { path: string, filenames?: Array<string>
     mainCSS: filenames.find((asset) => asset.startsWith('main.') && asset.endsWith('.css')) || 'main.css',
   };
 
-  return pageContainer({ props, appMarkup, assets });
+  return pageContainer({ props, appMarkup, assets, path: locals.path });
 }
