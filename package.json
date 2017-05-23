@@ -11,7 +11,7 @@
     "typecheck": "flow check",
     "test": "jest",
     "coverage": "jest --coverage",
-    "ci": "yarn coverage && cat ./coverage/lcov.info > codacy-coverage",
+    "ci": "yarn coverage && codacy-coverage < ./coverage/lcov.info",
     "build-prod": "node ./webpack.build.js",
     "build": "webpack --env=prod -p",
     "watch": "webpack --env=dev --watch",
