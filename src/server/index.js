@@ -14,10 +14,10 @@ import type { AppPropsType } from '../common/types';
 
 const posts = getPosts(postArray);
 
-export default function render(locals: { path: string, filenames?: Array<string>, webpackStats: { compilation: { assets: { [filename: string]: string } } } }) {
+export default function render(locals: { path: string, filenames?: Array<string>, webpackStats: { hash: string, compilation: { assets: { [filename: string]: string } } } }) {
   const context = {};
 
-  const props: AppPropsType = { posts };
+  const props: AppPropsType = { posts, buildHash: locals.webpackStats.hash };
 
   const appMarkup = renderToString(
     <StaticRouter
