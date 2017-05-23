@@ -24,6 +24,13 @@ const website = `
   <meta property="og:type" content="website" />
 `;
 
+const sentry = `
+  <script src="https://cdn.ravenjs.com/3.15.0/raven.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript">
+    window.Raven.config('https://6d7076eb61934dac9021766cafb4d1d1@sentry.io/171507').install();
+  </script>
+`;
+
 export default ({ props, appMarkup, assets, path }: { props: AppPropsType, appMarkup: string, assets: assetsType, path: string }) => `
   <!DOCTYPE html>
   <html lang="en">
@@ -51,6 +58,9 @@ export default ({ props, appMarkup, assets, path }: { props: AppPropsType, appMa
     </head>
     <body>
       <div id="${APP_CONTAINER}">${appMarkup}</div>
+
+      ${sentry}
+
       <script type="text/javascript">
         window["${APP_STATE_PROP}"]=${serialize(props, { json: true })}
       </script>
