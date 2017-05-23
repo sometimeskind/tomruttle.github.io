@@ -17,8 +17,8 @@ module.exports = webpack(clientConfig('build'), (err, stats) => {
   const filenames = Object.keys(stats.compilation.assets);
 
   return webpack(merge.smart(clientConfig.sharedConfig, {
-    entry: { static: './src/server/index.js' },
-    output: { filename: 'static.js' },
+    entry: { server: './src/server/index.js' },
+    output: { filename: '[name].js' },
     plugins: clientConfig.getServerPlugins(filenames),
   }), (err2, stats2) => {
     if (err2 || stats2.hasErrors()) {
@@ -26,7 +26,7 @@ module.exports = webpack(clientConfig('build'), (err, stats) => {
       process.exit(1);
     }
 
-    const unwantedFiles = glob.sync([path.join(__dirname, 'dist', 'static*.js')]);
+    const unwantedFiles = glob.sync([path.join(__dirname, 'dist', 'server*.js')]);
     const deleteFilePromises = unwantedFiles.map((filename) => new Promise((resolve, reject) =>
       fs.unlink(filename, (unlinkErr) => (unlinkErr ? reject(unlinkErr) : resolve()))));
 

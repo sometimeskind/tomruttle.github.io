@@ -61,7 +61,7 @@ const sharedConfig = {
 const getServerPlugins = (filenames) => [
   new StaticSiteGeneratorPlugin({
     crawl: true,
-    entry: 'static',
+    entry: 'server',
     locals: filenames ? { filenames } : {},
   }),
   new WorkboxPlugin({
@@ -114,7 +114,7 @@ module.exports = (env) => {
 
   return merge.smart(sharedConfig, {
     entry: {
-      static: './src/server/index.js',
+      server: './src/server/index.js',
       main: ['babel-polyfill', './src/client/index.js'],
     },
 
