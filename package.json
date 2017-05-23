@@ -17,8 +17,8 @@
     "watch": "webpack --env=dev --watch",
     "buildstats": "webpack --env=analyse",
     "dev": "http-server ./dist",
-    "precommit": "yarn lint && yarn typecheck",
-    "prepush": "yarn test"
+    "precommit": "yarn lint",
+    "prepush": "yarn typecheck && yarn test"
   },
   "dependencies": {
     "autoprefixer": "^7.1.1",
