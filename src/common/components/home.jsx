@@ -12,7 +12,7 @@ export default class Home extends PureComponent {
           <li>Isomorphic React/React-Router</li>
           <li>Webpack, in particular a really excellent plugin called <a href="https://github.com/markdalgleish/static-site-generator-webpack-plugin" rel="noopener noreferrer" target="_blank">static-site-generator</a> which allows me to serve this site statically/statelessly from Github Pages.</li>
           <li>Automatic loading/reading/parsing/inserting of Markdown files as posts</li>
-          <li>Flow typing</li>
+          <li>Flow, Eslint, Stylelint, Jest, Istanbul, Codacy for code quality</li>
           <li>Travis CI, which rebuilds the static assets on git push</li>
           <li>Cloudflare, which does exciting CDN/TLS/DNSSEC/Caching things</li>
           <li>Service worker and App Manifest</li>
