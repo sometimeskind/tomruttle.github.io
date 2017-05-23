@@ -1,4 +1,4 @@
-import { parseMetadata } from '../src/server/get-posts';
+import getPosts, { parseMetadata } from '../src/server/get-posts';
 
 describe('parseMetadata', () => {
   const words = 'These are test words.';
@@ -10,11 +10,11 @@ describe('parseMetadata', () => {
     const parsed = parseMetadata({
       fileName,
       words: `
-<!--
-date: ${date}
-title: ${title}
--->
-${words}
+        <!--
+          date: ${date}
+          title: ${title}
+        -->
+        ${words}
       `,
     });
 
@@ -48,5 +48,19 @@ ${words}
     };
 
     expect(parsed).toMatchObject(expected);
+  });
+});
+
+describe('getPosts', () => {
+  test('Parses an array of posts and sorts them', () => {
+    const posts = getPosts([
+      { fileName: 'post', words: 'second' },
+      { words: 'not shown' },
+      { fileName: 'test', words: '<!-- date: 2017-01-01 -->first' },
+    ]);
+
+    expect(posts.length).toBe(2);
+    expect(posts[0].words).toBe('first');
+    expect(posts[1].words).toBe('second');
   });
 });
