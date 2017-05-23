@@ -22,6 +22,7 @@ export default ({ props, appMarkup, assets }: { props: AppPropsType, appMarkup: 
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta name="description" content="${description}" />
+      <meta name="theme-color" content="#fff" />
 
       <meta name="twitter:site" content="@tomruttle" />
       <meta name="twitter:creator" content="@tomruttle" />

@@ -21,6 +21,21 @@
       "src": "images/monster-192x192.49f87.png",
       "type": "image/png",
       "sizes": "192x192"
+    },
+    {
+      "src": "/images/monster-256x256.bbe5c.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/monster-384x384.4a3a9.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    },  
+    {
+      "src": "/images/monster-512x512.0edfc.png",
+      "sizes": "512x512",
+      "type": "image/png"
     }
   ],
   "start_url": "/",
