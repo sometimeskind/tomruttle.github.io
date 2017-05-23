@@ -1,0 +1,30 @@
+{
+  "short_name": "tomruttle.com",
+  "name": "Hello. It's tomruttle.com.",
+  "icons": [
+    {
+      "src": "images/monster-128x128.ff226.png",
+      "type": "image/png",
+      "sizes": "128x128"
+    },
+    {
+      "src": "images/monster-152x152.711ca.png",
+      "type": "image/png",
+      "sizes": "152x152"
+    },
+    {
+      "src": "images/monster-144x144.2194c.png",
+      "type": "image/png",
+      "sizes": "144x144"
+    },
+    {
+      "src": "images/monster-192x192.49f87.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#fff",
+  "background_color": "#fff"
+}

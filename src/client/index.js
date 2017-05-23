@@ -10,7 +10,7 @@ import App from '../common/components/app';
 import ScrollToTop from './components/scroll-to-top';
 
 import './main.css';
-import './require-images';
+import './require-assets';
 
 import type { AppPropsType } from '../common/types';
 
@@ -24,4 +24,8 @@ render((
   </BrowserRouter>
 ), container, () => {
   console.log('app rendered');
+
+  if ('serviceWorker' in window.navigator) {
+    window.addEventListener('load', () => window.navigator.serviceWorker.register('/sw.js'));
+  }
 });

@@ -4,7 +4,6 @@ const path = require('path');
 const fs = require('fs');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
-const StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin');
 const glob = require('glob-all');
 
 const clientConfig = require('./webpack.config');
@@ -20,13 +19,7 @@ module.exports = webpack(clientConfig('build'), (err, stats) => {
   return webpack(merge.smart(clientConfig.sharedConfig, {
     entry: { static: './src/server/index.js' },
     output: { filename: 'static.js' },
-    plugins: [
-      new StaticSiteGeneratorPlugin({
-        crawl: true,
-        entry: 'static',
-        locals: { filenames },
-      }),
-    ],
+    plugins: clientConfig.getServerPlugins(filenames),
   }), (err2, stats2) => {
     if (err2 || stats2.hasErrors()) {
       console.error('Error 2', err2);

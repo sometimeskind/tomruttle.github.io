@@ -10,6 +10,7 @@ const glob = require('glob-all');
 const PurifyCSSPlugin = require('purifycss-webpack');
 const merge = require('webpack-merge');
 const StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin');
+const WorkboxPlugin = require('workbox-webpack-plugin');
 
 const SUPPORTED_BROWSERS = ['last 2 versions', 'ie 9', 'ie 10'];
 
@@ -57,6 +58,19 @@ const sharedConfig = {
   },
 };
 
+const getServerPlugins = (filenames) => [
+  new StaticSiteGeneratorPlugin({
+    crawl: true,
+    entry: 'static',
+    locals: filenames ? { filenames } : {},
+  }),
+  new WorkboxPlugin({
+    globDirectory: 'dist',
+    staticFileGlobs: ['**/*.{html,js,css,svg,jpeg,png}'],
+    swDest: path.join(__dirname, 'dist', 'sw.js'),
+  }),
+];
+
 module.exports = (env) => {
   const plugins = [
     new CleanWebpackPlugin(['dist']),
@@ -95,10 +109,7 @@ module.exports = (env) => {
       plugins.push(new BundleAnalyzerPlugin());
     }
 
-    plugins.push(new StaticSiteGeneratorPlugin({
-      crawl: true,
-      entry: 'static',
-    }));
+    plugins.push(...getServerPlugins());
   }
 
   return merge.smart(sharedConfig, {
@@ -120,11 +131,20 @@ module.exports = (env) => {
     module: {
       rules: [
         {
-          test: /\.(jpe?g|gif|png|svg|woff|ttf|wav|mp3)$/,
+          test: /\.(jpe?g|gif|png|svg)$/,
           use: [
             {
               loader: 'file-loader',
               options: { name: 'images/[name].[ext]', useRelativePath: env !== 'dev' },
+            },
+          ],
+        },
+        {
+          test: /\.json$/,
+          use: [
+            {
+              loader: 'file-loader',
+              options: { name: '[name].[ext]', useRelativePath: env !== 'dev' },
             },
           ],
         },
@@ -152,3 +172,4 @@ module.exports = (env) => {
 };
 
 module.exports.sharedConfig = sharedConfig;
+module.exports.getServerPlugins = getServerPlugins;

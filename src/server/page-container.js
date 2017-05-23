@@ -34,7 +34,8 @@ export default ({ props, appMarkup, assets }: { props: AppPropsType, appMarkup: 
 
       <title>${title}</title>
 
-      <link rel="icon" type="image/png" href="https://www.tomruttle.com/images/monster-icon.d119b2.png" />
+      <link rel="icon" type="image/png" href="/images/monster-icon.d119b2.png" />
+      <link rel="manifest" href="/manifest.json">
       <link rel="stylesheet" type="text/css" href="/${assets.mainCSS}">
     </head>
     <body>
