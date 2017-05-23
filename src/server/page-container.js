@@ -59,7 +59,7 @@ export default ({ props, appMarkup, assets, path }: { props: AppPropsType, appMa
     <body>
       <div id="${APP_CONTAINER}">${appMarkup}</div>
 
-      ${sentry}
+      ${process.env.NODE_ENV === 'production' ? sentry : ''}
 
       <script type="text/javascript">
         window["${APP_STATE_PROP}"]=${serialize(props, { json: true })}
