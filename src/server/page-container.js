@@ -12,17 +12,29 @@ export type assetsType = {
   vendorJS: ?string,
 }
 
+const description = 'A homepage for Tom Ruttle';
+const title = 'HELLO';
+
 export default ({ props, appMarkup, assets }: { props: AppPropsType, appMarkup: string, assets: assetsType }) => `
   <!DOCTYPE html>
   <html lang="en">
     <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <meta name="description" content="A homepage for Tom Ruttle" />
+      <meta name="description" content="${description}" />
 
-      <title>HELLO</title>
+      <meta name="twitter:site" content="@tomruttle" />
+      <meta name="twitter:creator" content="@tomruttle" />
 
-      <link rel="icon" type="image/png" href="https://emojipedia-us.s3.amazonaws.com/cache/7d/1c/7d1c2a029746effc30399feaddcc0007.png" />
+      <meta property="og:type" content="website" />
+      <meta property="og:url" content="https://www.tomruttle.com/" />
+      <meta property="og:title" content="${title}" />
+      <meta property="og:description" content="${description}" />
+      <meta property="og:image" content="https://www.tomruttle.com/images/monster.b8494.jpeg" />
+
+      <title>${title}</title>
+
+      <link rel="icon" type="image/png" href="https://www.tomruttle.com/images/monster-icon.d119b2.png" />
       <link rel="stylesheet" type="text/css" href="/${assets.mainCSS}">
     </head>
     <body>
