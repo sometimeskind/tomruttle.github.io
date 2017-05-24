@@ -9,6 +9,7 @@ import Footer from './footer/footer';
 
 import type { PostType } from '../types';
 
+import './global.css';
 import './app.css';
 
 class App extends Component {
