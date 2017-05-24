@@ -26,7 +26,7 @@ class App extends Component {
     return (
       <div className="pure-g app">
         <Header />
-        <Height children={<Main posts={this.state.posts} />} />
+        <Height className="pure-u-1" children={<Main posts={this.state.posts} />} />
         <Footer />
       </div>
     );
