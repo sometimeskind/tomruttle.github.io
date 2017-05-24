@@ -19,6 +19,7 @@ module.exports = webpack(clientConfig('build'), (err, stats) => {
   return webpack(merge.smart(clientConfig.sharedConfig, {
     entry: { server: './src/server/index.js' },
     output: { filename: '[name].js' },
+    module: { rules: [{ test: /\.css$/, use: 'ignore-loader' }] },
     plugins: clientConfig.getServerPlugins(filenames),
   }), (err2, stats2) => {
     if (err2 || stats2.hasErrors()) {

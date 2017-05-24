@@ -4,6 +4,8 @@ import React from 'react';
 
 import { NavLink, Link } from 'react-router-dom';
 
+import './header.css';
+
 export default function Header() {
   return (
     <header className="header pure-u-1 offset-md-1-4 pure-u-md-3-4">

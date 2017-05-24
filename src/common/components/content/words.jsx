@@ -7,6 +7,8 @@ import { Route, Switch } from 'react-router-dom';
 
 import type { PostType } from '../../types';
 
+import './content.css';
+
 function createMarkup(html) {
   return { __html: html };
 }

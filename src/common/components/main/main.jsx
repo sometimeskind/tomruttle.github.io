@@ -3,11 +3,13 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import Home from './content/home';
-import Words from './content/words';
-import WordsMenu from './sidebar/words-menu';
+import Home from '../content/home';
+import Words from '../content/words';
+import WordsMenu from '../sidebar/words-menu';
 
-import type { PostType } from '../types';
+import type { PostType } from '../../types';
+
+import './main.css';
 
 function Main({ posts }: { posts: Array<PostType> }) {
   return (

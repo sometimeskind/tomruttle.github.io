@@ -1,0 +1,17 @@
+@import '../variables.css';
+
+.main {
+  @mixin clear-fix;
+
+  &__content {
+    @media (--full-width) {
+      float: right;
+    }
+  }
+
+  &__sidebar {
+    @media (--full-width) {
+      float: left;
+    }
+  }
+}

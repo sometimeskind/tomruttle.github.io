@@ -5,6 +5,8 @@ import { NavLink } from 'react-router-dom';
 
 import type { PostType } from '../../types';
 
+import './sidebar.css';
+
 function WordsMenu({ posts }: { posts: Array<PostType> }) {
   return (
     <div className="sidebar">

@@ -78,11 +78,11 @@ module.exports = (env) => {
     new CleanWebpackPlugin(['dist']),
     new ExtractTextPlugin(env === 'dev' ? 'main.css' : 'main.[contenthash].css'),
     new PurifyCSSPlugin({
-      minimize: true,
+      minimize: env !== 'dev',
       paths: glob.sync([
         path.join(__dirname, 'src', 'server', 'page-container.js'),
-        path.join(__dirname, 'src', 'common', 'components', '*.jsx'),
-        path.join(__dirname, 'src', 'client', 'components', '*.jsx'),
+        path.join(__dirname, 'src', 'common', 'components', '**/*.jsx'),
+        path.join(__dirname, 'src', 'client', 'components', '**/*.jsx'),
       ]),
     }),
   ];
@@ -159,7 +159,7 @@ module.exports = (env) => {
                 loader: 'postcss-loader',
                 options: {
                   sourceMap: true,
-                  plugins() { return [cssImport, precss, customMedia, autoprefixer({ browsers: SUPPORTED_BROWSERS })]; },
+                  plugins() { return [cssImport, customMedia, precss, autoprefixer({ browsers: SUPPORTED_BROWSERS })]; },
                 },
               },
             ],

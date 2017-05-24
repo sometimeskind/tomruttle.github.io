@@ -1,0 +1,26 @@
+@import '../variables.css';
+
+.sidebar {
+  padding: 0 1em;
+  margin-bottom: 1em;
+
+  @media (--full-width) {
+    text-align: right;
+    padding-top: 3.9em;
+    margin: 0;
+  }
+
+  &__header {
+    padding-top: 1em;
+
+    @media (--full-width) {
+      display: none;
+    }
+  }
+
+  &__menu {
+    &__link {
+      padding: 0.5em 0;
+    }
+  }
+}

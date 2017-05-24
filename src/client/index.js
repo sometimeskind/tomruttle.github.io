@@ -9,7 +9,6 @@ import { APP_CONTAINER, APP_STATE_PROP } from '../common/constants';
 import App from '../common/components/app';
 import ScrollToTop from './components/scroll-to-top';
 
-import './main.css';
 import './require-assets';
 
 import type { AppPropsType } from '../common/types';

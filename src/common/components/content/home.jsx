@@ -2,6 +2,8 @@
 
 import React, { PureComponent } from 'react';
 
+import './content.css';
+
 export default class Home extends PureComponent {
   render() {
     return (
