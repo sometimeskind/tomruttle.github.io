@@ -5,7 +5,7 @@ import React, { PureComponent } from 'react';
 export default class Home extends PureComponent {
   render() {
     return (
-      <div>
+      <div className="content">
         <p>When this site was a blog I never wrote anything on it, so now it&apos;s just somewhere I&apos;m going to play with fun technology.</p>
         <p>To render its &lt;10 views, this stateless SPA so far uses:</p>
         <ul>

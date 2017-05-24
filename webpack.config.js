@@ -11,6 +11,7 @@ const PurifyCSSPlugin = require('purifycss-webpack');
 const merge = require('webpack-merge');
 const StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin');
 const WorkboxPlugin = require('workbox-webpack-plugin');
+const customMedia = require('postcss-custom-media');
 
 const SUPPORTED_BROWSERS = ['last 2 versions', 'ie 9', 'ie 10'];
 
@@ -158,7 +159,7 @@ module.exports = (env) => {
                 loader: 'postcss-loader',
                 options: {
                   sourceMap: true,
-                  plugins() { return [cssImport, precss, autoprefixer({ browsers: SUPPORTED_BROWSERS })]; },
+                  plugins() { return [cssImport, precss, customMedia, autoprefixer({ browsers: SUPPORTED_BROWSERS })]; },
                 },
               },
             ],

@@ -5341,6 +5341,12 @@ postcss-custom-media@^5.0.0:
   dependencies:
     postcss "^5.0.0"
 
+postcss-custom-media@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.npmjs.org/postcss-custom-media/-/postcss-custom-media-6.0.0.tgz#be532784110ecb295044fb5395a18006eb21a737"
+  dependencies:
+    postcss "^6.0.1"
+
 postcss-custom-properties@^5.0.0:
   version "5.0.2"
   resolved "https://registry.npmjs.org/postcss-custom-properties/-/postcss-custom-properties-5.0.2.tgz#9719d78f2da9cf9f53810aebc23d4656130aceb1"

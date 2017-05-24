@@ -6,20 +6,12 @@ $containerWidth: 64em;
 $containerMinWidth: 16em;
 $highlightColor: OrangeRed;
 
+@custom-media --full-width screen and (min-width: 48em);
+
 @define-mixin hidden-text {
   text-indent: 100%;
   white-space: nowrap;
   overflow: hidden;
-}
-
-hr {
-  border-top: 1px solid #efefef;
-}
-
-.clear-fix::after {
-  content: "";
-  display: table;
-  clear: both;
 }
 
 .pure-g div,
@@ -28,124 +20,142 @@ hr {
   box-sizing: border-box;
 }
 
+.clear-fix::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.social-button {
+  @mixin hidden-text;
+
+  &--twitter {
+    background: transparent url('/images/twitter.405a3.svg') no-repeat 0 0;
+  }
+
+  &--github {
+    background: transparent url('/images/github.f1d11.svg') no-repeat 0 0;
+  }
+}
+
 .container {
   font-size: 16px;
   line-height: 1.7em;
-  padding: 1em;
+  padding: 1em 2em;
   color: #555;
   max-width: $containerWidth;
   min-width: $containerMinWidth;
   height: 100%;
   position: relative;
 
-  .pure-menu-link {
-    white-space: inherit;
+  hr {
+    border-top: 1px solid #efefef;
   }
 
-  .pure-menu-selected.pure-menu-link,
-  .pure-menu-selected.pure-menu-link:visited {
-    background-color: inherit;
-    color: $highlightColor;
-  }
+  .menu {
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
 
-  .pure-menu-link:hover,
-  .pure-menu-selected.pure-menu-link:hover {
-    background-color: inherit;
-    color: $highlightColor;
-  }
-
-  header {
-    .header-container {
-      padding: 0 1em;
-
-      h2 {
-        a {
-          color: #111;
-          text-decoration: none;
-          font-weight: bold;
-        }
+      li {
+        position: relative;
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        vertical-align: middle;
       }
     }
 
-    nav {
+    &__link {
+      color: #777;
+      display: block;
+      text-decoration: none;
+
+      &--selected,
+      &:hover {
+        color: $highlightColor;
+      }
+    }
+  }
+
+  .header {
+    padding: 0 1em;
+
+    h2 {
+      a {
+        color: #111;
+        text-decoration: none;
+        font-weight: bold;
+      }
+    }
+
+    &__menu {
       ul {
+        width: 100%;
+        white-space: nowrap;
         padding: 0;
         margin: 0;
+
+        li {
+          display: inline-block;
+        }
+      }
+
+      &__link {
+        padding: 0.5em 2em 0.5em 0;
       }
     }
   }
 
   .main {
-    padding: 0 1em;
-    display: block;
+    &__content {
+      padding: 0 1em;
 
-    aside {
-      .sidenav.no-content {
-        display: none;
-      }
-
-      .sidenav {
-        .pure-menu-link {
-          padding: 0.5em 0;
-          white-space: inherit;
-        }
-
-        .sidenav-header {
-          padding-top: 1em;
-        }
+      @media (--full-width) {
+        float: right;
       }
     }
 
-    @media screen and (min-width: 48em) {
-      aside {
+    &__sidebar {
+      @media (--full-width) {
         float: left;
-
-        .sidenav.no-content {
-          display: block;
-        }
-
-        .sidenav {
-          text-align: right;
-          padding: 3.9em 1em 1em 0;
-
-          .sidenav-header {
-            display: none;
-          }
-        }
-      }
-
-      .content {
-        float: right;
-        padding: 0 1em;
       }
     }
   }
 
-  footer {
-    padding: 0 1em;
+  .sidebar {
+    padding: 0 1em 1em;
 
-    .footer-content {
-      margin-top: 2em;
-      padding-bottom: 2em;
+    @media (--full-width) {
       text-align: right;
+      padding-top: 3.9em;
+    }
 
-      .twitter-button,
-      .github-button {
-        display: inline-block;
-        width: 2em;
-        height: 2em;
-        margin-left: 1em;
+    &__header {
+      padding-top: 1em;
 
-        @mixin hidden-text;
+      @media (--full-width) {
+        display: none;
       }
+    }
 
-      .twitter-button {
-        background: transparent url('/images/twitter.405a3.svg') no-repeat 0 0;
+    &__menu {
+      &__link {
+        padding: 0.5em 0;
       }
+    }
+  }
 
-      .github-button {
-        background: transparent url('/images/github.f1d11.svg') no-repeat 0 0;
-      }
+  .footer {
+    padding: 1em 1em 0 0;
+    text-align: right;
+
+    &__social-button {
+      width: 2em;
+      height: 2em;
+      display: inline-block;
+      margin-left: 1em;
     }
   }
 }
