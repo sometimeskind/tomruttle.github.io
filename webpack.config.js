@@ -1,19 +1,14 @@
 const webpack = require('webpack');
 const path = require('path');
-const autoprefixer = require('autoprefixer');
-const precss = require('precss');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-const cssImport = require('postcss-import');
 const glob = require('glob-all');
 const PurifyCSSPlugin = require('purifycss-webpack');
 const merge = require('webpack-merge');
 const StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin');
 const WorkboxPlugin = require('workbox-webpack-plugin');
-const customMedia = require('postcss-custom-media');
-
-const SUPPORTED_BROWSERS = ['last 2 versions', 'ie 9', 'ie 10'];
+const pkg = require('./package.json');
 
 const sharedConfig = {
   output: {
@@ -49,7 +44,7 @@ const sharedConfig = {
         loader: 'babel-loader',
         options: {
           presets: [
-            ['env', { loose: true, modules: false, targets: { browsers: SUPPORTED_BROWSERS } }],
+            ['env', { loose: true, modules: false, targets: { browsers: pkg['supported-browsers'] } }],
             'react',
           ],
           plugins: ['transform-object-rest-spread', 'transform-class-properties'],
@@ -84,6 +79,7 @@ module.exports = (env) => {
         path.join(__dirname, 'src', 'common', 'components', '**/*.jsx'),
         path.join(__dirname, 'src', 'client', 'components', '**/*.jsx'),
       ]),
+      purifyOptions: { whitelist: ['*hello*'] },
     }),
   ];
 
@@ -154,14 +150,16 @@ module.exports = (env) => {
           test: /\.css$/,
           use: ExtractTextPlugin.extract({
             use: [
-              { loader: 'css-loader', options: { sourceMap: true, importLoaders: 1 } },
               {
-                loader: 'postcss-loader',
+                loader: 'css-loader',
                 options: {
+                  modules: true,
                   sourceMap: true,
-                  plugins() { return [cssImport, customMedia, precss, autoprefixer({ browsers: SUPPORTED_BROWSERS })]; },
+                  importLoaders: 1,
+                  localIdentName: 'hello_[hash:base64:5]',
                 },
               },
+              'postcss-loader',
             ],
             fallback: 'style-loader',
           }),

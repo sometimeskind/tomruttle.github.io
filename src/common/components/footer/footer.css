@@ -1,13 +1,21 @@
-@import '../variables.css';
-
 .footer {
   padding: 1em 1em 0 0;
   text-align: right;
+}
 
-  &__social-button {
-    width: 2em;
-    height: 2em;
-    display: inline-block;
-    margin-left: 1em;
-  }
+.button {
+  width: 2em;
+  height: 2em;
+  display: inline-block;
+  margin-left: 1em;
+}
+
+.twitter-button {
+  composes: twitter-button from '../global.css';
+  composes: button;
+}
+
+.github-button {
+  composes: github-button from '../global.css';
+  composes: button;
 }

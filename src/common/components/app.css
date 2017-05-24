@@ -1,12 +1,13 @@
-@import "./variables.css";
+@value variables: './variables.css';
+@value containerMinWidth, containerWidth from variables;
 
 .app {
   font-size: 16px;
   line-height: 1.7em;
   padding: 1em 2em;
   color: #555;
-  max-width: $containerWidth;
-  min-width: $containerMinWidth;
+  max-width: containerWidth;
+  min-width: containerMinWidth;
   height: 100%;
   position: relative;
 }

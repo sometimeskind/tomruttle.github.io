@@ -1,19 +1,4 @@
-$containerWidth: 64em;
-$containerMinWidth: 16em;
-$highlightColor: OrangeRed;
-
-@custom-media --full-width screen and (min-width: 48em);
-
-@define-mixin hidden-text {
-  text-indent: 100%;
-  white-space: nowrap;
-  overflow: hidden;
-}
-
-@define-mixin clear-fix {
-  &::after {
-    content: "";
-    display: table;
-    clear: both;
-  }
-}
+@value containerWidth: 64em;
+@value containerMinWidth: 16em;
+@value highlightColor: OrangeRed;
+@value large: screen and (min-width: 48em);

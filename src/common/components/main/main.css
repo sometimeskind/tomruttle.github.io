@@ -1,17 +1,16 @@
-@import '../variables.css';
+@value variables: '../variables.css';
+@value large from variables;
 
 .main {
-  @mixin clear-fix;
+  composes: clear-fix from '../global.css';
+}
 
-  &__content {
-    @media (--full-width) {
-      float: right;
-    }
+@media large {
+  .content {
+    float: right;
   }
 
-  &__sidebar {
-    @media (--full-width) {
-      float: left;
-    }
+  .sidebar {
+    float: left;
   }
 }

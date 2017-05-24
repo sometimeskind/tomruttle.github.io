@@ -9,7 +9,7 @@ import type { List, Record } from 'immutable';
 
 import type { PostType } from '../../types';
 
-import './content.css';
+import styles from './content.css';
 
 function createMarkup(html) {
   return { __html: html };
@@ -17,7 +17,7 @@ function createMarkup(html) {
 
 function Words({ posts }: { posts: List<Record<PostType>> }) {
   return (
-    <div className="content">
+    <div className={styles.content}>
       <Switch>
         {posts.toJS().map(({ metadata, words }) => (
           <Route

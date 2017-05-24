@@ -3,6 +3,8 @@
 import React, { Component } from 'react';
 import { fromJS } from 'immutable';
 
+import pure from 'purecss/build/pure.css';
+
 import type { List, Record } from 'immutable';
 
 import Header from './header/header';
@@ -12,8 +14,7 @@ import Height from './height/height';
 
 import type { PostType } from '../types';
 
-import './global.css';
-import './app.css';
+import styles from './app.css';
 
 class App extends Component {
   props: { posts: Array<PostType> }
@@ -24,9 +25,9 @@ class App extends Component {
 
   render() {
     return (
-      <div className="pure-g app">
+      <div className={`${pure['pure-g']} ${styles.app}`}>
         <Header />
-        <Height className="pure-u-1" children={<Main posts={this.state.posts} />} />
+        <Height className={pure['pure-u-1']} children={<Main posts={this.state.posts} />} />
         <Footer />
       </div>
     );

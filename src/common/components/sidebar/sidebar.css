@@ -1,26 +1,40 @@
-@import '../variables.css';
+@value variables: '../variables.css';
+@value large from variables;
+
+.list {
+  composes: list from '../global.css';
+}
+
+.list-item {
+  composes: list-item from '../global.css';
+}
+
+.list-link {
+  composes: list-link from '../global.css';
+  padding: 0.5em 0;
+}
+
+.list-link-selected {
+  composes: list-link-selected from '../global.css';
+}
 
 .sidebar {
   padding: 0 1em;
   margin-bottom: 1em;
+}
 
-  @media (--full-width) {
+.header {
+  padding-top: 1em;
+}
+
+@media large {
+  .sidebar {
     text-align: right;
     padding-top: 3.9em;
     margin: 0;
   }
 
-  &__header {
-    padding-top: 1em;
-
-    @media (--full-width) {
-      display: none;
-    }
-  }
-
-  &__menu {
-    &__link {
-      padding: 0.5em 0;
-    }
+  .header {
+    display: none;
   }
 }

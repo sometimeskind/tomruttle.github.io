@@ -5,25 +5,28 @@ import { Route, Switch } from 'react-router-dom';
 
 import type { List, Record } from 'immutable';
 
+import pure from 'purecss/build/pure.css';
+import responsive from 'purecss/build/grids-responsive.css';
+
 import Home from '../content/home';
 import Words from '../content/words';
 import WordsMenu from '../sidebar/words-menu';
 
 import type { PostType } from '../../types';
 
-import './main.css';
+import styles from './main.css';
 
 function Main({ posts }: { posts: List<Record<PostType>> }) {
   return (
-    <div className="main pure-u-1">
-      <section className="main__content pure-u-1 pure-u-md-3-4">
+    <div className={`${styles.main} ${pure['pure-u-1']}`}>
+      <section className={`${styles.content} ${pure['pure-u-1']} ${responsive['pure-u-md-3-4']}`}>
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/words/:path?" render={() => <Words posts={posts} />} />
         </Switch>
       </section>
 
-      <aside className="main__sidebar pure-u-1 pure-u-md-1-4">
+      <aside className={`${styles.sidebar} ${pure['pure-u-1']} ${responsive['pure-u-md-1-4']}`}>
         <Switch>
           <Route path="/words/:path?" render={() => <WordsMenu posts={posts} />} />
         </Switch>
