@@ -14,16 +14,18 @@ $highlightColor: OrangeRed;
   overflow: hidden;
 }
 
+@define-mixin clear-fix {
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
 .pure-g div,
 .pure-g section,
 .pure-g aside {
   box-sizing: border-box;
-}
-
-.clear-fix::after {
-  content: "";
-  display: table;
-  clear: both;
 }
 
 .social-button {
@@ -109,6 +111,8 @@ $highlightColor: OrangeRed;
   }
 
   .main {
+    @mixin clear-fix;
+
     &__content {
       padding: 0 1em;
 

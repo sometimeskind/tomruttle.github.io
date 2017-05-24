@@ -11,7 +11,7 @@ import type { PostType } from '../types';
 
 function Main({ posts }: { posts: Array<PostType> }) {
   return (
-    <div className="main clear-fix pure-u-1">
+    <div className="main pure-u-1">
       <section className="main__content pure-u-1 pure-u-md-3-4">
         <Switch>
           <Route exact path="/" component={Home} />
