@@ -3,6 +3,8 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
+import type { List, Record } from 'immutable';
+
 import Home from '../content/home';
 import Words from '../content/words';
 import WordsMenu from '../sidebar/words-menu';
@@ -11,7 +13,7 @@ import type { PostType } from '../../types';
 
 import './main.css';
 
-function Main({ posts }: { posts: Array<PostType> }) {
+function Main({ posts }: { posts: List<Record<PostType>> }) {
   return (
     <div className="main pure-u-1">
       <section className="main__content pure-u-1 pure-u-md-3-4">

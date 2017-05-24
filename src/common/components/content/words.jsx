@@ -5,6 +5,8 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
+import type { List, Record } from 'immutable';
+
 import type { PostType } from '../../types';
 
 import './content.css';
@@ -13,11 +15,11 @@ function createMarkup(html) {
   return { __html: html };
 }
 
-function Words({ posts }: { posts: Array<PostType> }) {
+function Words({ posts }: { posts: List<Record<PostType>> }) {
   return (
     <div className="content">
       <Switch>
-        {posts.map(({ metadata, words }) => (
+        {posts.toJS().map(({ metadata, words }) => (
           <Route
             key={metadata.fileName}
             path={`/words/${metadata.path}/`}
