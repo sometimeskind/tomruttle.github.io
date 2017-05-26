@@ -5,10 +5,11 @@ import { ReactHeight } from 'react-height';
 
 import type { Element } from 'react';
 
+import styles from './height.module.css';
+
 class App extends Component {
   props: {
     children: Element<*>,
-    className: string,
   }
 
   constructor(...args: Array<Object>) {
@@ -26,7 +27,7 @@ class App extends Component {
 
   render() {
     return (
-      <div className={this.props.className} style={this.state.height ? { height: this.state.height } : {}}>
+      <div className={styles.height} style={this.state.height ? { height: this.state.height } : {}}>
         <ReactHeight onHeightReady={this.setHeight}>
           {this.props.children}
         </ReactHeight>

@@ -1,0 +1,34 @@
+.header {
+  composes: pure-u-1 from global;
+  composes: pure-u-md-3-4 from global;
+  composes: offset-md-1-4 from global;
+  padding: 0 1em;
+}
+
+.title-link {
+  color: #111;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.list {
+  composes: list from '../global.module.css';
+  width: 100%;
+  white-space: nowrap;
+  padding: 0;
+  margin: 0;
+}
+
+.list-item {
+  composes: list-item from '../global.module.css';
+  display: inline-block;
+}
+
+.list-link {
+  composes: list-link from '../global.module.css';
+  padding: 0.5em 2em 0.5em 0;
+}
+
+.list-link-selected {
+  composes: list-link-selected from '../global.module.css';
+}

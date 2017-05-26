@@ -5,17 +5,15 @@ import { NavLink } from 'react-router-dom';
 
 import type { List, Record } from 'immutable';
 
-import pure from 'purecss/build/pure.css';
-
 import type { PostType } from '../../types';
 
-import styles from './sidebar.css';
+import styles from './sidebar.module.css';
 
 function WordsMenu({ posts }: { posts: List<Record<PostType>> }) {
   return (
     <div className={styles.sidebar}>
       <div className={styles.header}>
-        <hr className={pure['pure-u-1-2']} />
+        <hr className={styles.divider} />
         <h4>Posts List</h4>
       </div>
 

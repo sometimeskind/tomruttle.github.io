@@ -1,5 +1,7 @@
-@value variables: './variables.css';
-@value highlightColor from variables;
+@value containerWidth: 64em;
+@value containerMinWidth: 16em;
+@value highlightColor: OrangeRed;
+@value large: screen and (min-width: 48em);
 
 .hidden-text {
   text-indent: 100%;

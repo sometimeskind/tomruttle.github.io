@@ -1,0 +1,27 @@
+@value variables: '../global.module.css';
+@value large from variables;
+
+.main {
+  composes: pure-u-1 from global;
+  composes: clear-fix from '../global.module.css';
+}
+
+.content {
+  composes: pure-u-1 from global;
+  composes: pure-u-md-3-4 from global;
+}
+
+.sidebar {
+  composes: pure-u-1 from global;
+  composes: pure-u-md-1-4 from global;
+}
+
+@media large {
+  .content {
+    float: right;
+  }
+
+  .sidebar {
+    float: left;
+  }
+}

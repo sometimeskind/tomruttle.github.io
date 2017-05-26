@@ -1,3 +1,5 @@
+// Some of this comes from https://medium.com/webpack/predictable-long-term-caching-with-webpack-d3eee1d3fa31;
+
 const webpack = require('webpack');
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -9,6 +11,23 @@ const merge = require('webpack-merge');
 const StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin');
 const WorkboxPlugin = require('workbox-webpack-plugin');
 const pkg = require('./package.json');
+const NameAllModulesPlugin = require('name-all-modules-plugin');
+
+const getExtractTextLoader = (modules = false) => ExtractTextPlugin.extract({
+  use: [
+    {
+      loader: 'css-loader',
+      options: {
+        modules,
+        sourceMap: true,
+        importLoaders: 1,
+        localIdentName: 'hello_[name]__[local]--[hash:base64:5]',
+      },
+    },
+    'postcss-loader',
+  ],
+  fallback: 'style-loader',
+});
 
 const sharedConfig = {
   output: {
@@ -71,7 +90,7 @@ const getServerPlugins = (filenames) => [
 module.exports = (env) => {
   const plugins = [
     new CleanWebpackPlugin(['dist']),
-    new ExtractTextPlugin(env === 'dev' ? 'main.css' : 'main.[contenthash].css'),
+    new ExtractTextPlugin(env === 'dev' ? 'main.css' : '[name].[contenthash].css'),
     new PurifyCSSPlugin({
       minimize: env !== 'dev',
       paths: glob.sync([
@@ -79,7 +98,7 @@ module.exports = (env) => {
         path.join(__dirname, 'src', 'common', 'components', '**/*.jsx'),
         path.join(__dirname, 'src', 'client', 'components', '**/*.jsx'),
       ]),
-      purifyOptions: { whitelist: ['*hello*'] },
+      purifyOptions: { whitelist: ['*hello*', '*pure-u-*', '*offset-*'] },
     }),
   ];
 
@@ -92,22 +111,24 @@ module.exports = (env) => {
       compress: { screw_ie8: true },
       comments: false,
     }),
+    new webpack.NamedModulesPlugin(),
+    new webpack.NamedChunksPlugin((chunk) => (chunk.name ? chunk.name : chunk.modules.map((m) => path.relative(m.context, m.request)).join('-'))),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
-      minChunks(module) {
-        return module.context && module.context.indexOf('node_modules') !== -1;
-      },
+      minChunks(module) { return module.context && module.context.indexOf('node_modules') !== -1; },
     }),
+    new webpack.optimize.CommonsChunkPlugin({ name: 'manifest' }),
+    new NameAllModulesPlugin(),
   ];
 
   if (env === 'build') {
     plugins.push(...buildPlugins);
   } else {
+    plugins.push(...getServerPlugins());
+
     if (env === 'analyse') {
       plugins.push(new BundleAnalyzerPlugin());
     }
-
-    plugins.push(...getServerPlugins());
   }
 
   return merge.smart(sharedConfig, {
@@ -148,21 +169,12 @@ module.exports = (env) => {
         },
         {
           test: /\.css$/,
-          use: ExtractTextPlugin.extract({
-            use: [
-              {
-                loader: 'css-loader',
-                options: {
-                  modules: true,
-                  sourceMap: true,
-                  importLoaders: 1,
-                  localIdentName: 'hello_[hash:base64:5]',
-                },
-              },
-              'postcss-loader',
-            ],
-            fallback: 'style-loader',
-          }),
+          exclude: /\.module.css$/,
+          use: getExtractTextLoader(false),
+        },
+        {
+          test: /\.module.css$/,
+          use: getExtractTextLoader(true),
         },
       ],
     },

@@ -1,21 +1,25 @@
-@value variables: '../variables.css';
+@value variables: '../global.module.css';
 @value large from variables;
 
 .list {
-  composes: list from '../global.css';
+  composes: list from '../global.module.css';
 }
 
 .list-item {
-  composes: list-item from '../global.css';
+  composes: list-item from '../global.module.css';
 }
 
 .list-link {
-  composes: list-link from '../global.css';
+  composes: list-link from '../global.module.css';
   padding: 0.5em 0;
 }
 
 .list-link-selected {
-  composes: list-link-selected from '../global.css';
+  composes: list-link-selected from '../global.module.css';
+}
+
+.divider {
+  composes: pure-u-1-2 from global;
 }
 
 .sidebar {

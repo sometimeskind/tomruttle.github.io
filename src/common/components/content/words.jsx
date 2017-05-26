@@ -9,7 +9,7 @@ import type { List, Record } from 'immutable';
 
 import type { PostType } from '../../types';
 
-import styles from './content.css';
+import styles from './content.module.css';
 
 function createMarkup(html) {
   return { __html: html };

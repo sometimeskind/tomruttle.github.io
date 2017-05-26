@@ -2,7 +2,7 @@
 
 import React, { PureComponent } from 'react';
 
-import styles from './content.css';
+import styles from './content.module.css';
 
 export default class Home extends PureComponent {
   render() {

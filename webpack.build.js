@@ -27,7 +27,11 @@ module.exports = webpack(clientConfig('build'), (err, stats) => {
       process.exit(1);
     }
 
-    const unwantedFiles = glob.sync([path.join(__dirname, 'dist', 'server*.js')]);
+    const unwantedFiles = glob.sync([
+      path.join(__dirname, 'dist', 'server*.js'),
+      path.join(__dirname, 'dist', 'server*.css'),
+      path.join(__dirname, 'dist', 'vendor*.css'),
+    ]);
     const deleteFilePromises = unwantedFiles.map((filename) => new Promise((resolve, reject) =>
       fs.unlink(filename, (unlinkErr) => (unlinkErr ? reject(unlinkErr) : resolve()))));
 

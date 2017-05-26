@@ -1,7 +1,8 @@
-@value variables: './variables.css';
+@value variables: './global.module.css';
 @value containerMinWidth, containerWidth from variables;
 
 .app {
+  composes: pure-g from global;
   font-size: 16px;
   line-height: 1.7em;
   padding: 1em 2em;
