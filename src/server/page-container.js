@@ -6,12 +6,6 @@ import { APP_CONTAINER, APP_STATE_PROP } from '../common/constants';
 
 import type { AppPropsType } from '../common/types';
 
-export type assetsType = {
-  mainJS: string,
-  mainCSS: string,
-  vendorJS: ?string,
-}
-
 const description = 'A homepage for Tom Ruttle';
 const title = 'HELLO';
 
@@ -31,7 +25,7 @@ const sentry = `
   </script>
 `;
 
-export default ({ props, appMarkup, assets, path, styles }: { props: AppPropsType, appMarkup: string, assets: assetsType, path: string, styles: string }) => `
+export default ({ props, appMarkup, assets, path, styles }: { props: AppPropsType, appMarkup: string, assets: { [chunkName: string]: string }, path: string, styles: string }) => `
   <!DOCTYPE html>
   <html lang="en">
       <head prefix="og: http://ogp.me/ns#${path.includes('/words/') ? ' article: http://ogp.me/ns/article#' : ''}">
@@ -65,8 +59,7 @@ export default ({ props, appMarkup, assets, path, styles }: { props: AppPropsTyp
         window["${APP_STATE_PROP}"]=${serialize(props, { json: true })}
       </script>
 
-      ${assets.vendorJS ? `<script src="/${assets.vendorJS}"></script>` : ''}
-      <script async src="/${assets.mainJS}"></script>
+      <script async src="/${assets.main}"></script>
 
       <script>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

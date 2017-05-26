@@ -6684,6 +6684,14 @@ stable@~0.1.3:
   version "0.1.6"
   resolved "https://registry.npmjs.org/stable/-/stable-0.1.6.tgz#910f5d2aed7b520c6e777499c1f32e139fdecb10"
 
+static-site-generator-webpack-plugin@HorizonXP/static-site-generator-webpack-plugin:
+  version "3.1.0"
+  resolved "https://codeload.github.com/HorizonXP/static-site-generator-webpack-plugin/tar.gz/2303b00aee66cf21c68efcead6b0c4da2e042a16"
+  dependencies:
+    bluebird "^3.0.5"
+    eval "^0.1.0"
+    webpack-sources "^0.1.2"
+
 static-site-generator-webpack-plugin@^3.4.1:
   version "3.4.1"
   resolved "https://registry.npmjs.org/static-site-generator-webpack-plugin/-/static-site-generator-webpack-plugin-3.4.1.tgz#6ee22468830bc546798a37e0fca6fd699cc93b81"
@@ -7429,7 +7437,7 @@ webpack-merge@^4.1.0:
   dependencies:
     lodash "^4.17.4"
 
-webpack-sources@^0.1.0, webpack-sources@^0.1.4:
+webpack-sources@^0.1.0, webpack-sources@^0.1.2, webpack-sources@^0.1.4:
   version "0.1.5"
   resolved "https://registry.npmjs.org/webpack-sources/-/webpack-sources-0.1.5.tgz#aa1f3abf0f0d74db7111c40e500b84f966640750"
   dependencies:
