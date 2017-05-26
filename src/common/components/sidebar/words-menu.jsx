@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 import type { List, Record } from 'immutable';
 
@@ -30,4 +31,4 @@ function WordsMenu({ posts }: { posts: List<Record<PostType>> }) {
   );
 }
 
-export default WordsMenu;
+export default withStyles(styles)(WordsMenu);

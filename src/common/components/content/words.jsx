@@ -4,9 +4,9 @@
 
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 import type { List, Record } from 'immutable';
-
 import type { PostType } from '../../types';
 
 import styles from './content.module.css';
@@ -39,4 +39,4 @@ function Words({ posts }: { posts: List<Record<PostType>> }) {
   );
 }
 
-export default Words;
+export default withStyles(styles)(Words);

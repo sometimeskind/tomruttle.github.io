@@ -1,10 +1,11 @@
 // @flow
 
 import React, { PureComponent } from 'react';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 import styles from './content.module.css';
 
-export default class Home extends PureComponent {
+class Home extends PureComponent {
   render() {
     return (
       <div className={styles.content}>
@@ -25,3 +26,5 @@ export default class Home extends PureComponent {
     );
   }
 }
+
+export default withStyles(styles)(Home);

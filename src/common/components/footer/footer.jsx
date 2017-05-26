@@ -1,10 +1,11 @@
 // @flow
 
 import React, { PureComponent } from 'react';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 import styles from './footer.module.css';
 
-export default class Footer extends PureComponent {
+class Footer extends PureComponent {
   render() {
     return (
       <footer className={styles.footer}>
@@ -14,3 +15,5 @@ export default class Footer extends PureComponent {
     );
   }
 }
+
+export default withStyles(styles)(Footer);

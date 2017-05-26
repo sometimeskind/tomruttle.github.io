@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react';
 import { ReactHeight } from 'react-height';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 import type { Element } from 'react';
 
@@ -36,4 +37,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withStyles(styles)(App);

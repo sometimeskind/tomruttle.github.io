@@ -7,7 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { APP_CONTAINER, APP_STATE_PROP } from '../common/constants';
 
 import App from '../common/components/app';
-import ScrollToTop from './components/scroll-to-top';
+import ClientWrapper from './components/client-wrapper';
 
 import './require-assets';
 
@@ -25,9 +25,11 @@ function logException(ex, context) {
   }
 }
 
+const css = new Set();
+
 const app = (
   <BrowserRouter>
-    <ScrollToTop children={<App {...props} />} />
+    <ClientWrapper css={css} children={<App {...props} />} />
   </BrowserRouter>
 );
 

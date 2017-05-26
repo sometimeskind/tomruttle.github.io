@@ -3,10 +3,11 @@
 import React from 'react';
 
 import { NavLink, Link } from 'react-router-dom';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 import styles from './header.module.css';
 
-export default function Header() {
+function Header() {
   return (
     <header className={styles.header}>
       <h2><Link className={styles['title-link']} to="/">HELLO</Link></h2>
@@ -20,3 +21,5 @@ export default function Header() {
     </header>
   );
 }
+
+export default withStyles(styles)(Header);

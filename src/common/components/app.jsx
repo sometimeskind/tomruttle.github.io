@@ -1,14 +1,15 @@
 // @flow
 
-import 'purecss/build/pure.css';
-import 'purecss/build/grids-responsive.css';
+import pureStyles from 'purecss/build/pure.css';
+import pureGrids from 'purecss/build/grids-responsive.css';
 
 import React, { Component } from 'react';
 import { fromJS } from 'immutable';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 import type { List, Record } from 'immutable';
 
-import '../../../assets/css/offsets.css';
+import pureOffsets from '../../../assets/css/offsets.css';
 
 import Header from './header/header';
 import Main from './main/main';
@@ -37,4 +38,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withStyles(styles, pureStyles, pureGrids, pureOffsets)(App);

@@ -31,7 +31,7 @@ const sentry = `
   </script>
 `;
 
-export default ({ props, appMarkup, assets, path }: { props: AppPropsType, appMarkup: string, assets: assetsType, path: string }) => `
+export default ({ props, appMarkup, assets, path, styles }: { props: AppPropsType, appMarkup: string, assets: assetsType, path: string, styles: string }) => `
   <!DOCTYPE html>
   <html lang="en">
       <head prefix="og: http://ogp.me/ns#${path.includes('/words/') ? ' article: http://ogp.me/ns/article#' : ''}">
@@ -54,7 +54,7 @@ export default ({ props, appMarkup, assets, path }: { props: AppPropsType, appMa
 
       <link rel="icon" type="image/png" href="/images/monster-icon.d119b2.png" />
       <link rel="manifest" href="/manifest.json">
-      <link rel="stylesheet" type="text/css" href="/${assets.mainCSS}">
+      <style type="text/css">${styles}</style>
     </head>
     <body>
       <div id="${APP_CONTAINER}">${appMarkup}</div>

@@ -9,6 +9,7 @@ import getPosts from './get-posts';
 import pageContainer from './page-container';
 
 import App from '../common/components/app';
+import ServerWrapper from './components/server-wrapper';
 
 import type { AppPropsType } from '../common/types';
 
@@ -19,11 +20,12 @@ export default function render(locals: { path: string, filenames?: Array<string>
 
   const props: AppPropsType = { posts, buildHash: locals.webpackStats.hash };
 
+  const css = new Set();
+
   const appMarkup = renderToString(
-    <StaticRouter
-      location={locals.path}
-      context={context}
-    ><App {...props} /></StaticRouter>
+    <StaticRouter location={locals.path} context={context}>
+      <ServerWrapper css={css} children={<App {...props} />} />
+    </StaticRouter>
   );
 
   const filenames = locals.filenames || Object.keys(locals.webpackStats.compilation.assets);
@@ -35,7 +37,7 @@ export default function render(locals: { path: string, filenames?: Array<string>
   };
 
   return {
-    [locals.path]: pageContainer({ props, appMarkup, assets, path: locals.path }),
+    [locals.path]: pageContainer({ props, appMarkup, assets, path: locals.path, styles: Array.from(css).join('') }),
     '/404.html': renderToString(<div>Not Found, bro!</div>),
   };
 }

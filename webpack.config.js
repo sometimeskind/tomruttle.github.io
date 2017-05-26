@@ -2,32 +2,28 @@
 
 const webpack = require('webpack');
 const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-const glob = require('glob-all');
-const PurifyCSSPlugin = require('purifycss-webpack');
 const merge = require('webpack-merge');
 const StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin');
 const WorkboxPlugin = require('workbox-webpack-plugin');
 const pkg = require('./package.json');
 const NameAllModulesPlugin = require('name-all-modules-plugin');
 
-const getExtractTextLoader = (modules = false) => ExtractTextPlugin.extract({
-  use: [
-    {
-      loader: 'css-loader',
-      options: {
-        modules,
-        sourceMap: true,
-        importLoaders: 1,
-        localIdentName: 'hello_[name]__[local]--[hash:base64:5]',
-      },
+const getExtractTextLoader = (modules = false) => [
+  'isomorphic-style-loader',
+  {
+    loader: 'css-loader',
+    options: {
+      modules,
+      minimize: true,
+      sourceMap: true,
+      importLoaders: 1,
+      localIdentName: 'hello_[name]__[local]--[hash:base64:5]',
     },
-    'postcss-loader',
-  ],
-  fallback: 'style-loader',
-});
+  },
+  'postcss-loader',
+];
 
 const sharedConfig = {
   output: {
@@ -90,16 +86,6 @@ const getServerPlugins = (filenames) => [
 module.exports = (env) => {
   const plugins = [
     new CleanWebpackPlugin(['dist']),
-    new ExtractTextPlugin(env === 'dev' ? 'main.css' : '[name].[contenthash].css'),
-    new PurifyCSSPlugin({
-      minimize: env !== 'dev',
-      paths: glob.sync([
-        path.join(__dirname, 'src', 'server', 'page-container.js'),
-        path.join(__dirname, 'src', 'common', 'components', '**/*.jsx'),
-        path.join(__dirname, 'src', 'client', 'components', '**/*.jsx'),
-      ]),
-      purifyOptions: { whitelist: ['*hello*', '*pure-u-*', '*offset-*'] },
-    }),
   ];
 
   const buildPlugins = [

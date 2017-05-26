@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 import type { List, Record } from 'immutable';
 
@@ -32,4 +33,4 @@ function Main({ posts }: { posts: List<Record<PostType>> }) {
   );
 }
 
-export default Main;
+export default withStyles(styles)(Main);
