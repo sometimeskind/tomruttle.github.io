@@ -1,4 +1,4 @@
-// Some of this comes from https://medium.com/webpack/predictable-long-term-caching-with-webpack-d3eee1d3fa31;
+// Some of this comes from https://medium.com/webpack/predictable-long-term-caching-with-webpack-d3eee1d3fa31
 
 const webpack = require('webpack');
 const path = require('path');
@@ -9,29 +9,31 @@ const WorkboxPlugin = require('workbox-webpack-plugin');
 const pkg = require('./package.json');
 const NameAllModulesPlugin = require('name-all-modules-plugin');
 
-const getExtractTextLoader = (modules = false) => [
-  'isomorphic-style-loader',
-  {
-    loader: 'css-loader',
-    options: {
-      modules,
-      minimize: true,
-      importLoaders: 1,
-      localIdentName: 'hello_[name]__[local]--[hash:base64:5]',
-    },
-  },
-  'postcss-loader',
-];
-
 module.exports = (env) => {
+  const getExtractTextLoader = (modules = false) => [
+    'isomorphic-style-loader',
+    {
+      loader: 'css-loader',
+      options: {
+        modules,
+        minimize: env !== 'dev',
+        importLoaders: 1,
+        localIdentName: '[name]__[local]--[hash:base64:5]',
+      },
+    },
+    'postcss-loader',
+  ];
+
   const plugins = [
     new CleanWebpackPlugin(['dist']),
+
     // Reinstate these chunks when static-site-generator PRs are merged.
     // new webpack.optimize.CommonsChunkPlugin({
     //   name: 'vendor',
     //   minChunks(module) { return module.context && module.context.indexOf('node_modules') !== -1; },
     // }),
     // new webpack.optimize.CommonsChunkPlugin({ name: 'manifest' }),
+
     new StaticSiteGeneratorPlugin({
       crawl: true,
       entry: 'server',
