@@ -25,7 +25,7 @@ const sentry = `
   </script>
 `;
 
-export default ({ props, appMarkup, assets, path, styles }: { props: AppProps, appMarkup: string, assets: { [chunkName: string]: string }, path: string, styles: string }) => `
+export default ({ props, appMarkup, assets, path, styles, noClient }: { props: AppProps, appMarkup: string, assets: { [chunkName: string]: string }, path: string, styles: string }) => `
   <!DOCTYPE html>
   <html lang="en">
       <head prefix="og: http://ogp.me/ns#${path.includes('/words/') ? ' article: http://ogp.me/ns/article#' : ''}">
@@ -59,7 +59,7 @@ export default ({ props, appMarkup, assets, path, styles }: { props: AppProps, a
         window["${APP_STATE_PROP}"]=${serialize(props, { json: true })}
       </script>
 
-      <script async src="/${assets.main}"></script>
+      ${noClient ? '' : `<script async src="/${assets.main}"></script>`}
 
       <script>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

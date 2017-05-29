@@ -15,7 +15,7 @@ import type { AppProps, Post } from '../common/types';
 
 const posts: Array<Post> = getPosts(postArray);
 
-function getMarkup({ location, props, assets }) {
+function getMarkup({ location, props, assets, noClient }) {
   const css = new Set();
   const context = {};
   const appMarkup = renderToString(
@@ -24,7 +24,7 @@ function getMarkup({ location, props, assets }) {
     </StaticRouter>
   );
 
-  return pageContainer({ props, appMarkup, assets, path: location, styles: Array.from(css).join('') });
+  return pageContainer({ props, appMarkup, assets, path: location, styles: Array.from(css).join(''), noClient });
 }
 
 export default function render(locals: { path: string, webpackStats: { hash: string }, assets: { [chunkName: string]: string } }) {
@@ -32,7 +32,7 @@ export default function render(locals: { path: string, webpackStats: { hash: str
   const props: AppProps = { posts, buildHash };
 
   return {
-    [locals.path]: getMarkup({ location: locals.path, props, assets: locals.assets }),
-    '/404.html': getMarkup({ location: 'not-found', props, assets: locals.assets }),
+    [locals.path]: getMarkup({ location: locals.path, props, assets: locals.assets, noClient: false }),
+    '/404.html': getMarkup({ location: 'not-found', props, assets: locals.assets, noClient: true }),
   };
 }
