@@ -11,6 +11,8 @@ import styles from './content.module.css';
 
 import DangerousSection from './dangerous-section';
 
+import wordsIntro from '../../../../pages/words-intro.md';
+
 function Words({ posts }: { posts: List<Record<Post>> }) {
   return (
     <div className={styles.content}>
@@ -22,14 +24,7 @@ function Words({ posts }: { posts: List<Record<Post>> }) {
             render={() => <DangerousSection content={words} />}
           />
         ))}
-        <Route
-          render={() => (
-            <section>
-              <h4>Words</h4>
-              <p>Select a post and read it, fool!</p>
-            </section>
-          )}
-        />
+        <Route render={() => <DangerousSection content={wordsIntro} />} />
       </Switch>
     </div>
   );

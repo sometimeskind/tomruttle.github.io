@@ -5,14 +5,18 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 import styles from './content.module.css';
 
-class Home extends PureComponent {
+import DangerousSection from './dangerous-section';
+
+import notFoundText from '../../../../pages/not-found.md';
+
+class NotFound extends PureComponent {
   render() {
     return (
       <div className={styles.content}>
-        <p>Couldn&apos;t find anything here, friend!</p>
+        <DangerousSection content={notFoundText} />
       </div>
     );
   }
 }
 
-export default withStyles(styles)(Home);
+export default withStyles(styles)(NotFound);
