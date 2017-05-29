@@ -3,11 +3,9 @@
 import pureStyles from 'purecss/build/pure.css';
 import pureGrids from 'purecss/build/grids-responsive.css';
 
-import React, { Component } from 'react';
+import React from 'react';
 import { fromJS } from 'immutable';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-
-import type { List, Record } from 'immutable';
 
 import pureOffsets from '../../../assets/css/offsets.css';
 
@@ -20,22 +18,14 @@ import type { Post } from '../types';
 
 import styles from './app.module.css';
 
-class App extends Component {
-  props: { posts: Array<Post> }
-
-  state: { posts: List<Record<Post>>} = {
-    posts: fromJS(this.props.posts),
-  }
-
-  render() {
-    return (
-      <div className={styles.app}>
-        <Header />
-        <Height children={<Main posts={this.state.posts} />} />
-        <Footer />
-      </div>
-    );
-  }
+function App({ posts }: { posts: Array<Post> }) {
+  return (
+    <div className={styles.app}>
+      <Header />
+      <Height children={<Main posts={fromJS(posts)} />} />
+      <Footer />
+    </div>
+  );
 }
 
 export default withStyles(styles, pureStyles, pureGrids, pureOffsets)(App);
