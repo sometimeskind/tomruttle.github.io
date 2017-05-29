@@ -11,11 +11,11 @@ import ClientWrapper from './components/client-wrapper';
 
 import './require-assets';
 
-import type { AppPropsType } from '../common/types';
+import type { AppProps } from '../common/types';
 
 const container = document.getElementById(APP_CONTAINER);
 
-const props: AppPropsType = window[APP_STATE_PROP];
+const props: AppProps = window[APP_STATE_PROP];
 
 function logException(ex, context) {
   if (window.Raven) {

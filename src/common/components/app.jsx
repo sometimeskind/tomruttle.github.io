@@ -16,14 +16,14 @@ import Main from './main/main';
 import Footer from './footer/footer';
 import Height from './height/height';
 
-import type { PostType } from '../types';
+import type { Post } from '../types';
 
 import styles from './app.module.css';
 
 class App extends Component {
-  props: { posts: Array<PostType> }
+  props: { posts: Array<Post> }
 
-  state: { posts: List<Record<PostType>>} = {
+  state: { posts: List<Record<Post>>} = {
     posts: fromJS(this.props.posts),
   }
 

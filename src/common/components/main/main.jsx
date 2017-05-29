@@ -9,18 +9,20 @@ import type { List, Record } from 'immutable';
 import Home from '../content/home';
 import Words from '../content/words';
 import WordsMenu from '../sidebar/words-menu';
+import NotFound from '../content/not-found';
 
-import type { PostType } from '../../types';
+import type { Post } from '../../types';
 
 import styles from './main.module.css';
 
-function Main({ posts }: { posts: List<Record<PostType>> }) {
+function Main({ posts }: { posts: List<Record<Post>> }) {
   return (
     <div className={styles.main}>
       <section className={styles.content}>
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/words/:path?" render={() => <Words posts={posts} />} />
+          <Route component={NotFound} />
         </Switch>
       </section>
 

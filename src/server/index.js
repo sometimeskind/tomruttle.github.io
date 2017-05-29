@@ -11,25 +11,28 @@ import pageContainer from './page-container';
 import App from '../common/components/app';
 import ServerWrapper from './components/server-wrapper';
 
-import type { AppPropsType } from '../common/types';
+import type { AppProps, Post } from '../common/types';
 
-const posts = getPosts(postArray);
+const posts: Array<Post> = getPosts(postArray);
 
-export default function render(locals: { path: string, webpackStats: { hash: string }, assets: { [chunkName: string]: string } }) {
-  const context = {};
-
-  const props: AppPropsType = { posts, buildHash: locals.webpackStats.hash };
-
+function getMarkup({ location, props, assets }) {
   const css = new Set();
-
+  const context = {};
   const appMarkup = renderToString(
-    <StaticRouter location={locals.path} context={context}>
+    <StaticRouter location={location} context={context}>
       <ServerWrapper css={css} children={<App {...props} />} />
     </StaticRouter>
   );
 
+  return pageContainer({ props, appMarkup, assets, path: location, styles: Array.from(css).join('') });
+}
+
+export default function render(locals: { path: string, webpackStats: { hash: string }, assets: { [chunkName: string]: string } }) {
+  const buildHash = locals.webpackStats.hash;
+  const props: AppProps = { posts, buildHash };
+
   return {
-    [locals.path]: pageContainer({ props, appMarkup, assets: locals.assets, path: locals.path, styles: Array.from(css).join('') }),
-    '/404.html': renderToString(<div>Not Found, bro!</div>),
+    [locals.path]: getMarkup({ location: locals.path, props, assets: locals.assets }),
+    '/404.html': getMarkup({ location: 'not-found', props, assets: locals.assets }),
   };
 }

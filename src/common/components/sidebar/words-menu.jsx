@@ -6,11 +6,11 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 import type { List, Record } from 'immutable';
 
-import type { PostType } from '../../types';
+import type { Post } from '../../types';
 
 import styles from './sidebar.module.css';
 
-function WordsMenu({ posts }: { posts: List<Record<PostType>> }) {
+function WordsMenu({ posts }: { posts: List<Record<Post>> }) {
   return (
     <div className={styles.sidebar}>
       <div className={styles.header}>
@@ -20,7 +20,7 @@ function WordsMenu({ posts }: { posts: List<Record<PostType>> }) {
 
       <nav>
         <ul className={styles.list}>
-          {posts.toJS().map(({ metadata }) => (
+          {posts.toJS().map(({ metadata }: Post) => (
             <li key={metadata.path} className={styles['list-item']}>
               <NavLink className={styles['list-link']} activeClassName={styles['list-link-selected']} to={`/words/${metadata.path}/`}>{metadata.title}</NavLink>
             </li>

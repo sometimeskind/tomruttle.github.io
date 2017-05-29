@@ -4,5 +4,8 @@
 [include]
 
 [libs]
+flow-typed
 
 [options]
+module.file_ext=.md
+module.file_ext=.css

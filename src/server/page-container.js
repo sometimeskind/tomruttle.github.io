@@ -4,7 +4,7 @@ import serialize from 'serialize-javascript';
 
 import { APP_CONTAINER, APP_STATE_PROP } from '../common/constants';
 
-import type { AppPropsType } from '../common/types';
+import type { AppProps } from '../common/types';
 
 const description = 'A homepage for Tom Ruttle';
 const title = 'HELLO';
@@ -25,7 +25,7 @@ const sentry = `
   </script>
 `;
 
-export default ({ props, appMarkup, assets, path, styles }: { props: AppPropsType, appMarkup: string, assets: { [chunkName: string]: string }, path: string, styles: string }) => `
+export default ({ props, appMarkup, assets, path, styles }: { props: AppProps, appMarkup: string, assets: { [chunkName: string]: string }, path: string, styles: string }) => `
   <!DOCTYPE html>
   <html lang="en">
       <head prefix="og: http://ogp.me/ns#${path.includes('/words/') ? ' article: http://ogp.me/ns/article#' : ''}">
