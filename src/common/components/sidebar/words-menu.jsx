@@ -4,13 +4,13 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
-import type { List, Record } from 'immutable';
+import type { List, Map } from 'immutable';
 
 import type { Post } from '../../types';
 
 import styles from './sidebar.module.css';
 
-function WordsMenu({ posts }: { posts: List<Record<Post>> }) {
+function WordsMenu({ posts }: { posts: List<Map<Post>> }) {
   return (
     <div className={styles.sidebar}>
       <div className={styles.header}>
@@ -20,9 +20,9 @@ function WordsMenu({ posts }: { posts: List<Record<Post>> }) {
 
       <nav>
         <ul className={styles.list}>
-          {posts.toJS().map(({ metadata }: Post) => (
-            <li key={metadata.path} className={styles['list-item']}>
-              <NavLink className={styles['list-link']} activeClassName={styles['list-link-selected']} to={`/words/${metadata.path}/`}>{metadata.title}</NavLink>
+          {posts.map((post: Post) => (
+            <li key={post.getIn(['metadata', 'path'])} className={styles['list-item']}>
+              <NavLink className={styles['list-link']} activeClassName={styles['list-link-selected']} to={`/words/${post.getIn(['metadata', 'path'])}/`}>{post.getIn(['metadata', 'title'])}</NavLink>
             </li>
           ))}
         </ul>

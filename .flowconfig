@@ -2,9 +2,10 @@
 .*node_modules/stylelint/.*
 
 [include]
+node_modules/
+flow-typed/
 
 [libs]
-flow-typed
 
 [options]
 module.file_ext=.md

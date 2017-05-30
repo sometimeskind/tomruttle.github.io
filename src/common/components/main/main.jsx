@@ -4,7 +4,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
-import type { List, Record } from 'immutable';
+import type { List, Map } from 'immutable';
 
 import Home from '../content/home';
 import Words from '../content/words';
@@ -15,7 +15,7 @@ import type { Post } from '../../types';
 
 import styles from './main.module.css';
 
-function Main({ posts }: { posts: List<Record<Post>> }) {
+function Main({ posts }: { posts: List<Map<Post>> }) {
   return (
     <div className={styles.main}>
       <section className={styles.content}>
