@@ -1,3 +1,3 @@
 #### Words
 
-Select a post and read it, fool
+Select a post and read it, fool!
