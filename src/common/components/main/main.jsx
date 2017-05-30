@@ -3,6 +3,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import { CSSTransitionGroup } from 'react-transition-group';
 
 import type { List, Map } from 'immutable';
 
@@ -19,11 +20,23 @@ function Main({ posts }: { posts: List<Map<Post>> }) {
   return (
     <div className={styles.main}>
       <section className={styles.content}>
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/words/:path?" render={() => <Words posts={posts} />} />
-          <Route component={NotFound} />
-        </Switch>
+        <div className={styles.container}>
+          <Route
+            render={({ location }) => (
+              <CSSTransitionGroup
+                transitionName={styles}
+                transitionEnterTimeout={200}
+                transitionLeaveTimeout={100}
+              >
+                <Switch location={location} key={location.key}>
+                  <Route exact path="/" component={Home} />
+                  <Route path="/words/:path?" render={() => <Words posts={posts} />} />
+                  <Route component={NotFound} />
+                </Switch>
+              </CSSTransitionGroup>
+            )}
+          />
+        </div>
       </section>
 
       <aside className={styles.sidebar}>

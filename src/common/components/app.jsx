@@ -12,7 +12,6 @@ import pureOffsets from '../../../assets/css/offsets.css';
 import Header from './header/header';
 import Main from './main/main';
 import Footer from './footer/footer';
-import Height from './height/height';
 
 import type { Post } from '../types';
 
@@ -31,7 +30,7 @@ class App extends Component {
     return (
       <div className={styles.app}>
         <Header />
-        <Height children={<Main posts={this.state.posts} />} />
+        <Main posts={this.state.posts} />
         <Footer />
       </div>
     );
