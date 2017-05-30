@@ -1,7 +1,5 @@
 .footer {
-  composes: pure-u-1 from global;
-  composes: pure-u-md-3-4 from global;
-  composes: offset-md-1-4 from global;
+  composes: pure-u-1 pure-u-md-3-4 offset-md-1-4 from global;
   padding: 1em 1em 0 0;
   text-align: right;
 }

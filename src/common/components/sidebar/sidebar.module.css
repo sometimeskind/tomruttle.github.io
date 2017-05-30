@@ -1,5 +1,4 @@
-@value variables: '../global.module.css';
-@value large from variables;
+@value large from '../global.module.css';
 
 .list {
   composes: list from '../global.module.css';

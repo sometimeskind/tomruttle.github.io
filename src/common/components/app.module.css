@@ -1,5 +1,4 @@
-@value variables: './global.module.css';
-@value containerMinWidth, containerWidth from variables;
+@value containerMinWidth, containerWidth from './global.module.css';
 
 .app {
   composes: pure-g from global;
