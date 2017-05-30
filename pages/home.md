@@ -8,6 +8,7 @@ When this site was a blog I never wrote anything on it, so now it's just somewhe
   - Flow, Eslint, Stylelint, Jest, Istanbul, Codacy for code quality
   - Build pipeline via hosted Travis CI
   - Yarn
+  - Immutable.js
   - Exciting CDN/TLS/DNSSEC/Caching things from Cloudflare
   - Offline/Progressive Web App technology (a Service worker and an App Manifest)
   - Other
