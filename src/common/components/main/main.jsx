@@ -5,18 +5,16 @@ import { Route, Switch } from 'react-router-dom';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import { CSSTransitionGroup } from 'react-transition-group';
 
-import type { List, Map } from 'immutable';
+import type { Posts } from '../../types';
 
 import Home from '../content/home';
 import Words from '../content/words';
 import WordsMenu from '../sidebar/words-menu';
 import NotFound from '../content/not-found';
 
-import type { Post } from '../../types';
-
 import styles from './main.module.css';
 
-function Main({ posts }: { posts: List<Map<Post>> }) {
+function Main({ posts }: { posts: Posts }) {
   return (
     <div className={styles.main}>
       <section className={styles.content}>

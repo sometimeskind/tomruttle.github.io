@@ -8,5 +8,7 @@ flow-typed/
 [libs]
 
 [options]
+module.file_ext=.js
+module.file_ext=.jsx
 module.file_ext=.md
 module.file_ext=.css

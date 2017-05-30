@@ -25,7 +25,7 @@ const sentry = `
   </script>
 `;
 
-export default ({ props, appMarkup, assets, path, styles, noClient }: { props: AppProps, appMarkup: string, assets: { [chunkName: string]: string }, path: string, styles: string }) => `
+export default ({ props, appMarkup, assets, path, styles, noClient }: { noClient: boolean, props: AppProps, appMarkup: string, assets: { [chunkName: string]: string }, path: string, styles: string }) => `
   <!DOCTYPE html>
   <html lang="en">
       <head prefix="og: http://ogp.me/ns#${path.includes('/words/') ? ' article: http://ogp.me/ns/article#' : ''}">

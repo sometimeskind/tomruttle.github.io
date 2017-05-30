@@ -1,8 +1,10 @@
 // @flow
 
+import type { List, Record } from 'immutable';
+
 export type FileName = string;
 export type FileTitle = string;
-export type Words = string;
+export type WordsType = string;
 
 export type Metadata = {
   fileName: FileName,
@@ -13,15 +15,17 @@ export type Metadata = {
 
 export type Post = {
   metadata: Metadata,
-  words: Words,
+  words: WordsType,
 }
 
 export type ImportPost = {
   fileName: FileName,
-  words: Words,
+  words: WordsType,
 };
 
 export type AppProps = {
   posts: Array<Post>,
   buildHash: string,
 };
+
+export type Posts = List<Record<Post>>;

@@ -13,7 +13,7 @@ import Header from './header/header';
 import Main from './main/main';
 import Footer from './footer/footer';
 
-import type { Post } from '../types';
+import type { Post, Posts } from '../types';
 
 import styles from './app.module.css';
 
@@ -22,7 +22,7 @@ class App extends Component {
     posts: Array<Post>,
   }
 
-  state = {
+  state: { posts: Posts } = {
     posts: fromJS(this.props.posts),
   }
 

@@ -1,13 +1,15 @@
 // @flow
 
 import React from 'react';
-import { render } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 
 import { APP_CONTAINER, APP_STATE_PROP } from '../common/constants';
 
 import App from '../common/components/app';
 import ClientWrapper from './components/client-wrapper';
+
+// Until flowtypes are fixed to include render callback.
+import render from './react-render';
 
 import './require-assets';
 
