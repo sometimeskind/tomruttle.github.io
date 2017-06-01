@@ -5020,6 +5020,12 @@ react-router@^4.1.1:
     prop-types "^15.5.4"
     warning "^3.0.0"
 
+react-swipeable@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.npmjs.org/react-swipeable/-/react-swipeable-4.0.0.tgz#5f574c59b8518fcf018cc4b83e1bd4e62284dc7c"
+  dependencies:
+    prop-types "^15.5.8"
+
 react-transition-group@^1.1.3:
   version "1.1.3"
   resolved "https://registry.npmjs.org/react-transition-group/-/react-transition-group-1.1.3.tgz#5e02cf6e44a863314ff3c68a0c826c2d9d70b221"
