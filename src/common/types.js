@@ -1,10 +1,10 @@
 // @flow
 
-import type { List, Record } from 'immutable';
+import type { List, Map } from 'immutable';
 
-export type FileName = string;
-export type FileTitle = string;
-export type WordsType = string;
+type FileName = string;
+type FileTitle = string;
+type Words = string;
 
 export type Metadata = {
   fileName: FileName,
@@ -15,12 +15,12 @@ export type Metadata = {
 
 export type Post = {
   metadata: Metadata,
-  words: WordsType,
+  words: Words,
 }
 
 export type ImportPost = {
   fileName: FileName,
-  words: WordsType,
+  words: Words,
 };
 
 export type AppProps = {
@@ -28,4 +28,4 @@ export type AppProps = {
   buildHash: string,
 };
 
-export type Posts = List<Record<Post>>;
+export type Posts = List<Map<string, Metadata | Words>>;
