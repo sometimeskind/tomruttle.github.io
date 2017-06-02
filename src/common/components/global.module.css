@@ -9,12 +9,6 @@
   overflow: hidden;
 }
 
-.clear-fix::after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
 .pure-g div,
 .pure-g section,
 .pure-g aside {
