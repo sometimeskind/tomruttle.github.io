@@ -29,9 +29,13 @@ class App extends Component {
   render() {
     return (
       <div className={styles.app}>
-        <Header />
-        <Main posts={this.state.posts} />
-        <Footer />
+        <div className={styles.outer}>
+          <div className={styles.inner}>
+            <Header />
+            <Main posts={this.state.posts} />
+          </div>
+          <Footer />
+        </div>
       </div>
     );
   }
