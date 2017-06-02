@@ -21,6 +21,12 @@
   padding: 0 1em;
 }
 
+@media large {
+  .container {
+    padding: 0 2em;
+  }
+}
+
 .sidebar {
   composes: pure-u-1 pure-u-md-1-4 from global;
 }

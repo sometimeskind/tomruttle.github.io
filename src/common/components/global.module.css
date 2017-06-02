@@ -1,7 +1,8 @@
-@value containerWidth: 64em;
-@value containerMinWidth: 16em;
+@value containerWidth: 80rem;
+@value containerMinWidth: 16rem;
 @value highlightColor: OrangeRed;
-@value large: screen and (min-width: 48em);
+@value large: screen and (min-width: 48rem);
+@value larger: screen and (min-width: 64rem);
 
 .hidden-text {
   text-indent: 100%;

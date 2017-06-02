@@ -1,4 +1,4 @@
-@value containerMinWidth, containerWidth, large from './global.module.css';
+@value containerMinWidth, containerWidth, large, larger from './global.module.css';
 
 .app {
   composes: pure-g from global;
@@ -13,6 +13,12 @@
 @media large {
   .app {
     font-size: 16px;
+  }
+}
+
+@media larger {
+  .app {
+    font-size: 18px;
   }
 }
 
