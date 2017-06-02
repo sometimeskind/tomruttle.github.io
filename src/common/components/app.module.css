@@ -1,13 +1,19 @@
-@value containerMinWidth, containerWidth from './global.module.css';
+@value containerMinWidth, containerWidth, large from './global.module.css';
 
 .app {
   composes: pure-g from global;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1.7em;
   color: #555;
   max-width: containerWidth;
   min-width: containerMinWidth;
   min-height: 100vh;
+}
+
+@media large {
+  .app {
+    font-size: 16px;
+  }
 }
 
 .outer {
