@@ -7,7 +7,6 @@
   "author": "Tom Ruttle <tom@tomruttle.com>",
   "license": "MIT",
   "scripts": {
-    "stylelint": "stylelint ./src/**/*.css",
     "lint": "eslint --ext .js,.jsx .",
     "typecheck": "flow check",
     "test": "jest",
@@ -17,7 +16,7 @@
     "watch": "webpack --env=dev --watch",
     "buildstats": "webpack --env=analyse",
     "dev": "http-server ./dist",
-    "precommit": "yarn lint && yarn stylelint",
+    "precommit": "yarn lint",
     "prepush": "yarn typecheck && yarn test"
   },
   "dependencies": {
