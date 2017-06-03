@@ -27,11 +27,9 @@ function logException(ex, context) {
   }
 }
 
-const css = new Set();
-
 const app = (
   <BrowserRouter>
-    <ClientWrapper css={css} children={<App {...props} />} />
+    <ClientWrapper children={<App {...props} />} />
   </BrowserRouter>
 );
 

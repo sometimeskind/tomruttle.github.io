@@ -1,7 +1,3 @@
 module.exports = {
-  extends: [
-    'stylelint-config-standard',
-    'stylelint-config-css-modules',
-  ],
-  mixins: ['composes'],
+  extends: ['stylelint-config-standard'],
 };

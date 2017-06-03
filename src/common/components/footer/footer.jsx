@@ -1,19 +1,16 @@
 // @flow
 
 import React, { PureComponent } from 'react';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
-import styles from './footer.module.css';
+import { PaddedFooter, GithubButton, TwitterButton } from './footer.styles';
 
-class Footer extends PureComponent {
+export default class Footer extends PureComponent {
   render() {
     return (
-      <footer className={styles.footer}>
-        <a href="https://twitter.com/tomruttle" className={styles['twitter-button']} target="_blank" rel="me noopener noreferrer">Twitter: @tomruttle</a>
-        <a href="https://github.com/tomruttle" className={styles['github-button']} target="_blank" rel="me noopener noreferrer">Github: @tomruttle</a>
-      </footer>
+      <PaddedFooter className="pure-u-1 pure-u-md-3-4 offset-md-1-4">
+        <TwitterButton>Twitter: @tomruttle</TwitterButton>
+        <GithubButton>Github: @tomruttle</GithubButton>
+      </PaddedFooter>
     );
   }
 }
-
-export default withStyles(styles)(Footer);

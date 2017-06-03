@@ -1,23 +1,16 @@
 // @flow
 
-import pureStyles from 'purecss/build/pure.css';
-import pureGrids from 'purecss/build/grids-responsive.css';
-
 import React, { Component } from 'react';
 import { fromJS } from 'immutable';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
-
-import pureOffsets from '../../../assets/css/offsets.css';
 
 import Header from './header/header';
 import Main from './main/main';
 import Footer from './footer/footer';
 
 import type { Post, Posts } from '../types';
+import { Outer, Inner, Wrapper, baseStyles } from './app.styles';
 
-import styles from './app.module.css';
-
-class App extends Component {
+export default class App extends Component {
   props: {
     posts: Array<Post>,
   }
@@ -27,18 +20,18 @@ class App extends Component {
   }
 
   render() {
+    baseStyles();
+
     return (
-      <div className={styles.app}>
-        <div className={styles.outer}>
-          <div className={styles.inner}>
+      <Wrapper className="pure-g">
+        <Outer>
+          <Inner>
             <Header />
             <Main posts={this.state.posts} />
-          </div>
+          </Inner>
           <Footer />
-        </div>
-      </div>
+        </Outer>
+      </Wrapper>
     );
   }
 }
-
-export default withStyles(styles, pureStyles, pureGrids, pureOffsets)(App);
