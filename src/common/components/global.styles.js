@@ -1,3 +1,5 @@
+// @flow
+
 import styled, { injectGlobal } from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
@@ -11,18 +13,18 @@ export const highlightColor = 'OrangeRed';
 export const activeClassName = 'list-link-selected';
 
 export const media = {
-  large(styles) {
+  large(styles: Array<string>) {
     return `
       @media screen and (min-width: 48rem) {
-        ${styles}
+        ${styles.join('\n')}
       }
     `;
   },
 
-  larger(styles) {
+  larger(styles: Array<string>) {
     return `
       @media screen and (min-width: 64rem){
-        ${styles}
+        ${styles.join('\n')}
       }
     `;
   },

@@ -1,8 +1,10 @@
+// @flow
+
 import styled from 'styled-components';
 
 import { ListItem, media } from '../global.styles';
 
-export { List, ListLink, ListLinkSelected, activeClassName } from '../global.styles';
+export { List, ListLink, activeClassName } from '../global.styles';
 
 export const ListItemSidebar = styled(ListItem)`
   padding: 0.5em 0;
