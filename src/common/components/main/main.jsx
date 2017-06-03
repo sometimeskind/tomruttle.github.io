@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-// import { CSSTransitionGroup } from 'react-transition-group';
 import Swipeable from 'react-swipeable';
 
 import type { Posts } from '../../types';
@@ -12,7 +11,7 @@ import Words from '../content/words';
 import WordsMenu from '../sidebar/words-menu';
 import NotFound from '../content/not-found';
 
-import { Wrapper, Container } from './main.styles';
+import { Wrapper, Container, TransitionAnimation } from './main.styles';
 
 function swiped(history) {
   return (e, deltaX, deltaY, isFlick) => {
@@ -40,17 +39,13 @@ export default function Main({ posts }: { posts: Posts }) {
           <Route
             render={({ location, history }) => (
               <Swipeable onSwiped={swiped(history)}>
-                {/* <CSSTransitionGroup
-                  transitionName={styles}
-                  transitionEnterTimeout={200}
-                  transitionLeaveTimeout={100}
-                > */}
-                <Switch location={location} key={location.key}>
-                  <Route exact path="/" component={Home} />
-                  <Route path="/words/:path?" render={() => <Words posts={posts} />} />
-                  <Route component={NotFound} />
-                </Switch>
-                {/* </CSSTransitionGroup> */}
+                <TransitionAnimation>
+                  <Switch location={location} key={location.key}>
+                    <Route exact path="/" component={Home} />
+                    <Route path="/words/:path?" render={() => <Words posts={posts} />} />
+                    <Route component={NotFound} />
+                  </Switch>
+                </TransitionAnimation>
               </Swipeable>
             )}
           />

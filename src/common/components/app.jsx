@@ -8,7 +8,7 @@ import Main from './main/main';
 import Footer from './footer/footer';
 
 import type { Post, Posts } from '../types';
-import { Outer, Inner, Wrapper, baseStyles } from './app.styles';
+import { Wrapper, Outer, Inner, baseStyles } from './app.styles';
 
 export default class App extends Component {
   props: {

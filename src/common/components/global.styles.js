@@ -11,18 +11,18 @@ export const highlightColor = 'OrangeRed';
 export const activeClassName = 'list-link-selected';
 
 export const media = {
-  large(...args) {
-    return styled.css`
+  large(styles) {
+    return `
       @media screen and (min-width: 48rem) {
-        ${styled.css(...args)}
+        ${styles}
       }
     `;
   },
 
-  larger(...args) {
-    return styled.css`
+  larger(styles) {
+    return `
       @media screen and (min-width: 64rem){
-        ${styled.css(...args)}
+        ${styles}
       }
     `;
   },
