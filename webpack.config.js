@@ -26,7 +26,7 @@ module.exports = (env) => {
     }),
     new WorkboxPlugin({
       globDirectory: 'dist',
-      staticFileGlobs: ['**/*.{html,js,svg,jpeg,png}'],
+      globPatterns: ['**/*.{html,js,svg,jpeg,png}'],
       globIgnores: ['server*.js'],
       swDest: path.join(__dirname, 'dist', 'sw.js'),
     }),

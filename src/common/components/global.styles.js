@@ -36,23 +36,6 @@ export const hiddenText = `
   overflow: hidden;
 `;
 
-const SocialButton = styled.a.attrs({ target: '_blank', rel: 'me noopener noreferrer' })`
-  ${hiddenText}
-
-  width: 2em;
-  height: 2em;
-  display: inline-block;
-  margin-left: 1em;
-`;
-
-export const TwitterButton = styled(SocialButton).attrs({ href: 'https://twitter.com/tomruttle' })`
-  background: transparent url('/images/twitter.405a3.svg') no-repeat 0 0;
-`;
-
-export const GithubButton = styled(SocialButton).attrs({ href: 'https://github.com/tomruttle' })`
-  background: transparent url('/images/github.f1d11.svg') no-repeat 0 0;
-`;
-
 export const List = styled.ul`
   list-style: none;
   margin: 0;
