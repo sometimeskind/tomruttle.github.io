@@ -1,27 +1,31 @@
 // @flow
 
-export type FileNameType = string;
-export type FileTitleType = string;
-export type WordsType = string;
+import type { List, Map } from 'immutable';
 
-export type MetadataType = {
-  fileName: FileNameType,
+type FileName = string;
+type FileTitle = string;
+type Words = string;
+
+export type Metadata = {
+  fileName: FileName,
   date: string,
-  title: FileTitleType,
+  title: FileTitle,
   path: string,
 };
 
-export type PostType = {
-  metadata: MetadataType,
-  words: WordsType,
+export type Post = {
+  metadata: Metadata,
+  words: Words,
 }
 
-export type ImportPostType = {
-  fileName: FileNameType,
-  words: WordsType,
+export type ImportPost = {
+  fileName: FileName,
+  words: Words,
 };
 
-export type AppPropsType = {
-  posts: Array<PostType>,
+export type AppProps = {
+  posts: Array<Post>,
   buildHash: string,
 };
+
+export type Posts = List<Map<string, Metadata | Words>>;

@@ -1,119 +1,52 @@
+// Some of this comes from https://medium.com/webpack/predictable-long-term-caching-with-webpack-d3eee1d3fa31
+
 const webpack = require('webpack');
 const path = require('path');
-const autoprefixer = require('autoprefixer');
-const precss = require('precss');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-const cssImport = require('postcss-import');
-const glob = require('glob-all');
-const PurifyCSSPlugin = require('purifycss-webpack');
-const merge = require('webpack-merge');
 const StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin');
 const WorkboxPlugin = require('workbox-webpack-plugin');
-
-const SUPPORTED_BROWSERS = ['last 2 versions', 'ie 9', 'ie 10'];
-
-const sharedConfig = {
-  output: {
-    path: path.resolve(__dirname, 'dist'),
-    libraryTarget: 'umd',
-  },
-
-  resolve: {
-    extensions: ['.js', '.jsx', '.md'],
-  },
-
-  module: {
-    rules: [
-      {
-        test: /\.md$/,
-        use: [
-          {
-            loader: 'html-loader',
-            options: {
-              removeComments: false,
-              collapseWhitespace: false,
-            },
-          },
-          {
-            loader: 'markdown-loader',
-            options: {},
-          },
-        ],
-      },
-      {
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        loader: 'babel-loader',
-        options: {
-          presets: [
-            ['env', { loose: true, modules: false, targets: { browsers: SUPPORTED_BROWSERS } }],
-            'react',
-          ],
-          plugins: ['transform-object-rest-spread', 'transform-class-properties'],
-        },
-      },
-    ],
-  },
-};
-
-const getServerPlugins = (filenames) => [
-  new StaticSiteGeneratorPlugin({
-    crawl: true,
-    entry: 'server',
-    locals: filenames ? { filenames } : {},
-  }),
-  new WorkboxPlugin({
-    globDirectory: 'dist',
-    staticFileGlobs: ['**/*.{html,js,css,svg,jpeg,png}'],
-    globIgnores: ['server*.js'],
-    swDest: path.join(__dirname, 'dist', 'sw.js'),
-  }),
-];
+const pkg = require('./package.json');
+const NameAllModulesPlugin = require('name-all-modules-plugin');
 
 module.exports = (env) => {
   const plugins = [
     new CleanWebpackPlugin(['dist']),
-    new ExtractTextPlugin(env === 'dev' ? 'main.css' : 'main.[contenthash].css'),
-    new PurifyCSSPlugin({
-      minimize: true,
-      paths: glob.sync([
-        path.join(__dirname, 'src', 'server', 'page-container.js'),
-        path.join(__dirname, 'src', 'common', 'components', '*.jsx'),
-        path.join(__dirname, 'src', 'client', 'components', '*.jsx'),
-      ]),
+
+    // Reinstate these chunks when static-site-generator PRs are merged.
+    // new webpack.optimize.CommonsChunkPlugin({
+    //   name: 'vendor',
+    //   minChunks(module) { return module.context && module.context.indexOf('node_modules') !== -1; },
+    // }),
+    // new webpack.optimize.CommonsChunkPlugin({ name: 'manifest' }),
+
+    new StaticSiteGeneratorPlugin({
+      crawl: true,
+      entry: 'server',
+    }),
+    new WorkboxPlugin({
+      globDirectory: 'dist',
+      staticFileGlobs: ['**/*.{html,js,svg,jpeg,png}'],
+      globIgnores: ['server*.js'],
+      swDest: path.join(__dirname, 'dist', 'sw.js'),
     }),
   ];
 
-  const buildPlugins = [
-    new webpack.LoaderOptionsPlugin({ minimize: true, debug: false }),
-    new webpack.DefinePlugin({ 'process.env': { NODE_ENV: JSON.stringify('production') } }),
-    new webpack.optimize.UglifyJsPlugin({
-      beautify: false,
-      mangle: { screw_ie8: true, keep_fnames: true },
-      compress: { screw_ie8: true },
-      comments: false,
-    }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      minChunks(module) {
-        return module.context && module.context.indexOf('node_modules') !== -1;
-      },
-    }),
-  ];
-
-  if (env === 'build') {
-    plugins.push(...buildPlugins);
-  } else {
-    if (env === 'analyse') {
-      plugins.push(new BundleAnalyzerPlugin());
-    }
-
-    plugins.push(...getServerPlugins());
+  if (env !== 'dev') {
+    plugins.push(...[
+      new webpack.LoaderOptionsPlugin({ minimize: true, debug: false }),
+      new webpack.DefinePlugin({ 'process.env': { NODE_ENV: JSON.stringify('production') } }),
+      new webpack.NamedModulesPlugin(),
+      new webpack.NamedChunksPlugin((chunk) => (chunk.name ? chunk.name : chunk.modules.map((m) => path.relative(m.context, m.request)).join('-'))),
+      new NameAllModulesPlugin(),
+    ]);
   }
 
-  return merge.smart(sharedConfig, {
+  if (env === 'analyse') {
+    plugins.push(new BundleAnalyzerPlugin());
+  }
+
+  return {
     entry: {
       server: './src/server/index.js',
       main: ['babel-polyfill', './src/client/index.js'],
@@ -121,13 +54,15 @@ module.exports = (env) => {
 
     output: {
       filename: env === 'dev' ? '[name].js' : '[name].[chunkhash].js',
+      path: path.resolve(__dirname, 'dist'),
+      libraryTarget: 'umd',
+    },
+
+    resolve: {
+      extensions: ['.js', '.jsx', '.md', '.css'],
     },
 
     devtool: env === 'dev' ? 'inline-source-map' : false,
-
-    resolve: {
-      extensions: ['.css'],
-    },
 
     module: {
       rules: [
@@ -151,26 +86,39 @@ module.exports = (env) => {
         },
         {
           test: /\.css$/,
-          use: ExtractTextPlugin.extract({
-            use: [
-              { loader: 'css-loader', options: { sourceMap: true, importLoaders: 1 } },
-              {
-                loader: 'postcss-loader',
-                options: {
-                  sourceMap: true,
-                  plugins() { return [cssImport, precss, autoprefixer({ browsers: SUPPORTED_BROWSERS })]; },
-                },
+          use: 'css-loader',
+        },
+        {
+          test: /\.md$/,
+          use: [
+            {
+              loader: 'html-loader',
+              options: {
+                removeComments: false,
+                collapseWhitespace: false,
               },
+            },
+            {
+              loader: 'markdown-loader',
+              options: {},
+            },
+          ],
+        },
+        {
+          test: /\.jsx?$/,
+          exclude: /node_modules/,
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              ['env', { loose: true, modules: false, targets: { browsers: pkg['supported-browsers'] } }],
+              'react',
             ],
-            fallback: 'style-loader',
-          }),
+            plugins: ['transform-object-rest-spread', 'transform-class-properties'],
+          },
         },
       ],
     },
 
     plugins,
-  });
+  };
 };
-
-module.exports.sharedConfig = sharedConfig;
-module.exports.getServerPlugins = getServerPlugins;

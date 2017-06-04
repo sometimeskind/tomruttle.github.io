@@ -1,43 +1,37 @@
 // @flow
 
 import React, { Component } from 'react';
-import { ReactHeight } from 'react-height';
+import { fromJS } from 'immutable';
 
-import Header from './header';
-import Main from './main';
-import Footer from './footer';
+import Header from './header/header';
+import Main from './main/main';
+import Footer from './footer/footer';
 
-import type { PostType } from '../types';
+import type { Post, Posts } from '../types';
+import { Wrapper, Outer, Inner, baseStyles } from './app.styles';
 
-class App extends Component {
-  props: { posts: Array<PostType> }
-
-  constructor(...args: Array<Object>) {
-    super(...args);
-    (this: any).setHeight = this.setHeight.bind(this);
+export default class App extends Component {
+  props: {
+    posts: Array<Post>,
   }
 
-  state = {
-    height: 0,
-  }
-
-  setHeight(height: number) {
-    this.setState(() => ({ height }));
+  state: { posts: Posts } = {
+    posts: fromJS(this.props.posts),
   }
 
   render() {
+    baseStyles();
+
     return (
-      <div className="pure-g container">
-        <Header />
-        <div className="main pure-u-1" style={this.state.height ? { height: this.state.height } : {}}>
-          <ReactHeight className="clear-fix" onHeightReady={this.setHeight}>
-            <Main posts={this.props.posts} />
-          </ReactHeight>
-        </div>
-        <Footer />
-      </div>
+      <Wrapper className="pure-g">
+        <Outer>
+          <Inner>
+            <Header />
+            <Main posts={this.state.posts} />
+          </Inner>
+          <Footer />
+        </Outer>
+      </Wrapper>
     );
   }
 }
-
-export default App;

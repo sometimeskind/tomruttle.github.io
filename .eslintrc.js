@@ -7,6 +7,7 @@ module.exports = {
     'import/prefer-default-export': 0,
     'arrow-parens': 0,
     'max-len': 0,
+    'no-underscore-dangle': 0,
     'react/sort-comp': 0,
     'react/prefer-stateless-function': 0,
     'comma-dangle': ['error', {

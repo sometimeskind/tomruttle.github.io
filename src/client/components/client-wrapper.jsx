@@ -4,15 +4,9 @@ import { Component } from 'react';
 
 import type { Element } from 'react';
 
-type ScrollToTopProps = {
-  children: Element<*>,
-};
-
-export default class ScrollToTop extends Component {
-  props: ScrollToTopProps
-
-  static defaultProps = {
-    location: '',
+export default class ClientWrapper extends Component {
+  props: {
+    children: Element<*>,
   }
 
   componentDidUpdate() {

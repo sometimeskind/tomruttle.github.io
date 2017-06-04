@@ -4,21 +4,31 @@ import serialize from 'serialize-javascript';
 
 import { APP_CONTAINER, APP_STATE_PROP } from '../common/constants';
 
-import type { AppPropsType } from '../common/types';
-
-export type assetsType = {
-  mainJS: string,
-  mainCSS: string,
-  vendorJS: ?string,
-}
+import type { AppProps } from '../common/types';
 
 const description = 'A homepage for Tom Ruttle';
 const title = 'HELLO';
 
-export default ({ props, appMarkup, assets, path }: { props: AppPropsType, appMarkup: string, assets: assetsType, path: string }) => `
+const article = `
+  <meta property="og:type" content="article" />
+  <meta property="article:author" content="https://www.twitter.com/tomruttle">
+`;
+
+const website = `
+  <meta property="og:type" content="website" />
+`;
+
+const sentry = `
+  <script src="https://cdn.ravenjs.com/3.15.0/raven.min.js" crossorigin="anonymous"></script>
+  <script type="text/javascript">
+    window.Raven.config('https://6d7076eb61934dac9021766cafb4d1d1@sentry.io/171507').install();
+  </script>
+`;
+
+export default ({ props, appMarkup, assets, path, styles, noClient }: { noClient: boolean, props: AppProps, appMarkup: string, assets: { [chunkName: string]: string }, path: string, styles: string }) => `
   <!DOCTYPE html>
   <html lang="en">
-    <head>
+      <head prefix="og: http://ogp.me/ns#${path.includes('/words/') ? ' article: http://ogp.me/ns/article#' : ''}">
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta name="description" content="${description}" />
@@ -27,7 +37,8 @@ export default ({ props, appMarkup, assets, path }: { props: AppPropsType, appMa
       <meta name="twitter:site" content="@tomruttle" />
       <meta name="twitter:creator" content="@tomruttle" />
 
-      <meta property="og:type" content="website" />
+      ${path.includes('/words/') ? article : website}
+
       <meta property="og:url" content="https://www.tomruttle.com${path}" />
       <meta property="og:title" content="${title}" />
       <meta property="og:description" content="${description}" />
@@ -37,16 +48,18 @@ export default ({ props, appMarkup, assets, path }: { props: AppPropsType, appMa
 
       <link rel="icon" type="image/png" href="/images/monster-icon.d119b2.png" />
       <link rel="manifest" href="/manifest.json">
-      <link rel="stylesheet" type="text/css" href="/${assets.mainCSS}">
+      <style type="text/css">${styles}</style>
     </head>
     <body>
       <div id="${APP_CONTAINER}">${appMarkup}</div>
+
+      ${process.env.NODE_ENV === 'production' ? sentry : ''}
+
       <script type="text/javascript">
         window["${APP_STATE_PROP}"]=${serialize(props, { json: true })}
       </script>
 
-      ${assets.vendorJS ? `<script src="/${assets.vendorJS}"></script>` : ''}
-      <script async src="/${assets.mainJS}"></script>
+      ${noClient ? '' : `<script async src="/${assets.main}"></script>`}
 
       <script>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

@@ -1,8 +1,15 @@
 [ignore]
 .*node_modules/stylelint/.*
+.*node_modules/styled-components/.*
 
 [include]
+node_modules/
+flow-typed/
 
 [libs]
 
 [options]
+module.file_ext=.js
+module.file_ext=.jsx
+module.file_ext=.md
+module.file_ext=.css

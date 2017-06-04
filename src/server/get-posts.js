@@ -5,13 +5,13 @@ import path from 'path';
 
 import { MARKDOWN_EXTENSION } from './constants';
 
-import type { ImportPostType, MetadataType, PostType } from '../common/types';
+import type { ImportPost, Metadata, Post } from '../common/types';
 
 const OPEN_METADATA = '<!--';
 const CLOSE_METADATA = '-->';
 
-export function parseMetadata({ fileName, words: raw }: ImportPostType): PostType {
-  let parsedMetadata: MetadataType | {} = {};
+export function parseMetadata({ fileName, words: raw }: ImportPost): Post {
+  let parsedMetadata: Metadata | {} = {};
   let words = raw.trim();
 
   if (words.startsWith(OPEN_METADATA)) {
@@ -34,12 +34,12 @@ export function parseMetadata({ fileName, words: raw }: ImportPostType): PostTyp
     path: encodeURIComponent(fileTitle.toLowerCase()),
   };
 
-  const metadata: MetadataType = { ...defaultMetadata, ...parsedMetadata };
+  const metadata: Metadata = { ...defaultMetadata, ...parsedMetadata };
 
   return { words, metadata: { ...metadata, date: new Date(metadata.date).toUTCString() } };
 }
 
-export default (posts: Array<ImportPostType>) => posts
+export default (posts: Array<ImportPost>) => posts
   .filter(({ fileName }) => typeof fileName === 'string')
   .map((post) => parseMetadata(post))
   .sort((a, b) => new Date(b.metadata.date).getTime() - new Date(a.metadata.date).getTime());

@@ -3,6 +3,7 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router';
+import { ServerStyleSheet } from 'styled-components';
 
 import postArray from './require-posts';
 import getPosts from './get-posts';
@@ -10,29 +11,28 @@ import pageContainer from './page-container';
 
 import App from '../common/components/app';
 
-import type { AppPropsType } from '../common/types';
+import type { AppProps, Post } from '../common/types';
 
-const posts = getPosts(postArray);
+const posts: Array<Post> = getPosts(postArray);
 
-export default function render(locals: { path: string, filenames?: Array<string>, webpackStats: { hash: string, compilation: { assets: { [filename: string]: string } } } }) {
+function getMarkup({ location, props, assets, noClient }) {
+  const sheet = new ServerStyleSheet();
   const context = {};
+  const appMarkup = renderToString(sheet.collectStyles(
+    <StaticRouter location={location} context={context}>
+      <App {...props} />
+    </StaticRouter>
+  ));
 
-  const props: AppPropsType = { posts, buildHash: locals.webpackStats.hash };
+  return pageContainer({ props, appMarkup, assets, path: location, styles: sheet.getStyleTags(), noClient });
+}
 
-  const appMarkup = renderToString(
-    <StaticRouter
-      location={locals.path}
-      context={context}
-    ><App {...props} /></StaticRouter>
-  );
+export default function render(locals: { path: string, webpackStats: { hash: string }, assets: { [chunkName: string]: string } }) {
+  const buildHash = locals.webpackStats.hash;
+  const props: AppProps = { posts, buildHash };
 
-  const filenames = locals.filenames || Object.keys(locals.webpackStats.compilation.assets);
-
-  const assets = {
-    vendorJS: filenames.find((asset) => asset.startsWith('vendor.') && asset.endsWith('.js')) || null,
-    mainJS: filenames.find((asset) => asset.startsWith('main.') && asset.endsWith('.js')) || 'main.js',
-    mainCSS: filenames.find((asset) => asset.startsWith('main.') && asset.endsWith('.css')) || 'main.css',
+  return {
+    [locals.path]: getMarkup({ location: locals.path, props, assets: locals.assets, noClient: false }),
+    '/404.html': getMarkup({ location: 'not-found', props, assets: locals.assets, noClient: true }),
   };
-
-  return pageContainer({ props, appMarkup, assets, path: locals.path });
 }
