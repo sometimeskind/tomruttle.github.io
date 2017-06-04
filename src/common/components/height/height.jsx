@@ -2,13 +2,10 @@
 
 import React, { Component } from 'react';
 import { ReactHeight } from 'react-height';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 import type { Element } from 'react';
 
-import styles from './height.module.css';
-
-class App extends Component {
+export default class Height extends Component {
   props: {
     children: Element<*>,
   }
@@ -28,7 +25,7 @@ class App extends Component {
 
   render() {
     return (
-      <div className={styles.height} style={this.state.height ? { height: this.state.height } : {}}>
+      <div className="pure-u-1" style={this.state.height ? { height: this.state.height } : {}}>
         <ReactHeight onHeightReady={this.setHeight}>
           {this.props.children}
         </ReactHeight>
@@ -36,5 +33,3 @@ class App extends Component {
     );
   }
 }
-
-export default withStyles(styles)(App);

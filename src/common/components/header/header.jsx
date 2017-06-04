@@ -2,24 +2,19 @@
 
 import React from 'react';
 
-import { NavLink, Link } from 'react-router-dom';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import { PaddedHeader, TitleLink, HeaderList, HeaderListItem, HeaderListLink, activeClassName } from './header.styles';
 
-import styles from './header.module.css';
-
-function Header() {
+export default function Header() {
   return (
-    <header className={styles.header}>
-      <h2><Link className={styles['title-link']} to="/">HELLO</Link></h2>
+    <PaddedHeader className="pure-u-1 pure-u-md-3-4 offset-md-1-4">
+      <h2><TitleLink to="/">HELLO</TitleLink></h2>
 
       <nav>
-        <ul className={styles.list}>
-          <li className={styles['list-item']}><NavLink className={styles['list-link']} activeClassName={styles['list-link-selected']} to="/" exact>Home</NavLink></li>
-          <li className={styles['list-item']}><NavLink className={styles['list-link']} activeClassName={styles['list-link-selected']} to="/words/">Words</NavLink></li>
-        </ul>
+        <HeaderList>
+          <HeaderListItem><HeaderListLink activeClassName={activeClassName} to="/" exact>Home</HeaderListLink></HeaderListItem>
+          <HeaderListItem><HeaderListLink activeClassName={activeClassName} to="/words/">Words</HeaderListLink></HeaderListItem>
+        </HeaderList>
       </nav>
-    </header>
+    </PaddedHeader>
   );
 }
-
-export default withStyles(styles)(Header);

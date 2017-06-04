@@ -2,8 +2,6 @@
 
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import { CSSTransitionGroup } from 'react-transition-group';
 import Swipeable from 'react-swipeable';
 
 import type { Posts } from '../../types';
@@ -13,7 +11,7 @@ import Words from '../content/words';
 import WordsMenu from '../sidebar/words-menu';
 import NotFound from '../content/not-found';
 
-import styles from './main.module.css';
+import { Wrapper, Container, TransitionAnimation } from './main.styles';
 
 function swiped(history) {
   return (e, deltaX, deltaY, isFlick) => {
@@ -33,38 +31,32 @@ function swiped(history) {
   };
 }
 
-function Main({ posts }: { posts: Posts }) {
+export default function Main({ posts }: { posts: Posts }) {
   return (
-    <div className={styles.main}>
-      <section className={styles.content}>
-        <div className={styles.container}>
+    <Wrapper className="pure-u-1">
+      <section className="pure-u-1 pure-u-md-3-4">
+        <Container>
           <Route
             render={({ location, history }) => (
               <Swipeable onSwiped={swiped(history)}>
-                <CSSTransitionGroup
-                  transitionName={styles}
-                  transitionEnterTimeout={200}
-                  transitionLeaveTimeout={100}
-                >
+                <TransitionAnimation>
                   <Switch location={location} key={location.key}>
                     <Route exact path="/" component={Home} />
                     <Route path="/words/:path?" render={() => <Words posts={posts} />} />
                     <Route component={NotFound} />
                   </Switch>
-                </CSSTransitionGroup>
+                </TransitionAnimation>
               </Swipeable>
             )}
           />
-        </div>
+        </Container>
       </section>
 
-      <aside className={styles.sidebar}>
+      <aside className="pure-u-1 pure-u-md-1-4">
         <Switch>
           <Route path="/words/:path?" render={() => <WordsMenu posts={posts} />} />
         </Switch>
       </aside>
-    </div>
+    </Wrapper>
   );
 }
-
-export default withStyles(styles)(Main);

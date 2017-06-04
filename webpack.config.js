@@ -10,20 +10,6 @@ const pkg = require('./package.json');
 const NameAllModulesPlugin = require('name-all-modules-plugin');
 
 module.exports = (env) => {
-  const getExtractTextLoader = (modules = false) => [
-    'isomorphic-style-loader',
-    {
-      loader: 'css-loader',
-      options: {
-        modules,
-        minimize: env !== 'dev',
-        importLoaders: 1,
-        localIdentName: '[name]__[local]--[hash:base64:5]',
-      },
-    },
-    'postcss-loader',
-  ];
-
   const plugins = [
     new CleanWebpackPlugin(['dist']),
 
@@ -100,12 +86,7 @@ module.exports = (env) => {
         },
         {
           test: /\.css$/,
-          exclude: /\.module.css$/,
-          use: getExtractTextLoader(false),
-        },
-        {
-          test: /\.module.css$/,
-          use: getExtractTextLoader(true),
+          use: 'css-loader',
         },
         {
           test: /\.md$/,
