@@ -17,13 +17,15 @@ export default function Header({ routes }: { routes: SiteRoutes }) {
       <nav>
         <HeaderList>
           {links.map((link) => {
-            const path = pathToRegexp.parse(link.get('path'))[0];
+            const path = link.get('path');
+            const absolutePath = pathToRegexp.parse(path)[0];
 
             return (
               <HeaderListItem key={`header-${link.get('key')}`}>
                 <HeaderListLink
+                  exact={path === absolutePath}
                   activeClassName={activeClassName}
-                  to={`${path}${path.endsWith('/') ? '' : '/'}`}
+                  to={`${absolutePath}${absolutePath.endsWith('/') ? '' : '/'}`}
                 >{link.get('title')}</HeaderListLink>
               </HeaderListItem>
             );

@@ -19,7 +19,7 @@ export default function WordsMenu({ routes }: { routes: SiteRoutes }) {
       <nav>
         <List>
           {postRoutes.map((route) => (
-            <ListItemSidebar key={`words-menu-${route.get('path')}`}>
+            <ListItemSidebar key={`words-menu-${route.get('key')}`}>
               <ListLink activeClassName={activeClassName} to={route.get('path')}>{route.get('title')}</ListLink>
             </ListItemSidebar>
           ))}
