@@ -4,12 +4,9 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Swipeable from 'react-swipeable';
 
-import type { Posts, SetPageTitle } from '../../types';
+import type { SiteRoutes, SiteRoute } from '../../types';
 
-import Home from '../content/home';
-import Words from '../content/words';
 import WordsMenu from '../sidebar/words-menu';
-import NotFound from '../content/not-found';
 
 import { Wrapper, Container, TransitionAnimation } from './main.styles';
 
@@ -31,7 +28,9 @@ function swiped(history) {
   };
 }
 
-export default function Main({ posts, setPageTitle }: { posts: Posts, setPageTitle: SetPageTitle }) {
+export default function Main({ routes }: { routes: SiteRoutes }) {
+  const wordsRoute: SiteRoute = routes.filter((route) => route.get('key') === 'words').get(0);
+
   return (
     <Wrapper className="pure-u-1">
       <section className="pure-u-1 pure-u-md-3-4">
@@ -41,26 +40,7 @@ export default function Main({ posts, setPageTitle }: { posts: Posts, setPageTit
               <Swipeable onSwiped={swiped(history)}>
                 <TransitionAnimation>
                   <Switch location={location} key={location.key}>
-                    <Route
-                      exact
-                      path="/"
-                      render={() => {
-                        setPageTitle(Home.pageTitle);
-                        return <Home />;
-                      }}
-                    />
-
-                    <Route
-                      path="/words/:path?"
-                      render={() => <Words posts={posts} setPageTitle={setPageTitle} />}
-                    />
-
-                    <Route
-                      render={() => {
-                        setPageTitle(NotFound.pageTitle);
-                        return <NotFound />;
-                      }}
-                    />
+                    {routes.map((route) => <Route key={`main-${route.get('key')}`} {...route.toJS()} />)}
                   </Switch>
                 </TransitionAnimation>
               </Swipeable>
@@ -71,7 +51,7 @@ export default function Main({ posts, setPageTitle }: { posts: Posts, setPageTit
 
       <aside className="pure-u-1 pure-u-md-1-4">
         <Switch>
-          <Route path="/words/:path?" render={() => <WordsMenu posts={posts} />} />
+          <Route path={wordsRoute.get('path')} render={() => <WordsMenu routes={wordsRoute.get('routes')} />} />
         </Switch>
       </aside>
     </Wrapper>

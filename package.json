@@ -53,6 +53,7 @@
     "js-yaml": "^3.8.4",
     "markdown-loader": "^2.0.0",
     "name-all-modules-plugin": "^1.0.1",
+    "path-to-regexp": "^1.7.0",
     "postcss-custom-media": "^6.0.0",
     "postcss-import": "^10.0.0",
     "postcss-loader": "^2.0.5",
