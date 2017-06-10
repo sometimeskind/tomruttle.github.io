@@ -21,6 +21,7 @@ export default function getRoutes({ posts, setPageTitle }) {
     })),
     {
       key: 'intro',
+      path: '/words/',
       render() {
         setPageTitle('Words');
         return <DangerousSection content={wordsIntro} />;

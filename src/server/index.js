@@ -9,6 +9,7 @@ import postArray from './require-posts';
 import getPosts from './get-posts';
 import pageContainer from './page-container';
 
+import getRoutes from '../common/routes';
 import App from '../common/components/app';
 
 import type { AppProps, Post } from '../common/types';
@@ -36,6 +37,20 @@ function getMarkup({ location, props, assets, noClient }) {
   return pageContainer({ props, appMarkup, assets, path: location, styles: sheet.getStyleTags(), noClient, pageTitle });
 }
 
+function generateSiteMap() {
+  const thing = getRoutes({ posts, setPageTitle: () => {} });
+
+  function getPaths(routes) {
+    return routes.reduce((paths, route) => {
+      const subRoutes = route.get('routes');
+      const newPaths = subRoutes ? getPaths(subRoutes) : route.get('path');
+      return paths.concat(newPaths);
+    }, []);
+  }
+
+  return getPaths(thing).filter(Boolean).join('\n');
+}
+
 export default function render(locals: { path: string, webpackStats: { hash: string }, assets: { [chunkName: string]: string } }) {
   const buildHash = locals.webpackStats.hash;
   const props: AppProps = { posts, buildHash };
@@ -43,5 +58,6 @@ export default function render(locals: { path: string, webpackStats: { hash: str
   return {
     [locals.path]: getMarkup({ location: locals.path, props, assets: locals.assets, noClient: false }),
     '/404.html': getMarkup({ location: 'not-found', props, assets: locals.assets, noClient: true }),
+    '/sitemap.html': generateSiteMap(),
   };
 }
