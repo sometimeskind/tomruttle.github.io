@@ -12,7 +12,7 @@
     "test": "jest",
     "coverage": "jest --coverage",
     "ci": "yarn coverage && codacy-coverage < ./coverage/lcov.info",
-    "build": "webpack --env=prod -p && rm dist/server*.js",
+    "build": "webpack --env=prod -p && rm dist/server*.js && mv dist/sitemap.html dist/sitemap.txt",
     "watch": "webpack --env=dev --watch",
     "buildstats": "webpack --env=analyse",
     "dev": "http-server ./dist",

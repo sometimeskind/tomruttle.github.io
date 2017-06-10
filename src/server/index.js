@@ -42,13 +42,17 @@ function generateSiteMap() {
 
   function getPaths(routes) {
     return routes.reduce((paths, route) => {
+      const path = route.get('path');
       const subRoutes = route.get('routes');
-      const newPaths = subRoutes ? getPaths(subRoutes) : route.get('path');
+      const newPaths = subRoutes ? getPaths(subRoutes) : path;
       return paths.concat(newPaths);
     }, []);
   }
 
-  return getPaths(thing).filter(Boolean).join('\n');
+  return getPaths(thing)
+    .filter(Boolean)
+    .map((path) => `https://www.tomruttle.com${path}`)
+    .join('\n');
 }
 
 export default function render(locals: { path: string, webpackStats: { hash: string }, assets: { [chunkName: string]: string } }) {
