@@ -6,6 +6,8 @@ import wordsIntro from '../../pages/words-intro.md';
 import page from '../../pages/home.md';
 import notFoundText from '../../pages/not-found.md';
 
+import { routeKeys } from './constants';
+
 import DangerousSection from './components/dangerous-section';
 
 export default function getRoutes({ posts, setPageTitle }) {
@@ -20,7 +22,7 @@ export default function getRoutes({ posts, setPageTitle }) {
       },
     })),
     {
-      key: 'intro',
+      key: routeKeys.WORDS_INTRO,
       path: '/words/',
       render() {
         setPageTitle('Words');
@@ -31,7 +33,7 @@ export default function getRoutes({ posts, setPageTitle }) {
 
   return fromJS([
     {
-      key: 'home',
+      key: routeKeys.HOME,
       exact: true,
       path: '/',
       title: 'Home',
@@ -41,7 +43,7 @@ export default function getRoutes({ posts, setPageTitle }) {
       },
     },
     {
-      key: 'words',
+      key: routeKeys.WORDS,
       path: '/words/:path?',
       title: 'Words',
       render() {
@@ -54,7 +56,7 @@ export default function getRoutes({ posts, setPageTitle }) {
       routes: wordsRoutes,
     },
     {
-      key: 'not-found',
+      key: routeKeys.NOT_FOUND,
       render() {
         setPageTitle('Page Not Found. :(');
         return <DangerousSection content={notFoundText} />;
