@@ -31,3 +31,7 @@ export type AppProps = {
 export type Posts = List<Map<string, Metadata | Words>>;
 
 export type SetPageTitle = (title: string) => void;
+
+export type SiteRoute = Map<string, *>;
+
+export type SiteRoutes = List<SiteRoute>;

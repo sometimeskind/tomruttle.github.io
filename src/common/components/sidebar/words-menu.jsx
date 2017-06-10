@@ -2,11 +2,13 @@
 
 import React from 'react';
 
-import type { Posts } from '../../types';
+import type { SiteRoutes } from '../../types';
 
 import { Sidebar, Header, List, ListLink, ListItemSidebar, activeClassName } from './sidebar.styles';
 
-export default function WordsMenu({ posts }: { posts: Posts }) {
+export default function WordsMenu({ routes }: { routes: SiteRoutes }) {
+  const postRoutes = routes.filter((route) => route.get('title'));
+
   return (
     <Sidebar>
       <Header>
@@ -16,9 +18,9 @@ export default function WordsMenu({ posts }: { posts: Posts }) {
 
       <nav>
         <List>
-          {posts.map((post) => (
-            <ListItemSidebar key={post.getIn(['metadata', 'path'])}>
-              <ListLink activeClassName={activeClassName} to={`/words/${String(post.getIn(['metadata', 'path']))}/`}>{post.getIn(['metadata', 'title'])}</ListLink>
+          {postRoutes.map((route) => (
+            <ListItemSidebar key={`words-menu-${route.get('path')}`}>
+              <ListLink activeClassName={activeClassName} to={route.get('path')}>{route.get('title')}</ListLink>
             </ListItemSidebar>
           ))}
         </List>
