@@ -7,7 +7,6 @@ import { APP_CONTAINER, APP_STATE_PROP } from '../common/constants';
 import type { AppProps } from '../common/types';
 
 const description = 'A homepage for Tom Ruttle';
-const title = 'HELLO';
 
 const article = `
   <meta property="og:type" content="article" />
@@ -25,7 +24,7 @@ const sentry = `
   </script>
 `;
 
-export default ({ props, appMarkup, assets, path, styles, noClient }: { noClient: boolean, props: AppProps, appMarkup: string, assets: { [chunkName: string]: string }, path: string, styles: string }) => `
+export default ({ props, appMarkup, assets, path, styles, noClient, pageTitle }: { pageTitle: string, noClient: boolean, props: AppProps, appMarkup: string, assets: { [chunkName: string]: string }, path: string, styles: string }) => `
   <!DOCTYPE html>
   <html lang="en">
       <head prefix="og: http://ogp.me/ns#${path.includes('/words/') ? ' article: http://ogp.me/ns/article#' : ''}">
@@ -40,11 +39,11 @@ export default ({ props, appMarkup, assets, path, styles, noClient }: { noClient
       ${path.includes('/words/') ? article : website}
 
       <meta property="og:url" content="https://www.tomruttle.com${path}" />
-      <meta property="og:title" content="${title}" />
+      <meta property="og:title" content="${pageTitle}" />
       <meta property="og:description" content="${description}" />
       <meta property="og:image" content="https://www.tomruttle.com/images/monster.b8494.jpeg" />
 
-      <title>${title}</title>
+      <title>${pageTitle} - tomruttle.com</title>
 
       <link rel="icon" type="image/png" href="/images/monster-icon.d119b2.png" />
       <link rel="manifest" href="/manifest.json">

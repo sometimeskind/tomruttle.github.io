@@ -4,7 +4,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Swipeable from 'react-swipeable';
 
-import type { Posts } from '../../types';
+import type { Posts, SetPageTitle } from '../../types';
 
 import Home from '../content/home';
 import Words from '../content/words';
@@ -31,7 +31,7 @@ function swiped(history) {
   };
 }
 
-export default function Main({ posts }: { posts: Posts }) {
+export default function Main({ posts, setPageTitle }: { posts: Posts, setPageTitle: SetPageTitle }) {
   return (
     <Wrapper className="pure-u-1">
       <section className="pure-u-1 pure-u-md-3-4">
@@ -41,9 +41,26 @@ export default function Main({ posts }: { posts: Posts }) {
               <Swipeable onSwiped={swiped(history)}>
                 <TransitionAnimation>
                   <Switch location={location} key={location.key}>
-                    <Route exact path="/" component={Home} />
-                    <Route path="/words/:path?" render={() => <Words posts={posts} />} />
-                    <Route component={NotFound} />
+                    <Route
+                      exact
+                      path="/"
+                      render={() => {
+                        setPageTitle(Home.pageTitle);
+                        return <Home />;
+                      }}
+                    />
+
+                    <Route
+                      path="/words/:path?"
+                      render={() => <Words posts={posts} setPageTitle={setPageTitle} />}
+                    />
+
+                    <Route
+                      render={() => {
+                        setPageTitle(NotFound.pageTitle);
+                        return <NotFound />;
+                      }}
+                    />
                   </Switch>
                 </TransitionAnimation>
               </Swipeable>

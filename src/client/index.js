@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
-
 import { APP_CONTAINER, APP_STATE_PROP } from '../common/constants';
 
 import App from '../common/components/app';
@@ -27,9 +26,13 @@ function logException(ex, context) {
   }
 }
 
+function setPageTitle(title) {
+  document.title = title;
+}
+
 const app = (
   <BrowserRouter>
-    <ClientWrapper children={<App {...props} />} />
+    <ClientWrapper children={<App {...props} setPageTitle={setPageTitle} />} />
   </BrowserRouter>
 );
 

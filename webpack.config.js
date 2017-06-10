@@ -6,8 +6,9 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin');
 const WorkboxPlugin = require('workbox-webpack-plugin');
-const pkg = require('./package.json');
 const NameAllModulesPlugin = require('name-all-modules-plugin');
+
+const pkg = require('./package.json');
 
 module.exports = (env) => {
   const plugins = [
