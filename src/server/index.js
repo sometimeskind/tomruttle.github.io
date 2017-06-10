@@ -14,7 +14,7 @@ import App from '../common/components/app';
 
 import type { AppProps, Post } from '../common/types';
 
-import { DEFAULT_TITLE } from './constants';
+import { DEFAULT_TITLE } from '../common/constants';
 
 const posts: Array<Post> = getPosts(postArray);
 
