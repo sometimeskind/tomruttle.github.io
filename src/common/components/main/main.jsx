@@ -8,9 +8,8 @@ import Swipeable from 'react-swipeable';
 
 import type { SiteRoutes, CurrentRoute, SiteRoute } from '../../types';
 
-import WordsMenu from '../sidebar/words-menu';
-import { getRouteFromPath, getRouteFromKey, getNewPathFromSwipe } from '../../routing-helpers';
-import { routeKeys } from '../../constants';
+import Sidebar from '../sidebar/sidebar';
+import { getRouteFromPath, getNewPathFromSwipe } from '../../routing-helpers';
 
 import { Wrapper, Container, TransitionAnimation } from './main.styles';
 
@@ -27,17 +26,15 @@ export function swiped(history: RouterHistory, routes: SiteRoutes, currentRoute:
 }
 
 export default function Main({ routes, notFoundRoute }: { routes: SiteRoutes, notFoundRoute: SiteRoute }) {
-  const wordsRoute = getRouteFromKey(routes, routeKeys.WORDS);
-
   return (
-    <Wrapper className="pure-u-1">
-      <section className="pure-u-1 pure-u-md-3-4">
-        <Container>
-          <Route
-            render={({ location, history }) => {
-              const currentRoute = getRouteFromPath(routes, location.pathname);
+    <Route
+      render={({ location, history }) => {
+        const currentRoute = getRouteFromPath(routes, location.pathname);
 
-              return (
+        return (
+          <Wrapper className="pure-u-1">
+            <section className="pure-u-1 pure-u-md-3-4">
+              <Container>
                 <Swipeable onSwiped={swiped(history, routes, currentRoute)}>
                   <TransitionAnimation>
                     <Switch location={location} key={location.key}>
@@ -46,19 +43,15 @@ export default function Main({ routes, notFoundRoute }: { routes: SiteRoutes, no
                     </Switch>
                   </TransitionAnimation>
                 </Swipeable>
-              );
-            }}
-          />
-        </Container>
-      </section>
+              </Container>
+            </section>
 
-      <aside className="pure-u-1 pure-u-md-1-4">
-        <Switch>
-          {wordsRoute ? (
-            <Route path={wordsRoute.get('path')} render={() => <WordsMenu routes={wordsRoute.get('routes')} />} />
-          ) : null}
-        </Switch>
-      </aside>
-    </Wrapper>
+            <aside className="pure-u-1 pure-u-md-1-4">
+              <Sidebar routes={routes} currentRoute={currentRoute} />
+            </aside>
+          </Wrapper>
+        );
+      }}
+    />
   );
 }

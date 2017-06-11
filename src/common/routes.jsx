@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { PureComponent } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { fromJS } from 'immutable';
 
@@ -12,7 +12,13 @@ import notFoundText from '../../pages/not-found.md';
 
 import { routeKeys } from './constants';
 
-import DangerousSection from './components/dangerous-section';
+class DangerousSection extends PureComponent {
+  props: { content: string }
+  render() {
+    /* eslint-disable react/no-danger */
+    return <section dangerouslySetInnerHTML={{ __html: this.props.content }} />;
+  }
+}
 
 export function getNotFoundRoute(setPageTitle?: SetPageTitle = () => {}): SiteRoute {
   const notFoundRoute = {
@@ -67,6 +73,7 @@ export default function getRoutes(posts: Array<Post>, setPageTitle?: SetPageTitl
           </Switch>
         );
       },
+      sidebarHeader: 'Posts List',
       routes: wordsRoutes,
     },
   ];

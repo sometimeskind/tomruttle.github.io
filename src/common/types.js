@@ -43,6 +43,7 @@ export type RouteObj = {
   path: string,
   title: string,
   routes?: Array<RouteObj>,
+  sidebarHeader?: string,
   render: () => Element<*>,
 };
 

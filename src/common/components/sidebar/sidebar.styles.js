@@ -6,11 +6,11 @@ import { ListItem, media } from '../global.styles';
 
 export { List, ListLink, activeClassName } from '../global.styles';
 
-export const ListItemSidebar = styled(ListItem)`
+export const ListItemSideMenu = styled(ListItem)`
   padding: 0.5em 0;
 `;
 
-export const Sidebar = styled.div`
+export const SideMenu = styled.div`
   padding: 0 1em;
   margin-bottom: 1em;
 
