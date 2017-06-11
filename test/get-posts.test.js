@@ -1,3 +1,5 @@
+// @flow
+
 import getPosts, { parseMetadata } from '../src/server/get-posts';
 
 describe('parseMetadata', () => {
@@ -52,7 +54,7 @@ describe('parseMetadata', () => {
 });
 
 describe('getPosts', () => {
-  test('Parses an array of posts and sorts them', () => {
+  it('Parses an array of posts and sorts them', () => {
     const posts = getPosts([
       { fileName: 'post', words: 'second' },
       { words: 'not shown' },

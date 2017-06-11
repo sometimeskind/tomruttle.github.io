@@ -24,15 +24,15 @@ export function getAllPaths(routes: SiteRoutes) {
   }, []);
 }
 
-export function getCurrentRoute(routes: SiteRoutes, pathname: string): CurrentRoute | null {
-  function findCurrentRoute(searchRoutes: Array<RouteObj>, parent?: CurrentRoute) {
+export function getRouteFromPath(routes: SiteRoutes, pathname: string): CurrentRoute | null {
+  function findRoute(searchRoutes: Array<RouteObj>, parent?: CurrentRoute) {
     return searchRoutes.reduce((key, route, index) => {
       if (route.path) {
         const matched = matchPath(pathname, route.path);
 
         if (matched && matched.isExact) {
           if (route.routes) {
-            const subRouteKey = findCurrentRoute(route.routes, { key: route.key, index, parent });
+            const subRouteKey = findRoute(route.routes, { key: route.key, index, parent });
 
             if (subRouteKey) {
               return subRouteKey;
@@ -47,7 +47,7 @@ export function getCurrentRoute(routes: SiteRoutes, pathname: string): CurrentRo
     }, null);
   }
 
-  return findCurrentRoute(routes.toJS());
+  return findRoute(routes.toJS());
 }
 
 export function getAbsolutePath(pathname: string = ''): string {
@@ -55,11 +55,30 @@ export function getAbsolutePath(pathname: string = ''): string {
   return `${absolutePath}${absolutePath && absolutePath.endsWith('/') ? '' : '/'}`;
 }
 
-export function findRoute(routes: SiteRoutes, routeKey: string): SiteRoute {
-  return routes.filter((route) => route.get('key') === routeKey).get(0);
+export function getRouteFromKey(routes: SiteRoutes, routeKey: string): SiteRoute | null {
+  function findRoute(searchRoutes) {
+    return searchRoutes.reduce((found, route) => {
+      if (route.get('key') === routeKey) {
+        return route;
+      }
+
+      const subRoutes = route.get('routes');
+      if (subRoutes) {
+        const foundSubRoute = findRoute(subRoutes);
+
+        if (foundSubRoute) {
+          return foundSubRoute;
+        }
+      }
+
+      return found;
+    }, null);
+  }
+
+  return findRoute(routes);
 }
 
-export function getNextPath(routes: SiteRoutes, currentRouteIndex: number, delta: number) {
+function getNextPath(routes: SiteRoutes, currentRouteIndex: number, delta: number) {
   const navigableRoutes: SiteRoutes = routes.filter((route) => route.get('title'));
 
   let newIndex;

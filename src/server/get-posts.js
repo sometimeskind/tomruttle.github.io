@@ -39,7 +39,12 @@ export function parseMetadata({ fileName, words: raw }: ImportPost): Post {
   return { words, metadata: { ...metadata, date: new Date(metadata.date).toUTCString() } };
 }
 
-export default (posts: Array<ImportPost>) => posts
-  .filter(({ fileName }) => typeof fileName === 'string')
-  .map((post) => parseMetadata(post))
-  .sort((a, b) => new Date(b.metadata.date).getTime() - new Date(a.metadata.date).getTime());
+
+export default (posts: Array<{ words: string, fileName?: string }>) => {
+  // https://github.com/facebook/flow/issues/1414
+  const filtered = ((posts.filter((post) => typeof post.fileName === 'string'): Array<any>): Array<ImportPost>);
+
+  return filtered
+    .map((post) => parseMetadata(post))
+    .sort((a, b) => new Date(b.metadata.date).getTime() - new Date(a.metadata.date).getTime());
+};

@@ -4,7 +4,7 @@ import React from 'react';
 
 import type { SiteRoutes } from '../../types';
 
-import { getAbsolutePath, findRoute } from '../../routing-helpers';
+import { getAbsolutePath, getRouteFromKey } from '../../routing-helpers';
 
 import { routeKeys, DEFAULT_TITLE } from '../../constants';
 
@@ -12,11 +12,13 @@ import { PaddedHeader, TitleLink, HeaderList, HeaderListItem, HeaderListLink, ac
 
 export default function Header({ routes }: { routes: SiteRoutes }) {
   const links = routes.filter((route) => route.get('title'));
-  const homeRoute = findRoute(links, routeKeys.HOME);
+  const homeRoute = getRouteFromKey(links, routeKeys.HOME);
 
   return (
     <PaddedHeader className="pure-u-1 pure-u-md-3-4 offset-md-1-4">
-      <h2><TitleLink to={homeRoute.get('path')}>{DEFAULT_TITLE}</TitleLink></h2>
+      {homeRoute ? (
+        <h2><TitleLink to={homeRoute.get('path')}>{DEFAULT_TITLE}</TitleLink></h2>
+      ) : null}
 
       <nav>
         <HeaderList>
