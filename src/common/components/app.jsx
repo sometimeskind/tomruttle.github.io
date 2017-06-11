@@ -6,7 +6,7 @@ import Header from './header/header';
 import Main from './main/main';
 import Footer from './footer/footer';
 
-import getRoutes, { getNotFoundRoute } from '../routes';
+import getRoutes from '../routes';
 
 import type { Post, SetPageTitle, SiteRoutes } from '../types';
 import { Wrapper, Outer, Inner, baseStyles } from './app.styles';
@@ -29,7 +29,7 @@ export default class App extends Component {
         <Outer>
           <Inner>
             <Header routes={this.state.routes} />
-            <Main routes={this.state.routes} notFoundRoute={getNotFoundRoute(this.props.setPageTitle)} />
+            <Main routes={this.state.routes} />
           </Inner>
           <Footer />
         </Outer>

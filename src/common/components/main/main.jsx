@@ -6,7 +6,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Swipeable from 'react-swipeable';
 
-import type { SiteRoutes, CurrentRoute, SiteRoute } from '../../types';
+import type { SiteRoutes, CurrentRoute } from '../../types';
 
 import Sidebar from '../sidebar/sidebar';
 import { getRouteFromPath, getNewPathFromSwipe } from '../../routing-helpers';
@@ -25,7 +25,7 @@ export function swiped(history: RouterHistory, routes: SiteRoutes, currentRoute:
   };
 }
 
-export default function Main({ routes, notFoundRoute }: { routes: SiteRoutes, notFoundRoute: SiteRoute }) {
+export default function Main({ routes }: { routes: SiteRoutes }) {
   return (
     <Route
       render={({ location, history }) => {
@@ -39,7 +39,6 @@ export default function Main({ routes, notFoundRoute }: { routes: SiteRoutes, no
                   <TransitionAnimation>
                     <Switch location={location} key={location.key}>
                       {routes.map((route) => <Route {...route.toJS()} />)}
-                      <Route {...notFoundRoute.toJS()} />
                     </Switch>
                   </TransitionAnimation>
                 </Swipeable>

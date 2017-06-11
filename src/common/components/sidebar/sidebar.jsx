@@ -24,7 +24,7 @@ export default function Sidebar({ currentRoute, routes }: { currentRoute: Curren
 
             <nav>
               <List>
-                {subRoutes.filter((subRoute) => subRoute.get('title')).map((route) => (
+                {subRoutes.filter((route) => route.get('path')).map((route) => (
                   <ListItemSideMenu key={`sidebar-${route.get('key')}`}>
                     <ListLink activeClassName={activeClassName} to={route.get('path')}>{route.get('title')}</ListLink>
                   </ListItemSideMenu>

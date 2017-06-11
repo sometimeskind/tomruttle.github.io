@@ -4,7 +4,7 @@ import React, { PureComponent } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { fromJS } from 'immutable';
 
-import type { RouteObj, Post, SetPageTitle, SiteRoutes, SiteRoute } from './types';
+import type { RouteObj, Post, SetPageTitle, SiteRoutes } from './types';
 
 import wordsIntro from '../../pages/words-intro.md';
 import page from '../../pages/home.md';
@@ -20,36 +20,25 @@ class DangerousSection extends PureComponent {
   }
 }
 
-export function getNotFoundRoute(setPageTitle?: SetPageTitle = () => {}): SiteRoute {
-  const notFoundRoute = {
-    key: routeKeys.NOT_FOUND,
-    render() {
-      setPageTitle('Page Not Found. :(');
-      return <DangerousSection content={notFoundText} />;
-    },
-  };
-
-  return fromJS(notFoundRoute);
-}
-
 export default function getRoutes(posts: Array<Post>, setPageTitle?: SetPageTitle = () => {}): SiteRoutes {
-  const wordsRoutes: Array<RouteObj> = posts.map((post) => ({
-    key: `words-${post.metadata.path}`,
-    path: `/words/${post.metadata.path}/`,
-    title: post.metadata.title,
-    render() {
-      setPageTitle(post.metadata.title);
-      return <DangerousSection content={post.words} />;
+  const wordsRoutes: Array<RouteObj> = [
+    ...posts.map((post) => ({
+      key: `words-${post.metadata.path}`,
+      path: `/words/${post.metadata.path}/`,
+      title: post.metadata.title,
+      render() {
+        setPageTitle(post.metadata.title);
+        return <DangerousSection content={post.words} />;
+      },
+    })),
+    {
+      key: routeKeys.WORDS_INTRO,
+      render() {
+        setPageTitle('Words');
+        return <DangerousSection content={wordsIntro} />;
+      },
     },
-  }));
-
-  const wordsIntroRoute = {
-    key: routeKeys.WORDS_INTRO,
-    render() {
-      setPageTitle('Words');
-      return <DangerousSection content={wordsIntro} />;
-    },
-  };
+  ];
 
   const routes: Array<RouteObj> = [
     {
@@ -69,12 +58,19 @@ export default function getRoutes(posts: Array<Post>, setPageTitle?: SetPageTitl
       render() {
         return (
           <Switch>
-            {[...wordsRoutes, wordsIntroRoute].map((route) => <Route {...route} />)}
+            {wordsRoutes.map((route) => <Route {...route} />)}
           </Switch>
         );
       },
       sidebarHeader: 'Posts List',
       routes: wordsRoutes,
+    },
+    {
+      key: routeKeys.NOT_FOUND,
+      render() {
+        setPageTitle('Page Not Found. :(');
+        return <DangerousSection content={notFoundText} />;
+      },
     },
   ];
 

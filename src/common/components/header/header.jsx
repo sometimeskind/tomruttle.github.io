@@ -11,8 +11,7 @@ import { routeKeys, DEFAULT_TITLE } from '../../constants';
 import { PaddedHeader, TitleLink, HeaderList, HeaderListItem, HeaderListLink, activeClassName } from './header.styles';
 
 export default function Header({ routes }: { routes: SiteRoutes }) {
-  const links = routes.filter((route) => route.get('title'));
-  const homeRoute = getRouteFromKey(links, routeKeys.HOME);
+  const homeRoute = getRouteFromKey(routes, routeKeys.HOME);
 
   return (
     <PaddedHeader className="pure-u-1 pure-u-md-3-4 offset-md-1-4">
@@ -22,17 +21,17 @@ export default function Header({ routes }: { routes: SiteRoutes }) {
 
       <nav>
         <HeaderList>
-          {links.map((link) => {
-            const path: string = link.get('path');
+          {routes.filter((route) => route.get('path')).map((route) => {
+            const path: string = route.get('path');
             const absolutePath = getAbsolutePath(path);
 
             return (
-              <HeaderListItem key={`header-${link.get('key')}`}>
+              <HeaderListItem key={`header-${route.get('key')}`}>
                 <HeaderListLink
                   exact={path === absolutePath}
                   activeClassName={activeClassName}
                   to={absolutePath}
-                >{link.get('title')}</HeaderListLink>
+                >{route.get('title')}</HeaderListLink>
               </HeaderListItem>
             );
           })}

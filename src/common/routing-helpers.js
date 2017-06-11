@@ -5,19 +5,23 @@ import { matchPath } from 'react-router';
 
 import type { SiteRoutes, SiteRoute, RouteObj, CurrentRoute } from './types';
 
+export function getAbsolutePath(pathname: string = ''): string {
+  const absolutePath: string = pathToRegexp.parse(pathname)[0];
+  return `${absolutePath}${absolutePath && absolutePath.endsWith('/') ? '' : '/'}`;
+}
+
 export function getAllPaths(routes: SiteRoutes) {
   return routes.reduce((paths, route) => {
+    const newPaths: Array<string> = [];
+
+    const path: ?string = route.get('path');
+    if (path) {
+      newPaths.push(getAbsolutePath(path));
+    }
+
     const subRoutes: SiteRoutes = route.get('routes');
-
-    let newPaths: Array<string> = [];
     if (subRoutes) {
-      newPaths = getAllPaths(subRoutes);
-    } else {
-      const path: string = route.get('path');
-
-      if (path) {
-        newPaths = [path];
-      }
+      newPaths.push(...getAllPaths(subRoutes));
     }
 
     return paths.concat(newPaths);
@@ -32,14 +36,14 @@ export function getRouteFromPath(routes: SiteRoutes, pathname: string): CurrentR
 
         if (matched && matched.isExact) {
           if (route.routes) {
-            const subRouteKey = findRoute(route.routes, { key: route.key, index, parent });
+            const subRouteKey = findRoute(route.routes, { key: route.key, index, parent, pathname: getAbsolutePath(route.path) });
 
             if (subRouteKey) {
               return subRouteKey;
             }
           }
 
-          return { key: route.key, index, parent };
+          return { key: route.key, index, parent, pathname };
         }
       }
 
@@ -48,11 +52,6 @@ export function getRouteFromPath(routes: SiteRoutes, pathname: string): CurrentR
   }
 
   return findRoute(routes.toJS());
-}
-
-export function getAbsolutePath(pathname: string = ''): string {
-  const absolutePath: string = pathToRegexp.parse(pathname)[0];
-  return `${absolutePath}${absolutePath && absolutePath.endsWith('/') ? '' : '/'}`;
 }
 
 export function getRouteFromKey(routes: SiteRoutes, routeKey: string): SiteRoute | null {
@@ -79,7 +78,7 @@ export function getRouteFromKey(routes: SiteRoutes, routeKey: string): SiteRoute
 }
 
 function getNextPath(routes: SiteRoutes, currentRouteIndex: number, delta: number) {
-  const navigableRoutes: SiteRoutes = routes.filter((route) => route.get('title'));
+  const navigableRoutes: SiteRoutes = routes.filter((route) => route.get('path'));
 
   let newIndex;
   if (delta > 0) {
@@ -89,33 +88,38 @@ function getNextPath(routes: SiteRoutes, currentRouteIndex: number, delta: numbe
     newIndex = currentRouteIndex + delta < 0 ? 0 : currentRouteIndex + delta;
   }
 
-  const currentPath: string = navigableRoutes.get(newIndex).get('path');
-  return getAbsolutePath(currentPath);
+  if (newIndex === currentRouteIndex) {
+    return null;
+  }
+
+  const nextPath: string = navigableRoutes.get(newIndex).get('path');
+  return getAbsolutePath(nextPath);
 }
 
 export function getNewPathFromSwipe(routes: SiteRoutes, currentRoute: CurrentRoute, deltaX: number, deltaY: number) {
+  const currentPath = currentRoute.pathname;
   const horizontal = Math.abs(deltaX) > Math.abs(deltaY);
 
   if (horizontal) {
     const delta = deltaX > 0 ? 1 : -1;
     const currentRouteIndex = currentRoute.parent ? currentRoute.parent.index : currentRoute.index;
-    return getNextPath(routes, currentRouteIndex, delta);
+    return getNextPath(routes, currentRouteIndex, delta) || currentPath;
   }
 
   const delta = deltaY > 0 ? 1 : -1;
 
   if (currentRoute.parent) {
     const currentRoutes: SiteRoutes = routes.get(currentRoute.parent.index).get('routes');
-    return getNextPath(currentRoutes, currentRoute.index, delta);
+    return getNextPath(currentRoutes, currentRoute.index, delta) || currentPath;
   }
 
   if (delta > 0) {
     const subRoutes: SiteRoutes = routes.get(currentRoute.index).get('routes');
 
     if (subRoutes) {
-      return getNextPath(subRoutes, -1, delta);
+      return getNextPath(subRoutes, -1, delta) || currentPath;
     }
   }
 
-  return '';
+  return currentPath;
 }

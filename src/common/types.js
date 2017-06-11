@@ -39,16 +39,17 @@ export type SiteRoutes = List<SiteRoute>;
 
 export type RouteObj = {
   key: string,
+  render: () => Element<*>,
   exact?: bool,
-  path: string,
-  title: string,
+  path?: string,
+  title?: string,
   routes?: Array<RouteObj>,
   sidebarHeader?: string,
-  render: () => Element<*>,
 };
 
 export type CurrentRoute = {
   key: string,
   index: number,
+  pathname: string,
   parent: ?CurrentRoute,
 };
