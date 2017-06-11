@@ -6,7 +6,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Swipeable from 'react-swipeable';
 
-import type { SiteRoutes, CurrentRoute } from '../../types';
+import type { SiteRoutes, CurrentRoute, SiteRoute } from '../../types';
 
 import WordsMenu from '../sidebar/words-menu';
 import { getCurrentRoute, findRoute, getNewPathFromSwipe } from '../../routing-helpers';
@@ -26,7 +26,7 @@ export function swiped(history: RouterHistory, routes: SiteRoutes, currentRoute:
   };
 }
 
-export default function Main({ routes }: { routes: SiteRoutes }) {
+export default function Main({ routes, notFoundRoute }: { routes: SiteRoutes, notFoundRoute: SiteRoute }) {
   const wordsRoute = findRoute(routes, routeKeys.WORDS);
 
   return (
@@ -41,7 +41,8 @@ export default function Main({ routes }: { routes: SiteRoutes }) {
                 <Swipeable onSwiped={swiped(history, routes, currentRoute)}>
                   <TransitionAnimation>
                     <Switch location={location} key={location.key}>
-                      {routes.map((route) => <Route key={`main-${route.get('key')}`} {...route.toJS()} />)}
+                      {routes.map((route) => <Route {...route.toJS()} />)}
+                      <Route {...notFoundRoute.toJS()} />
                     </Switch>
                   </TransitionAnimation>
                 </Swipeable>

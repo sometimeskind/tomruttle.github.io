@@ -4,7 +4,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { fromJS } from 'immutable';
 
-import type { RouteObj, Post, SetPageTitle, SiteRoutes } from './types';
+import type { RouteObj, Post, SetPageTitle, SiteRoutes, SiteRoute } from './types';
 
 import wordsIntro from '../../pages/words-intro.md';
 import page from '../../pages/home.md';
@@ -13,6 +13,18 @@ import notFoundText from '../../pages/not-found.md';
 import { routeKeys } from './constants';
 
 import DangerousSection from './components/dangerous-section';
+
+export function getNotFoundRoute(setPageTitle?: SetPageTitle = () => {}): SiteRoute {
+  const notFoundRoute = {
+    key: routeKeys.NOT_FOUND,
+    render() {
+      setPageTitle('Page Not Found. :(');
+      return <DangerousSection content={notFoundText} />;
+    },
+  };
+
+  return fromJS(notFoundRoute);
+}
 
 export default function getRoutes(posts: Array<Post>, setPageTitle?: SetPageTitle = () => {}): SiteRoutes {
   const wordsRoutes: Array<RouteObj> = posts.map((post) => ({
@@ -24,6 +36,14 @@ export default function getRoutes(posts: Array<Post>, setPageTitle?: SetPageTitl
       return <DangerousSection content={post.words} />;
     },
   }));
+
+  const wordsIntroRoute = {
+    key: routeKeys.WORDS_INTRO,
+    render() {
+      setPageTitle('Words');
+      return <DangerousSection content={wordsIntro} />;
+    },
+  };
 
   const routes: Array<RouteObj> = [
     {
@@ -43,25 +63,11 @@ export default function getRoutes(posts: Array<Post>, setPageTitle?: SetPageTitl
       render() {
         return (
           <Switch>
-            {wordsRoutes.map((route) => <Route key={`words-${route.key}`} {...route} />)}
-            <Route
-              key={routeKeys.WORDS_INTRO}
-              render={() => {
-                setPageTitle('Words');
-                return <DangerousSection content={wordsIntro} />;
-              }}
-            />,
+            {[...wordsRoutes, wordsIntroRoute].map((route) => <Route {...route} />)}
           </Switch>
         );
       },
       routes: wordsRoutes,
-    },
-    {
-      key: routeKeys.NOT_FOUND,
-      render() {
-        setPageTitle('Page Not Found. :(');
-        return <DangerousSection content={notFoundText} />;
-      },
     },
   ];
 

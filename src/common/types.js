@@ -40,8 +40,8 @@ export type SiteRoutes = List<SiteRoute>;
 export type RouteObj = {
   key: string,
   exact?: bool,
-  path?: string,
-  title?: string,
+  path: string,
+  title: string,
   routes?: Array<RouteObj>,
   render: () => Element<*>,
 };
