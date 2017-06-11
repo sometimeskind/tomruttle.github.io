@@ -152,5 +152,11 @@ describe('Routing Helpers', () => {
       const path = routingHelpers.getNewPathFromSwipe(routes, currentRoute, 1, 0);
       expect(path).toBe('/nest/child/');
     });
+
+    it('returns null if swipe is vertical', () => {
+      const currentRoute = { key: 'nest', index: 1, parent: undefined, pathname: '/nest/' };
+      const path = routingHelpers.getNewPathFromSwipe(routes, currentRoute, 0, 1);
+      expect(path).toBe(null);
+    });
   });
 });

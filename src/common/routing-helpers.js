@@ -106,5 +106,5 @@ export function getNewPathFromSwipe(routes: SiteRoutes, currentRoute: CurrentRou
     return getNextPath(routes, currentRouteIndex, delta) || currentPath;
   }
 
-  return currentPath;
+  return null;
 }
