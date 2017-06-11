@@ -106,20 +106,5 @@ export function getNewPathFromSwipe(routes: SiteRoutes, currentRoute: CurrentRou
     return getNextPath(routes, currentRouteIndex, delta) || currentPath;
   }
 
-  const delta = deltaY > 0 ? 1 : -1;
-
-  if (currentRoute.parent) {
-    const currentRoutes: SiteRoutes = routes.get(currentRoute.parent.index).get('routes');
-    return getNextPath(currentRoutes, currentRoute.index, delta) || currentPath;
-  }
-
-  if (delta > 0) {
-    const subRoutes: SiteRoutes = routes.get(currentRoute.index).get('routes');
-
-    if (subRoutes) {
-      return getNextPath(subRoutes, -1, delta) || currentPath;
-    }
-  }
-
   return currentPath;
 }
