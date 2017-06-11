@@ -1,6 +1,7 @@
 // @flow
 
 import type { List, Map } from 'immutable';
+import type { Element } from 'react';
 
 type FileName = string;
 type FileTitle = string;
@@ -35,3 +36,18 @@ export type SetPageTitle = (title: string) => void;
 export type SiteRoute = Map<string, *>;
 
 export type SiteRoutes = List<SiteRoute>;
+
+export type RouteObj = {
+  key: string,
+  exact?: bool,
+  path?: string,
+  title?: string,
+  routes?: Array<RouteObj>,
+  render: () => Element<*>,
+};
+
+export type CurrentRoute = {
+  key: string,
+  index: number,
+  parent: ?CurrentRoute,
+};

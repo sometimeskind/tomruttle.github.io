@@ -8,6 +8,7 @@ import { ServerStyleSheet } from 'styled-components';
 import postArray from './require-posts';
 import getPosts from './get-posts';
 import pageContainer from './page-container';
+import { getAllPaths } from '../common/routing-helpers';
 
 import getRoutes from '../common/routes';
 import App from '../common/components/app';
@@ -28,29 +29,21 @@ function getMarkup({ location, props, assets, noClient }) {
     pageTitle = title;
   }
 
-  const appMarkup = renderToString(sheet.collectStyles(
+  const app = (
     <StaticRouter location={location} context={context}>
       <App {...props} setPageTitle={setPageTitle} />
     </StaticRouter>
-  ));
+  );
+
+  const appMarkup = renderToString(sheet.collectStyles(app));
 
   return pageContainer({ props, appMarkup, assets, path: location, styles: sheet.getStyleTags(), noClient, pageTitle });
 }
 
 function generateSiteMap() {
-  const thing = getRoutes({ posts, setPageTitle: () => {} });
+  const routes = getRoutes(posts);
 
-  function getPaths(routes) {
-    return routes.reduce((paths, route) => {
-      const path = route.get('path');
-      const subRoutes = route.get('routes');
-      const newPaths = subRoutes ? getPaths(subRoutes) : path;
-      return paths.concat(newPaths);
-    }, []);
-  }
-
-  return getPaths(thing)
-    .filter(Boolean)
+  return getAllPaths(routes)
     .map((path) => `https://www.tomruttle.com${path}`)
     .join('\n');
 }

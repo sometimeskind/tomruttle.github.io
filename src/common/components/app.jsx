@@ -18,10 +18,7 @@ export default class App extends Component {
   }
 
   state: { routes: SiteRoutes } = {
-    routes: getRoutes({
-      posts: this.props.posts,
-      setPageTitle: this.props.setPageTitle,
-    }),
+    routes: getRoutes(this.props.posts, this.props.setPageTitle),
   }
 
   render() {

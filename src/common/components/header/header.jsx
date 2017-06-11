@@ -12,15 +12,16 @@ import { PaddedHeader, TitleLink, HeaderList, HeaderListItem, HeaderListLink, ac
 
 export default function Header({ routes }: { routes: SiteRoutes }) {
   const links = routes.filter((route) => route.get('title'));
+  const homeRoute = findRoute(links, routeKeys.HOME);
 
   return (
     <PaddedHeader className="pure-u-1 pure-u-md-3-4 offset-md-1-4">
-      <h2><TitleLink to={findRoute(links, routeKeys.HOME).get('path')}>{DEFAULT_TITLE}</TitleLink></h2>
+      <h2><TitleLink to={homeRoute.get('path')}>{DEFAULT_TITLE}</TitleLink></h2>
 
       <nav>
         <HeaderList>
           {links.map((link) => {
-            const path = link.get('path');
+            const path: string = link.get('path');
             const absolutePath = getAbsolutePath(path);
 
             return (
