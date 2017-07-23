@@ -1,6 +1,7 @@
 // @flow
 
 import serialize from 'serialize-javascript';
+import crypto from 'crypto-js';
 
 import { APP_CONTAINER, APP_STATE_PROP } from '../common/constants';
 
@@ -24,52 +25,67 @@ const sentry = `
   </script>
 `;
 
-export default ({ props, appMarkup, assets, path, styles, noClient, pageTitle }: { pageTitle: string, noClient: boolean, props: AppProps, appMarkup: string, assets: { [chunkName: string]: string }, path: string, styles: string }) => `
-  <!DOCTYPE html>
-  <html lang="en">
-      <head prefix="og: http://ogp.me/ns#${path.includes('/words/') ? ' article: http://ogp.me/ns/article#' : ''}">
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <meta name="description" content="${description}" />
-      <meta name="theme-color" content="#fff" />
+export default ({ props, appMarkup, assets, path, styles, noClient, pageTitle }: { pageTitle: string, noClient: boolean, props: AppProps, appMarkup: string, assets: { [chunkName: string]: string }, path: string, styles: string }) => {
+  const propsFuncString = `window["${APP_STATE_PROP}"]=${serialize(props, { json: true })};`;
 
-      <meta name="twitter:site" content="@tomruttle" />
-      <meta name="twitter:creator" content="@tomruttle" />
+  return `
+    <!DOCTYPE html>
+    <html lang="en">
+        <head prefix="og: http://ogp.me/ns#${path.includes('/words/') ? ' article: http://ogp.me/ns/article#' : ''}" />
+        <meta charset="UTF-8" />
 
-      ${path.includes('/words/') ? article : website}
+        <meta http-equiv="Content-Security-Policy" content="
+          default-src 'self';
+          style-src 'unsafe-inline';
+          script-src
+            'self'
+            data:
+            https://www.google-analytics.com
+            https://cdn.ravenjs.com
+            'sha256-SbkII2pDL2DBfAUarDUDN33xTz3ZlGTCn6mTAK32OXg='
+            'sha256-AxPj8j1FANOzGFl4BMawrC47yfyMXbAUkIuptYsYGnE='
+            'sha256-Ne48UjknvSA30YbbOP7IVTyUxNiJpRq/rcnqj5GJys8='
+            'sha256-UvUK5+eiBNqX6peExEASumNRzjBU/y2KmMgaW0Kxhvo='
+            'sha256-${crypto.enc.Base64.stringify(crypto.SHA256(propsFuncString))}';
+        " />
 
-      <meta property="og:url" content="https://www.tomruttle.com${path}" />
-      <meta property="og:title" content="${pageTitle}" />
-      <meta property="og:description" content="${description}" />
-      <meta property="og:image" content="https://www.tomruttle.com/images/monster.b8494.jpeg" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content="${description}" />
+        <meta name="theme-color" content="#fff" />
 
-      <title>${pageTitle} - tomruttle.com</title>
+        <meta name="twitter:site" content="@tomruttle" />
+        <meta name="twitter:creator" content="@tomruttle" />
 
-      <link rel="icon" type="image/png" href="/images/monster-icon.d119b2.png" />
-      <link rel="manifest" href="/manifest.json">
-      <style type="text/css">${styles}</style>
-    </head>
-    <body>
-      <div id="${APP_CONTAINER}">${appMarkup}</div>
+        ${path.includes('/words/') ? article : website}
 
-      ${process.env.NODE_ENV === 'production' ? sentry : ''}
+        <meta property="og:url" content="https://www.tomruttle.com${path}" />
+        <meta property="og:title" content="${pageTitle}" />
+        <meta property="og:description" content="${description}" />
+        <meta property="og:image" content="https://www.tomruttle.com/images/monster.b8494.jpeg" />
 
-      <script type="text/javascript">
-        window["${APP_STATE_PROP}"]=${serialize(props, { json: true })}
-      </script>
+        <title>${pageTitle} - tomruttle.com</title>
 
-      ${noClient ? '' : `<script async src="/${assets.main}"></script>`}
+        <link rel="icon" type="image/png" href="/images/monster-icon.d119b2.png" />
+        <link rel="manifest" href="/manifest.json">
+        <style type="text/css">${styles}</style>
+      </head>
+      <body>
+        <div id="${APP_CONTAINER}">${appMarkup}</div>
 
-      <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+        ${process.env.NODE_ENV === 'production' ? sentry : ''}
 
-        ga('create', 'UA-76848132-1', 'auto');
-        ga('set', 'forceSSL', true);
-        ga('send', 'pageview');
-      </script>
-    </body>
-  </html>
-`;
+        <script type="text/javascript">${propsFuncString}</script>
+
+        ${noClient ? '' : `<script async src="/${assets.main}"></script>`}
+
+        <script>
+          window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+          ga('create', 'UA-76848132-1', 'auto');
+          ga('set', 'forceSSL', true);
+          ga('send', 'pageview');
+        </script>
+        <script async src='https://www.google-analytics.com/analytics.js'></script>
+      </body>
+    </html>
+  `;
+};
