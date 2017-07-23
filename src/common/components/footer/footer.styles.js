@@ -26,7 +26,7 @@ export const SocialButton = styled.a.attrs({
     if (props.github) { url = '/images/github.f1d11.svg'; }
     return `transparent url('${url}') no-repeat 0 0`;
   }};
-`;
+  `;
 
 
 export const PaddedFooter = styled.footer`
@@ -36,4 +36,4 @@ export const PaddedFooter = styled.footer`
   ${media.large`
     padding: 1em 2em 0 0;
   `}
-`;
+  `;
