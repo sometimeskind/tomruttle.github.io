@@ -31,10 +31,10 @@ module.exports = (env) => {
   ];
 
   if (env === 'dev') {
-    plugins.push(...[
-      new webpack.NamedModulesPlugin(),
-    ]);
-  } else {
+    plugins.push(new webpack.NamedModulesPlugin());
+  } else if (env === 'analyse') {
+    plugins.push(new BundleAnalyzerPlugin());
+  } else if (env === 'prod') {
     plugins.push(...[
       new webpack.LoaderOptionsPlugin({ minimize: true, debug: false }),
       new webpack.DefinePlugin({ 'process.env': { NODE_ENV: JSON.stringify('production') } }),
@@ -51,10 +51,6 @@ module.exports = (env) => {
         chunks: ['main', 'vendor'],
       }),
     ]);
-  }
-
-  if (env === 'analyse') {
-    plugins.push(new BundleAnalyzerPlugin());
   }
 
   return {
