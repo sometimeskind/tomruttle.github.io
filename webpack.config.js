@@ -43,14 +43,10 @@ module.exports = (env) => {
 
   if (env === 'dev') {
     plugins.push(new webpack.NamedModulesPlugin());
+  } else if (env === 'prod') {
+    plugins.push(new webpack.HashedModuleIdsPlugin());
   } else if (env === 'analyse') {
     plugins.push(new BundleAnalyzerPlugin());
-  } else if (env === 'prod') {
-    plugins.push(...[
-      new webpack.LoaderOptionsPlugin({ minimize: true, debug: false }),
-      new webpack.DefinePlugin({ 'process.env': { NODE_ENV: JSON.stringify('production') } }),
-      new webpack.HashedModuleIdsPlugin(),
-    ]);
   }
 
   return {
