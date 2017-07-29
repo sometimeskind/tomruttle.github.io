@@ -6,7 +6,6 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin');
 const WorkboxPlugin = require('workbox-webpack-plugin');
-const NameAllModulesPlugin = require('name-all-modules-plugin');
 
 const pkg = require('./package.json');
 
@@ -14,17 +13,15 @@ module.exports = (env) => {
   const plugins = [
     new CleanWebpackPlugin(['dist']),
 
-    // Reinstate these chunks when static-site-generator PRs are merged.
-    // new webpack.optimize.CommonsChunkPlugin({
-    //   name: 'vendor',
-    //   minChunks(module) { return module.context && module.context.indexOf('node_modules') !== -1; },
-    // }),
-    // new webpack.optimize.CommonsChunkPlugin({ name: 'manifest' }),
+    new webpack.optimize.ModuleConcatenationPlugin(),
+
+    new webpack.NamedChunksPlugin((chunk) => (chunk.name ? chunk.name : chunk.modules.map((m) => path.relative(m.context, m.request)).join('-'))),
 
     new StaticSiteGeneratorPlugin({
       crawl: true,
       entry: 'server',
     }),
+
     new WorkboxPlugin({
       globDirectory: 'dist',
       globPatterns: ['**/*.{html,js,svg,jpeg,png}'],
@@ -33,13 +30,26 @@ module.exports = (env) => {
     }),
   ];
 
-  if (env !== 'dev') {
+  if (env === 'dev') {
+    plugins.push(...[
+      new webpack.NamedModulesPlugin(),
+    ]);
+  } else {
     plugins.push(...[
       new webpack.LoaderOptionsPlugin({ minimize: true, debug: false }),
       new webpack.DefinePlugin({ 'process.env': { NODE_ENV: JSON.stringify('production') } }),
-      new webpack.NamedModulesPlugin(),
-      new webpack.NamedChunksPlugin((chunk) => (chunk.name ? chunk.name : chunk.modules.map((m) => path.relative(m.context, m.request)).join('-'))),
-      new NameAllModulesPlugin(),
+      new webpack.HashedModuleIdsPlugin(),
+
+      new webpack.optimize.CommonsChunkPlugin({
+        name: 'vendor',
+        chunks: ['main'],
+        minChunks({ context = '' }) { return context.includes('node_modules'); },
+      }),
+
+      new webpack.optimize.CommonsChunkPlugin({
+        name: 'runtime',
+        chunks: ['main', 'vendor'],
+      }),
     ]);
   }
 
@@ -50,7 +60,7 @@ module.exports = (env) => {
   return {
     entry: {
       server: './src/server/index.js',
-      main: ['babel-polyfill', './src/client/index.js'],
+      main: './src/client/index.js',
     },
 
     output: {

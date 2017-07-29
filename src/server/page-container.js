@@ -25,6 +25,16 @@ const sentry = `
   </script>
 `;
 
+const analytics = `
+  <script>
+    window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+    ga('create', 'UA-76848132-1', 'auto');
+    ga('set', 'forceSSL', true);
+    ga('send', 'pageview');
+  </script>
+  <script async src='https://www.google-analytics.com/analytics.js'></script>
+`;
+
 export default ({ props, appMarkup, assets, path, styles, noClient, pageTitle }: { pageTitle: string, noClient: boolean, props: AppProps, appMarkup: string, assets: { [chunkName: string]: string }, path: string, styles: string }) => {
   const propsFuncString = `window["${APP_STATE_PROP}"]=${serialize(props, { json: true })};`;
 
@@ -37,6 +47,12 @@ export default ({ props, appMarkup, assets, path, styles, noClient, pageTitle }:
         <meta http-equiv="Content-Security-Policy" content="
           default-src 'self';
           style-src 'unsafe-inline';
+          img-src
+            'self'
+            https://www.google-analytics.com;
+          connect-src
+            'self'
+            https://sentry.io;
           script-src
             'self'
             data:
@@ -44,8 +60,8 @@ export default ({ props, appMarkup, assets, path, styles, noClient, pageTitle }:
             https://cdn.ravenjs.com
             'sha256-SbkII2pDL2DBfAUarDUDN33xTz3ZlGTCn6mTAK32OXg='
             'sha256-AxPj8j1FANOzGFl4BMawrC47yfyMXbAUkIuptYsYGnE='
-            'sha256-Ne48UjknvSA30YbbOP7IVTyUxNiJpRq/rcnqj5GJys8='
             'sha256-UvUK5+eiBNqX6peExEASumNRzjBU/y2KmMgaW0Kxhvo='
+            'sha256-xcoIXlwfy346mx6BiCq9+t784AV3nKtsZEOqk4D6WK0='
             'sha256-${crypto.enc.Base64.stringify(crypto.SHA256(propsFuncString))}';
         " />
 
@@ -76,15 +92,15 @@ export default ({ props, appMarkup, assets, path, styles, noClient, pageTitle }:
 
         <script type="text/javascript">${propsFuncString}</script>
 
-        ${noClient ? '' : `<script async src="/${assets.main}"></script>`}
+        ${noClient ? '' : `
+          ${process.env.NODE_ENV === 'production' ? `
+            <script async src="/${assets.runtime}"></script>
+            <script async src="/${assets.vendor}"></script>
+          ` : ''}
+          <script async src="/${assets.main}"></script>
+        `}
 
-        <script>
-          window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-          ga('create', 'UA-76848132-1', 'auto');
-          ga('set', 'forceSSL', true);
-          ga('send', 'pageview');
-        </script>
-        <script async src='https://www.google-analytics.com/analytics.js'></script>
+        ${process.env.NODE_ENV === 'production' ? analytics : ''}
       </body>
     </html>
   `;
