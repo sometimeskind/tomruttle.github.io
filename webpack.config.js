@@ -17,6 +17,17 @@ module.exports = (env) => {
 
     new webpack.NamedChunksPlugin((chunk) => (chunk.name ? chunk.name : chunk.modules.map((m) => path.relative(m.context, m.request)).join('-'))),
 
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      chunks: ['main'],
+      minChunks({ context = '' }) { return context.includes('node_modules'); },
+    }),
+
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'runtime',
+      chunks: ['main', 'vendor'],
+    }),
+
     new StaticSiteGeneratorPlugin({
       crawl: true,
       entry: 'server',
@@ -39,17 +50,6 @@ module.exports = (env) => {
       new webpack.LoaderOptionsPlugin({ minimize: true, debug: false }),
       new webpack.DefinePlugin({ 'process.env': { NODE_ENV: JSON.stringify('production') } }),
       new webpack.HashedModuleIdsPlugin(),
-
-      new webpack.optimize.CommonsChunkPlugin({
-        name: 'vendor',
-        chunks: ['main'],
-        minChunks({ context = '' }) { return context.includes('node_modules'); },
-      }),
-
-      new webpack.optimize.CommonsChunkPlugin({
-        name: 'runtime',
-        chunks: ['main', 'vendor'],
-      }),
     ]);
   }
 
