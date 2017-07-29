@@ -60,7 +60,7 @@ module.exports = (env) => {
     },
 
     output: {
-      filename: env === 'dev' ? '[name].js' : '[name].[chunkhash].js',
+      filename: env === 'prod' ? '[name].[chunkhash].js' : '[name].js',
       path: path.resolve(__dirname, 'dist'),
       libraryTarget: 'umd',
     },

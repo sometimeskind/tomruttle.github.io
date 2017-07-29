@@ -93,11 +93,9 @@ export default ({ props, appMarkup, assets, path, styles, noClient, pageTitle }:
         <script type="text/javascript">${propsFuncString}</script>
 
         ${noClient ? '' : `
-          ${process.env.NODE_ENV === 'production' ? `
-            <script async src="/${assets.runtime}"></script>
-            <script async src="/${assets.vendor}"></script>
-          ` : ''}
+          <!--<script async src="/${assets.runtime}"></script>-->
           <script async src="/${assets.main}"></script>
+          <script async src="/${assets.vendor}"></script>
         `}
 
         ${process.env.NODE_ENV === 'production' ? analytics : ''}
