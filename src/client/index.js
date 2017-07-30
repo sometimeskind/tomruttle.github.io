@@ -2,6 +2,8 @@
 
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
+import whyDidYouUpdate from 'why-did-you-update';
+
 import { APP_CONTAINER, APP_STATE_PROP } from '../common/constants';
 
 import App from '../common/components/app';
@@ -28,6 +30,18 @@ function logException(ex, context) {
 
 function setPageTitle(title) {
   document.title = title;
+}
+
+if (process.env.NODE_ENV !== 'production') {
+  whyDidYouUpdate(React, {
+    exclude: [
+      /^Route/,
+      /^Link/,
+      /^Switch/,
+      /^(S|s)tyled/,
+      /^CSSTransitionGroup/,
+    ],
+  });
 }
 
 const app = (
