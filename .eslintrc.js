@@ -18,9 +18,6 @@ module.exports = {
       functions: 'ignore',
     }],
 
-    // Annoying flow bug where children prop doesn't work right
-    'react/no-children-prop': 0,
-
     // Annoying codacy bug
     'import/extensions': 0,
   }

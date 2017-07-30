@@ -46,7 +46,9 @@ if (process.env.NODE_ENV !== 'production') {
 
 const app = (
   <BrowserRouter>
-    <ClientWrapper children={<App {...props} setPageTitle={setPageTitle} />} />
+    <ClientWrapper logException={logException} >
+      <App {...props} setPageTitle={setPageTitle} />
+    </ClientWrapper>
   </BrowserRouter>
 );
 
