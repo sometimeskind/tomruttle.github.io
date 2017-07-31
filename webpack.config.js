@@ -52,7 +52,7 @@ module.exports = (env) => {
   return {
     entry: {
       server: './src/server/index.js',
-      main: ['babel-polyfill', './src/client/index.js'],
+      main: ['babel-polyfill', './src/client/request-animation-frame-polyfill', './src/client/index.js'],
     },
 
     output: {
