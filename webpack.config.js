@@ -1,4 +1,3 @@
-const webpack = require('webpack');
 const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin');
@@ -74,10 +73,6 @@ module.exports = (env, argv) => ({
 
   plugins: [
     new CleanWebpackPlugin(['dist']),
-
-    // ...(argv.mode === 'production' ? [
-    //   new webpack.HashedModuleIdsPlugin(),
-    // ] : []),
 
     new StaticSiteGeneratorPlugin({
       crawl: true,
