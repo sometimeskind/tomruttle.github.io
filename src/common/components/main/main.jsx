@@ -1,6 +1,6 @@
 // @flow
 
-import type { RouterHistory } from 'react-router';
+import type { RouterHistory, Location } from 'react-router';
 
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
@@ -14,11 +14,11 @@ import { getRouteFromPath, getNewPathFromSwipe } from '../../routing-helpers';
 import { Wrapper, Container, TransitionAnimation } from './main.styles';
 
 export function swiped(history: RouterHistory, routes: SiteRoutes, currentRoute: CurrentRoute | null) {
-  return (e: any, deltaX: number, deltaY: number, isFlick: bool) => {
+  return (e: SyntheticEvent<EventTarget>, deltaX: number, deltaY: number, isFlick: bool) => {
     if (currentRoute && isFlick) {
       const newPath = getNewPathFromSwipe(routes, currentRoute, deltaX, deltaY);
 
-      if (newPath) {
+      if (typeof newPath === 'string') {
         history.push(newPath);
       }
     }
@@ -32,7 +32,7 @@ type Props = {
 export default class Main extends Component<Props> {
   getRoute = (route: SiteRoute) => <Route {...route.toJS()} />;
 
-  renderRoute = (routeProps: { location: Object, history: Object }) => {
+  renderRoute = (routeProps: { location: Location, history: RouterHistory }) => {
     const { routes } = this.props;
     const { location, history } = routeProps;
 

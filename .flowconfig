@@ -1,8 +1,8 @@
-[ignore]
-
-[include]
-
-[libs]
+[lints]
+all=error
+unsafe-getters-setters=off
+untyped-import=off
+untyped-type-import=off
 
 [options]
 module.file_ext=.js

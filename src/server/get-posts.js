@@ -24,7 +24,8 @@ export function parseMetadata({ fileName, words: raw }: ImportPost): Post {
         throw new Error('Invalid yaml loaded.');
       }
 
-      parsedMetadata = (loadedYaml: any);
+      // $FlowFixMe
+      parsedMetadata = ((loadedYaml: any): Metadata);
 
       words = words.substr(metaString.length + OPEN_METADATA.length + CLOSE_METADATA.length).trim();
     } catch (err) {
@@ -53,7 +54,7 @@ export function parseMetadata({ fileName, words: raw }: ImportPost): Post {
 }
 
 export default function getPosts(posts: Array<{ words: string, fileName?: string }>): Array<Post> {
-  // https://github.com/facebook/flow/issues/1414
+  // $FlowFixMe https://github.com/facebook/flow/issues/1414
   const filtered = ((posts.filter((post) => typeof post.fileName === 'string'): Array<any>): Array<ImportPost>);
 
   return filtered

@@ -20,7 +20,7 @@ export function getAllPaths(routes: SiteRoutes) {
     const newPaths: Array<string> = [];
 
     const path: ?string = route.get('path');
-    if (path) {
+    if (typeof path === 'string') {
       newPaths.push(getAbsolutePath(path));
     }
 
@@ -36,7 +36,7 @@ export function getAllPaths(routes: SiteRoutes) {
 export function getRouteFromPath(routes: SiteRoutes, pathname: string): CurrentRoute | null {
   function findRoute(searchRoutes: Array<RouteObj>, parent?: CurrentRoute) {
     return searchRoutes.reduce((key, route, index) => {
-      if (route.path) {
+      if (typeof route.path === 'string') {
         const matched = matchPath(pathname, route.path);
 
         if (matched && matched.isExact) {
