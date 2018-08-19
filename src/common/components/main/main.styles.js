@@ -1,7 +1,6 @@
 // @flow
 
 import styled from 'styled-components';
-import { CSSTransition } from 'react-transition-group';
 
 import { media } from '../global.styles';
 
@@ -21,34 +20,4 @@ export const Container = styled.div`
   ${media.large`
     padding: 0 2em;
   `}
-`;
-
-const transitionName = 'fade';
-const transitionEnterTimeout = 200;
-const transitionLeaveTimeout = 100;
-
-function toS(ms) {
-  return `${ms / 1000}s`;
-}
-
-export const TransitionAnimation = styled(CSSTransition).attrs({ transitionName, timeout: { enter: transitionEnterTimeout, exit: transitionLeaveTimeout } })`
-  .${transitionName}-enter {
-    opacity: 0.01;
-    position: absolute; /* TODO: Is there a way to do this with flexbox? */
-  }
-
-  .${transitionName}-enter-active {
-    opacity: 1;
-    transition: opacity ${toS(transitionEnterTimeout)} ease-in ${toS(transitionLeaveTimeout)};
-  }
-
-  .${transitionName}-leave {
-    opacity: 1;
-    position: absolute;
-  }
-
-  .${transitionName}-leave-active {
-    transition: opacity ${toS(transitionLeaveTimeout)} ease-out;
-    opacity: 0.01;
-  }
 `;

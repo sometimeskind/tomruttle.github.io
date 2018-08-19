@@ -10,7 +10,7 @@ import type { SiteRoutes, SiteRoute } from '../../types';
 import Sidebar from '../sidebar/sidebar';
 import { getRouteFromPath } from '../../routing-helpers';
 
-import { Wrapper, Container, TransitionAnimation } from './main.styles';
+import { Wrapper, Container } from './main.styles';
 
 type Props = {
   routes: SiteRoutes,
@@ -44,11 +44,9 @@ export default class Main extends Component<Props> {
       <Wrapper className="pure-u-1">
         <section className="pure-u-1 pure-u-md-3-4">
           <Container>
-            <TransitionAnimation>
-              <Switch location={location} key={location.key}>
-                {this.renderedRoutes}
-              </Switch>
-            </TransitionAnimation>
+            <Switch location={location} key={location.key}>
+              {this.renderedRoutes}
+            </Switch>
           </Container>
         </section>
 
