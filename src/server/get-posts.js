@@ -11,7 +11,7 @@ const OPEN_METADATA = '<!--';
 const CLOSE_METADATA = '-->';
 
 export function parseMetadata({ fileName, words: raw }: ImportPost): Post {
-  let parsedMetadata: Metadata | {} = {};
+  let parsedMetadata: ?Metadata;
   let words = raw.trim();
 
   if (words.startsWith(OPEN_METADATA)) {
@@ -34,17 +34,22 @@ export function parseMetadata({ fileName, words: raw }: ImportPost): Post {
     path: encodeURIComponent(fileTitle.toLowerCase()),
   };
 
-  const metadata: Metadata = { ...defaultMetadata, ...parsedMetadata };
+  const metadata: Metadata = { ...defaultMetadata, ...(parsedMetadata || {}) };
 
-  return { words, metadata: { ...metadata, date: new Date(metadata.date).toUTCString() } };
+  return {
+    words,
+    metadata: {
+      ...metadata,
+      date: new Date(metadata.date).toUTCString(),
+    },
+  };
 }
 
-
-export default (posts: Array<{ words: string, fileName?: string }>) => {
+export default function getPosts(posts: Array<{ words: string, fileName?: string }>): Array<Post> {
   // https://github.com/facebook/flow/issues/1414
   const filtered = ((posts.filter((post) => typeof post.fileName === 'string'): Array<any>): Array<ImportPost>);
 
   return filtered
     .map((post) => parseMetadata(post))
     .sort((a, b) => new Date(b.metadata.date).getTime() - new Date(a.metadata.date).getTime());
-};
+}

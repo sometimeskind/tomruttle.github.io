@@ -2,7 +2,7 @@
 
 import type { RouterHistory } from 'react-router';
 
-import React from 'react';
+import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Swipeable from 'react-swipeable';
 
@@ -25,32 +25,45 @@ export function swiped(history: RouterHistory, routes: SiteRoutes, currentRoute:
   };
 }
 
-export default function Main({ routes }: { routes: SiteRoutes }) {
-  return (
-    <Route
-      render={({ location, history }) => {
-        const currentRoute = getRouteFromPath(routes, location.pathname);
+type Props = {
+  routes: SiteRoutes,
+};
 
-        return (
-          <Wrapper className="pure-u-1">
-            <section className="pure-u-1 pure-u-md-3-4">
-              <Container>
-                <Swipeable onSwiped={swiped(history, routes, currentRoute)}>
-                  <TransitionAnimation>
-                    <Switch location={location} key={location.key}>
-                      {routes.map((route) => <Route {...route.toJS()} />)}
-                    </Switch>
-                  </TransitionAnimation>
-                </Swipeable>
-              </Container>
-            </section>
+export default class Main extends Component<Props> {
+  getRoute = (route) => (
+    <Route {...route.toJS()} />
+  )
 
-            <aside className="pure-u-1 pure-u-md-1-4">
-              <Sidebar routes={routes} currentRoute={currentRoute} />
-            </aside>
-          </Wrapper>
-        );
-      }}
-    />
-  );
+  renderRoute = (routeProps: { location: Object, history: Object }) => {
+    const { routes } = this.props;
+    const { location, history } = routeProps;
+
+    const currentRoute = getRouteFromPath(routes, location.pathname);
+
+    return (
+      <Wrapper className="pure-u-1">
+        <section className="pure-u-1 pure-u-md-3-4">
+          <Container>
+            <Swipeable onSwiped={swiped(history, routes, currentRoute)}>
+              <TransitionAnimation>
+                <Switch location={location} key={location.key}>
+
+                  {routes.map(this.getRoute)}
+
+                </Switch>
+              </TransitionAnimation>
+            </Swipeable>
+          </Container>
+        </section>
+
+        <aside className="pure-u-1 pure-u-md-1-4">
+          <Sidebar routes={routes} currentRoute={currentRoute} />
+        </aside>
+      </Wrapper>
+    );
+  }
+
+  render = () => (
+    <Route render={this.renderRoute} />
+  )
 }

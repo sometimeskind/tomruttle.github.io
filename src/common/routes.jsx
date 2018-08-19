@@ -4,7 +4,12 @@ import React, { PureComponent } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { fromJS } from 'immutable';
 
-import type { RouteObj, Post, SetPageTitle, SiteRoutes } from './types';
+import type {
+  RouteObj,
+  Post,
+  SetPageTitle,
+  SiteRoutes,
+} from './types';
 
 import wordsIntro from '../../pages/words-intro.md';
 import page from '../../pages/home.md';
@@ -12,17 +17,18 @@ import notFoundText from '../../pages/not-found.md';
 
 import { routeKeys } from './constants';
 
-class DangerousSection extends PureComponent {
-  props: { content: string }
+class DangerousSection extends PureComponent<{ content: string }> {
   render() {
+    const { content } = this.props;
+
     /* eslint-disable react/no-danger */
-    return <section dangerouslySetInnerHTML={{ __html: this.props.content }} />;
+    return <section dangerouslySetInnerHTML={{ __html: content }} />;
   }
 }
 
 export default function getRoutes(posts: Array<Post>, setPageTitle?: SetPageTitle = () => {}): SiteRoutes {
-  const wordsRoutes: Array<RouteObj> = [
-    ...posts.map((post) => ({
+  function getPost(post) {
+    return {
       key: `words-${post.metadata.path}`,
       path: `/words/${post.metadata.path}/`,
       title: post.metadata.title,
@@ -30,7 +36,11 @@ export default function getRoutes(posts: Array<Post>, setPageTitle?: SetPageTitl
         setPageTitle(post.metadata.title);
         return <DangerousSection content={post.words} />;
       },
-    })),
+    };
+  }
+
+  const wordsRoutes: Array<RouteObj> = [
+    ...posts.map(getPost),
     {
       key: routeKeys.WORDS_INTRO,
       render() {

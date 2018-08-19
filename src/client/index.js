@@ -3,7 +3,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-import whyDidYouUpdate from 'why-did-you-update';
 
 import { APP_CONTAINER, APP_STATE_PROP } from '../common/constants';
 
@@ -14,49 +13,58 @@ import './require-assets';
 
 import type { AppProps } from '../common/types';
 
-const container = document.getElementById(APP_CONTAINER);
-
-const props: AppProps = window[APP_STATE_PROP];
-
 function logException(ex, context) {
   if (window.Raven) {
     window.Raven.captureException(ex, { extra: context });
   } else {
-    console.error(ex); // eslint-disable-line no-console
+    /* eslint-disable no-console */
+
+    console.error(ex);
   }
 }
 
 function setPageTitle(title) {
-  document.title = title;
+  window.document.title = title;
 }
 
-if (process.env.NODE_ENV !== 'production') {
-  whyDidYouUpdate(React, {
-    exclude: [
-      /^Route/,
-      /^Link/,
-      /^Switch/,
-      /^(S|s)tyled/,
-      /^CSSTransitionGroup/,
-    ],
-  });
-}
+const container = window.document.getElementById(APP_CONTAINER);
 
-const app = (
-  <BrowserRouter>
-    <ClientWrapper logException={logException} >
-      <App {...props} setPageTitle={setPageTitle} />
-    </ClientWrapper>
-  </BrowserRouter>
-);
+if (container) {
+  const props: AppProps = window[APP_STATE_PROP];
 
-ReactDOM.render(app, container, (err) => {
-  if (err) { logException(err, { message: 'React render failed.' }); }
+  if (process.env.NODE_ENV !== 'production') {
+    /* eslint-disable global-require */
 
-  if ('serviceWorker' in window.navigator) {
-    window.addEventListener('load', () => {
-      window.navigator.serviceWorker.register(`/sw.js?${props.buildHash}`)
-        .catch((swErr) => logException(swErr, { message: 'Service worker registry failed.' }));
+    const { whyDidYouUpdate } = require('why-did-you-update');
+
+    // $FlowFixMe
+    whyDidYouUpdate(React, {
+      exclude: [
+        /^Route/,
+        /^Link/,
+        /^Switch/,
+        /^(S|s)tyled/,
+        /^CSSTransitionGroup/,
+      ],
     });
   }
-});
+
+  const app = (
+    <BrowserRouter>
+      <ClientWrapper logException={logException}>
+        <App {...props} setPageTitle={setPageTitle} />
+      </ClientWrapper>
+    </BrowserRouter>
+  );
+
+  ReactDOM.hydrate(app, container, (err) => {
+    if (err) { logException(err, { message: 'React render failed.' }); }
+
+    if ('serviceWorker' in window.navigator) {
+      window.addEventListener('load', () => {
+        window.navigator.serviceWorker.register(`/sw.js?${props.buildHash}`)
+          .catch((swErr) => logException(swErr, { message: 'Service worker registry failed.' }));
+      });
+    }
+  });
+}

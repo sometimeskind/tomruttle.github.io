@@ -3,7 +3,12 @@
 import pathToRegexp from 'path-to-regexp';
 import { matchPath } from 'react-router';
 
-import type { SiteRoutes, SiteRoute, RouteObj, CurrentRoute } from './types';
+import type {
+  SiteRoutes,
+  SiteRoute,
+  RouteObj,
+  CurrentRoute,
+} from './types';
 
 export function getAbsolutePath(pathname: string = ''): string {
   const absolutePath: string = pathToRegexp.parse(pathname)[0];
@@ -36,14 +41,18 @@ export function getRouteFromPath(routes: SiteRoutes, pathname: string): CurrentR
 
         if (matched && matched.isExact) {
           if (route.routes) {
-            const subRouteKey = findRoute(route.routes, { key: route.key, index, parent, pathname: getAbsolutePath(route.path) });
+            const subRouteKey = findRoute(route.routes, {
+              key: route.key, index, parent, pathname: getAbsolutePath(route.path),
+            });
 
             if (subRouteKey) {
               return subRouteKey;
             }
           }
 
-          return { key: route.key, index, parent, pathname };
+          return {
+            key: route.key, index, parent, pathname,
+          };
         }
       }
 

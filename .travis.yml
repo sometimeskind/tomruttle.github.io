@@ -2,9 +2,8 @@ language: node_js
 branches:
   only:
   - master
-cache: yarn
-install: yarn
-script: yarn build && yarn ci
+install: npm install
+script: npm run build && npm run ci
 deploy:
   local_dir: dist
   provider: pages

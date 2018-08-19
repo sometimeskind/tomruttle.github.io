@@ -1,7 +1,7 @@
 // @flow
 
 import styled from 'styled-components';
-import { CSSTransitionGroup } from 'react-transition-group';
+import { CSSTransition } from 'react-transition-group';
 
 import { media } from '../global.styles';
 
@@ -31,7 +31,7 @@ function toS(ms) {
   return `${ms / 1000}s`;
 }
 
-export const TransitionAnimation = styled(CSSTransitionGroup).attrs({ transitionName, transitionEnterTimeout, transitionLeaveTimeout })`
+export const TransitionAnimation = styled(CSSTransition).attrs({ transitionName, transitionEnterTimeout, transitionLeaveTimeout })`
   .${transitionName}-enter {
     opacity: 0.01;
     position: absolute; /* TODO: Is there a way to do this with flexbox? */

@@ -3,50 +3,47 @@
 const webpack = require('webpack');
 const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin');
-const WorkboxPlugin = require('workbox-webpack-plugin');
+const { GenerateSW } = require('workbox-webpack-plugin');
 
 const pkg = require('./package.json');
 
-module.exports = (env) => {
+module.exports = (env, argv) => {
   const plugins = [
     new CleanWebpackPlugin(['dist']),
 
-    new webpack.optimize.ModuleConcatenationPlugin(),
-
-    new webpack.NamedChunksPlugin((chunk) => (chunk.name ? chunk.name : chunk.modules.map((m) => path.relative(m.context, m.request)).join('-'))),
-
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      chunks: ['main'],
-      minChunks({ context = '' }) { return context.includes('node_modules'); },
-    }),
-
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'runtime',
-      chunks: ['main', 'vendor'],
-    }),
+    // new webpack.optimize.ModuleConcatenationPlugin(),
+    //
+    // new webpack.NamedChunksPlugin((chunk) => (chunk.name
+    //   ? chunk.name
+    //   : chunk.modules.map((m) => path.relative(m.context, m.request)).join('-'))),
+    //
+    // new webpack.optimize.CommonsChunkPlugin({
+    //   name: 'vendor',
+    //   chunks: ['main'],
+    //   minChunks({ context = '' }) { return context.includes('node_modules'); },
+    // }),
+    //
+    // new webpack.optimize.CommonsChunkPlugin({
+    //   name: 'runtime',
+    //   chunks: ['main', 'vendor'],
+    // }),
 
     new StaticSiteGeneratorPlugin({
       crawl: true,
       entry: 'server',
     }),
 
-    new WorkboxPlugin({
-      globDirectory: 'dist',
-      globPatterns: ['**/*.{html,js,svg,jpeg,png}'],
-      globIgnores: ['server*.js', 'sitemap.*'],
+    new GenerateSW({
+      // globDirectory: 'dist',
+      // globPatterns: ['**/*.{html,js,svg,jpeg,png}'],
+      // globIgnores: ['server*.js', 'sitemap.*'],
       swDest: path.join(__dirname, 'dist', 'sw.js'),
     }),
   ];
 
-  if (env === 'dev') {
-    plugins.push(new webpack.NamedModulesPlugin());
-  } else if (env === 'prod') {
+  if (argv.mode === 'prod') {
     plugins.push(new webpack.HashedModuleIdsPlugin());
-  } else if (env === 'analyse') {
-    plugins.push(new BundleAnalyzerPlugin());
   }
 
   return {
@@ -56,16 +53,17 @@ module.exports = (env) => {
     },
 
     output: {
-      filename: env === 'prod' ? '[name].[chunkhash].js' : '[name].js',
+      filename: argv.mode === 'prod' ? '[name].[chunkhash].js' : '[name].js',
       path: path.resolve(__dirname, 'dist'),
       libraryTarget: 'umd',
+      globalObject: 'this',
     },
 
     resolve: {
-      extensions: ['.js', '.jsx', '.md', '.css'],
+      extensions: ['.js', '.jsx', '.md', '.css', '.json'],
     },
 
-    devtool: env === 'dev' ? 'inline-source-map' : false,
+    devtool: argv.mode === 'dev' ? 'inline-source-map' : false,
 
     module: {
       rules: [
@@ -74,16 +72,7 @@ module.exports = (env) => {
           use: [
             {
               loader: 'file-loader',
-              options: { name: 'images/[name].[ext]', useRelativePath: env !== 'dev' },
-            },
-          ],
-        },
-        {
-          test: /\.json$/,
-          use: [
-            {
-              loader: 'file-loader',
-              options: { name: '[name].[ext]', useRelativePath: env !== 'dev' },
+              options: { name: 'images/[name].[ext]', useRelativePath: argv.mode !== 'dev' },
             },
           ],
         },
@@ -112,6 +101,7 @@ module.exports = (env) => {
           exclude: /node_modules/,
           loader: 'babel-loader',
           options: {
+            babelrc: false,
             presets: [
               ['env', { loose: true, modules: false, targets: { browsers: pkg['supported-browsers'] } }],
               'react',
@@ -121,6 +111,26 @@ module.exports = (env) => {
         },
       ],
     },
+
+    // optimization: {
+    //   splitChunks: {
+    //     cacheGroups: {
+    //       commons: {
+    //         chunks: 'initial',
+    //         minChunks: 2,
+    //         maxInitialRequests: 5, // The default limit is too small to showcase the effect
+    //         minSize: 0, // This is example is too small to create commons chunks
+    //       },
+    //       vendor: {
+    //         test: /node_modules/,
+    //         chunks: 'initial',
+    //         name: 'vendor',
+    //         priority: 10,
+    //         enforce: true,
+    //       },
+    //     },
+    //   },
+    // },
 
     plugins,
   };

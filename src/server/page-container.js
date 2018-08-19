@@ -9,23 +9,23 @@ import type { AppProps } from '../common/types';
 
 const description = 'A homepage for Tom Ruttle';
 
-const article = `
+const article = /* @html */`
   <meta property="og:type" content="article" />
   <meta property="article:author" content="https://www.twitter.com/tomruttle">
 `;
 
-const website = `
+const website = /* @html */`
   <meta property="og:type" content="website" />
 `;
 
-const sentry = `
+const sentry = /* @html */`
   <script src="https://cdn.ravenjs.com/3.17.0/raven.min.js" crossorigin="anonymous"></script>
   <script type="text/javascript">
     window.Raven.config('https://6d7076eb61934dac9021766cafb4d1d1@sentry.io/171507').install();
   </script>
 `;
 
-const analytics = `
+const analytics = /* @html */`
   <script>
     window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
     ga('create', 'UA-76848132-1', 'auto');
@@ -35,13 +35,35 @@ const analytics = `
   <script async src='https://www.google-analytics.com/analytics.js'></script>
 `;
 
-export default ({ props, appMarkup, assets, path, styles, noClient, pageTitle }: { pageTitle: string, noClient: boolean, props: AppProps, appMarkup: string, assets: { [chunkName: string]: string }, path: string, styles: string }) => {
+type GetPageContainerArgsType = {
+  pageTitle: string,
+  noClient: boolean,
+  props: AppProps,
+  appMarkup: string,
+  assets: { [chunkName: string]: string },
+  path: string,
+  styles: string,
+  isProduction: boolean,
+};
+
+export default function getPageContainer(getPageContainerArgs: GetPageContainerArgsType) {
+  const {
+    props,
+    appMarkup,
+    assets,
+    path,
+    styles,
+    noClient,
+    pageTitle,
+    isProduction,
+  } = getPageContainerArgs;
+
   const propsFuncString = `window["${APP_STATE_PROP}"]=${serialize(props, { json: true })};`;
 
-  return `
+  return /* @html */`
     <!DOCTYPE html>
     <html lang="en">
-        <head prefix="og: http://ogp.me/ns#${path.includes('/words/') ? ' article: http://ogp.me/ns/article#' : ''}" />
+      <head prefix="og: http://ogp.me/ns#${path.includes('/words/') ? ' article: http://ogp.me/ns/article#' : ''}">
         <meta charset="UTF-8" />
 
         <meta http-equiv="Content-Security-Policy" content="
@@ -85,21 +107,22 @@ export default ({ props, appMarkup, assets, path, styles, noClient, pageTitle }:
         <link rel="manifest" href="/manifest.json">
         <style type="text/css">${styles}</style>
       </head>
+
       <body>
         <div id="${APP_CONTAINER}">${appMarkup}</div>
 
-        ${process.env.NODE_ENV === 'production' ? sentry : ''}
+        ${isProduction ? sentry : ''}
 
         <script type="text/javascript">${propsFuncString}</script>
 
-        ${noClient ? '' : `
+        ${noClient ? '' : /* @html */`
           <script src="/${assets.runtime}"></script>
           <script src="/${assets.vendor}"></script>
           <script src="/${assets.main}"></script>
         `}
 
-        ${process.env.NODE_ENV === 'production' ? analytics : ''}
+        ${isProduction ? analytics : ''}
       </body>
     </html>
   `;
-};
+}

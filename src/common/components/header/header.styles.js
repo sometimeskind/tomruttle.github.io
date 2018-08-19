@@ -3,7 +3,9 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import { media, List, ListItem, ListLink } from '../global.styles';
+import {
+  media, List, ListItem, ListLink,
+} from '../global.styles';
 
 export { activeClassName } from '../global.styles';
 
@@ -16,9 +18,9 @@ export const PaddedHeader = styled.header`
 `;
 
 export const TitleLink = styled(Link)`
-color: #111;
-text-decoration: none;
-font-weight: bold;
+  color: #111;
+  text-decoration: none;
+  font-weight: bold;
 `;
 
 export const HeaderList = styled(List)`

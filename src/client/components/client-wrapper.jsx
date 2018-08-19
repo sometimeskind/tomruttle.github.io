@@ -4,13 +4,17 @@ import { Component } from 'react';
 
 import type { Element } from 'react';
 
-export default class ClientWrapper extends Component {
-  props: {
-    children: Element<*>,
-    logException: (error: mixed, info: mixed) => void,
-  }
+type Props = {
+  children: Element<*>,
+  logException: (error: mixed, info: mixed) => void,
+};
 
-  state: { hasError: boolean } = {
+type State = {
+  hasError: boolean,
+};
+
+export default class ClientWrapper extends Component<Props, State> {
+  state = {
     hasError: false,
   }
 

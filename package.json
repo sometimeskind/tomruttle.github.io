@@ -12,9 +12,8 @@
     "test": "jest",
     "coverage": "jest --coverage",
     "ci": "npm run coverage && codacy-coverage < ./coverage/lcov.info",
-    "build": "webpack --env=prod -p && rm dist/server*.js && mv dist/sitemap.html dist/sitemap.txt",
-    "watch": "webpack --env=dev --watch",
-    "buildstats": "webpack --env=analyse",
+    "build": "webpack --mode=production -p && rm dist/server*.js && mv dist/sitemap.html dist/sitemap.txt",
+    "watch": "webpack --mode=development --watch",
     "dev": "http-server ./dist",
     "precommit": "npm run lint",
     "prepush": "npm run typecheck && npm test"
@@ -74,16 +73,16 @@
     "stylelint-config-css-modules": "^1.1.0",
     "stylelint-config-standard": "^18.2.0",
     "webpack": "^4.16.5",
-    "webpack-bundle-analyzer": "^2.8.3",
     "why-did-you-update": "^0.1.1",
     "workbox-webpack-plugin": "^3.4.1"
   },
   "supported-browsers": [
-    "last 2 versions",
-    "ie 9",
-    "ie 10"
+    ">0.25%",
+    "not ie 11",
+    "not op_mini all"
   ],
   "devDependencies": {
-    "eslint-plugin-jsx-a11y": "^6.1.1"
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "webpack-cli": "^3.1.0"
   }
 }

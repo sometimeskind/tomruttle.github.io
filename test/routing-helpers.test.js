@@ -63,7 +63,9 @@ describe('Routing Helpers', () => {
         key: 'nest-sibling',
         index: 1,
         pathname: '/nest/sibling/',
-        parent: { key: 'nest', index: 1, parent: undefined, pathname: '/nest/' },
+        parent: {
+          key: 'nest', index: 1, parent: undefined, pathname: '/nest/',
+        },
       });
     });
 
@@ -114,19 +116,25 @@ describe('Routing Helpers', () => {
 
   describe('getNewPathFromSwipe', () => {
     it('moves horizontally right on top level', () => {
-      const currentRoute = { key: 'test', index: 0, parent: undefined, pathname: '/test/' };
+      const currentRoute = {
+        key: 'test', index: 0, parent: undefined, pathname: '/test/',
+      };
       const path = routingHelpers.getNewPathFromSwipe(routes, currentRoute, 1, 0);
       expect(path).toBe('/nest/');
     });
 
     it('does not move horizontally if at start of top level', () => {
-      const currentRoute = { key: 'test', index: 0, parent: undefined, pathname: '/test/' };
+      const currentRoute = {
+        key: 'test', index: 0, parent: undefined, pathname: '/test/',
+      };
       const path = routingHelpers.getNewPathFromSwipe(routes, currentRoute, -1, 0);
       expect(path).toBe('/test/');
     });
 
     it('does not move horizontally if at end of top level', () => {
-      const currentRoute = { key: 'nest', index: 1, parent: undefined, pathname: '/nest/' };
+      const currentRoute = {
+        key: 'nest', index: 1, parent: undefined, pathname: '/nest/',
+      };
       const path = routingHelpers.getNewPathFromSwipe(routes, currentRoute, 1, 0);
       expect(path).toBe('/nest/');
     });
@@ -136,7 +144,9 @@ describe('Routing Helpers', () => {
         key: 'nest-child',
         index: 0,
         pathname: '/nest/child/',
-        parent: { key: 'nest', index: 1, parent: undefined, pathname: '/nest/' },
+        parent: {
+          key: 'nest', index: 1, parent: undefined, pathname: '/nest/',
+        },
       };
       const path = routingHelpers.getNewPathFromSwipe(routes, currentRoute, -1, 0);
       expect(path).toBe('/test/');
@@ -147,14 +157,18 @@ describe('Routing Helpers', () => {
         key: 'nest-child',
         index: 0,
         pathname: '/nest/child/',
-        parent: { key: 'nest', index: 1, parent: undefined, pathname: '/nest/' },
+        parent: {
+          key: 'nest', index: 1, parent: undefined, pathname: '/nest/',
+        },
       };
       const path = routingHelpers.getNewPathFromSwipe(routes, currentRoute, 1, 0);
       expect(path).toBe('/nest/child/');
     });
 
     it('returns null if swipe is vertical', () => {
-      const currentRoute = { key: 'nest', index: 1, parent: undefined, pathname: '/nest/' };
+      const currentRoute = {
+        key: 'nest', index: 1, parent: undefined, pathname: '/nest/',
+      };
       const path = routingHelpers.getNewPathFromSwipe(routes, currentRoute, 0, 1);
       expect(path).toBe(null);
     });
