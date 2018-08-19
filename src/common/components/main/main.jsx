@@ -14,7 +14,7 @@ import { getRouteFromPath, getNewPathFromSwipe } from '../../routing-helpers';
 import { Wrapper, Container, TransitionAnimation } from './main.styles';
 
 export function swiped(history: RouterHistory, routes: SiteRoutes, currentRoute: CurrentRoute | null) {
-  return (e: SyntheticEvent<EventTarget>, deltaX: number, deltaY: number, isFlick: bool) => {
+  return (e: SyntheticEvent<EventTarget>, deltaX: number, deltaY: number, isFlick: boolean) => {
     if (currentRoute && isFlick) {
       const newPath = getNewPathFromSwipe(routes, currentRoute, deltaX, deltaY);
 

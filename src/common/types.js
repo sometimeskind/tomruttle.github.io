@@ -36,7 +36,7 @@ export type SetPageTitle = (title: string) => void;
 export type RouteObj = {|
   key: string,
   render: () => Node,
-  exact?: bool,
+  exact?: boolean,
   path?: string,
   title?: string,
   routes?: Array<RouteObj>,
