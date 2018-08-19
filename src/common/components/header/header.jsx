@@ -1,6 +1,6 @@
 // @flow
 
-import React, { Component } from 'react';
+import React, { Component, type Node } from 'react';
 
 import type { SiteRoutes, SiteRoute } from '../../types';
 
@@ -22,6 +22,17 @@ type Props = {
 };
 
 export default class Header extends Component<Props> {
+  homeRoute: ?SiteRoute;
+
+  headerItems: Array<Node>;
+
+  constructor(props: Props) {
+    super(props);
+
+    this.homeRoute = getRouteFromKey(props.routes, routeKeys.HOME);
+    this.headerItems = props.routes.map(this.getHeaderItem);
+  }
+
   getHeaderItem = (route: SiteRoute) => {
     const { path } = route;
 
@@ -45,20 +56,16 @@ export default class Header extends Component<Props> {
   }
 
   render() {
-    const { routes } = this.props;
-
-    const homeRoute = getRouteFromKey(routes, routeKeys.HOME);
-
     return (
       <PaddedHeader className="pure-u-1 pure-u-md-3-4 offset-md-1-4">
 
-        {homeRoute ? (
-          <h2><TitleLink to={homeRoute.path}>{DEFAULT_TITLE}</TitleLink></h2>
+        {this.homeRoute ? (
+          <h2><TitleLink to={this.homeRoute.path}>{DEFAULT_TITLE}</TitleLink></h2>
         ) : null}
 
         <nav>
           <HeaderList>
-            {routes.map(this.getHeaderItem)}
+            {this.headerItems}
           </HeaderList>
         </nav>
       </PaddedHeader>

@@ -41,7 +41,10 @@ export function getRouteFromPath(routes: SiteRoutes, pathname: string): ?Current
         if (matched && matched.isExact) {
           if (route.routes) {
             const subRouteKey = findRoute(route.routes, {
-              key: route.key, index, parent, pathname: getAbsolutePath(route.path),
+              key: route.key,
+              index,
+              parent,
+              pathname: getAbsolutePath(route.path),
             });
 
             if (subRouteKey) {
@@ -50,7 +53,10 @@ export function getRouteFromPath(routes: SiteRoutes, pathname: string): ?Current
           }
 
           return {
-            key: route.key, index, parent, pathname,
+            key: route.key,
+            index,
+            parent,
+            pathname,
           };
         }
       }

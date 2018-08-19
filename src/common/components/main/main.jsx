@@ -2,7 +2,7 @@
 
 import type { Location } from 'react-router';
 
-import React, { Component } from 'react';
+import React, { Component, type Node } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import type { SiteRoutes, SiteRoute } from '../../types';
@@ -18,6 +18,14 @@ type Props = {
 };
 
 export default class Main extends Component<Props> {
+  renderedRoutes: Array<Node>;
+
+  constructor(props: Props) {
+    super(props);
+
+    this.renderedRoutes = props.routes.map(this.getRoute);
+  }
+
   getRoute = (route: SiteRoute) => (
     <Route
       key={route.key}
@@ -38,9 +46,7 @@ export default class Main extends Component<Props> {
           <Container>
             <TransitionAnimation>
               <Switch location={location} key={location.key}>
-
-                {routes.map(this.getRoute)}
-
+                {this.renderedRoutes}
               </Switch>
             </TransitionAnimation>
           </Container>
