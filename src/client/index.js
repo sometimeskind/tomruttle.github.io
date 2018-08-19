@@ -1,5 +1,8 @@
 // @flow
 
+import 'babel-polyfill';
+import 'raf/polyfill';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
@@ -32,27 +35,10 @@ const container = window.document.getElementById(APP_CONTAINER);
 if (container) {
   const props: AppProps = window[APP_STATE_PROP];
 
-  if (process.env.NODE_ENV !== 'production') {
-    /* eslint-disable global-require */
-
-    const { whyDidYouUpdate } = require('why-did-you-update');
-
-    // $FlowFixMe
-    whyDidYouUpdate(React, {
-      exclude: [
-        /^Route/,
-        /^Link/,
-        /^Switch/,
-        /^(S|s)tyled/,
-        /^CSSTransitionGroup/,
-      ],
-    });
-  }
-
   const app = (
     <BrowserRouter>
       <ClientWrapper logException={logException}>
-        <App {...props} setPageTitle={setPageTitle} />
+        <App posts={props.posts} setPageTitle={setPageTitle} />
       </ClientWrapper>
     </BrowserRouter>
   );

@@ -4,7 +4,10 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 import {
-  media, List, ListItem, ListLink,
+  media,
+  List,
+  ListItem,
+  ListLink,
 } from '../global.styles';
 
 export { activeClassName } from '../global.styles';

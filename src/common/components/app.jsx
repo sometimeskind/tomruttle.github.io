@@ -1,6 +1,9 @@
 // @flow
 
+import type { RouterHistory, Location } from 'react-router';
+
 import React, { Component } from 'react';
+import { Route } from 'react-router-dom';
 
 import Header from './header/header';
 import Main from './main/main';
@@ -21,17 +24,21 @@ type Props = {
   setPageTitle: SetPageTitle,
 };
 
-type State = {
-  routes: SiteRoutes,
-};
-
-export default class App extends Component<Props, State> {
+export default class App extends Component<Props> {
   routes: SiteRoutes;
 
   constructor(props: Props) {
     super(props);
 
     this.routes = getRoutes(props.posts, props.setPageTitle);
+  }
+
+  renderMain = (routeProps: { location: Location, history: RouterHistory }) => {
+    const { location, history } = routeProps;
+
+    return (
+      <Main location={location} history={history} routes={this.routes} />
+    );
   }
 
   render() {
@@ -42,7 +49,7 @@ export default class App extends Component<Props, State> {
         <Outer>
           <Inner>
             <Header routes={this.routes} />
-            <Main routes={this.routes} />
+            <Route render={this.renderMain} />
           </Inner>
           <Footer />
         </Outer>

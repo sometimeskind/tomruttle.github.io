@@ -32,7 +32,7 @@ export function getAllPaths(routes: SiteRoutes) {
   }, []);
 }
 
-export function getRouteFromPath(routes: SiteRoutes, pathname: string): CurrentRoute | null {
+export function getRouteFromPath(routes: SiteRoutes, pathname: string): ?CurrentRoute {
   function findRoute(searchRoutes: Array<SiteRoute>, parent?: CurrentRoute) {
     return searchRoutes.reduce((key, route, index) => {
       if (typeof route.path === 'string') {
@@ -62,7 +62,7 @@ export function getRouteFromPath(routes: SiteRoutes, pathname: string): CurrentR
   return findRoute(routes);
 }
 
-export function getRouteFromKey(routes: SiteRoutes, routeKey: string): SiteRoute | null {
+export function getRouteFromKey(routes: SiteRoutes, routeKey: string): ?SiteRoute {
   function findRoute(searchRoutes) {
     return searchRoutes.reduce((found, route) => {
       if (route.key === routeKey) {

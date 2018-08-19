@@ -116,8 +116,8 @@ export default function getPageContainer(getPageContainerArgs: GetPageContainerA
         <script type="text/javascript">${propsFuncString}</script>
 
         ${noClient ? '' : /* @html */`
-          <script src="/${assets.runtime}"></script>
-          <script src="/${assets.vendor}"></script>
+          <!-- <script src="/${assets.runtime}"></script> -->
+          <!-- <script src="/${assets.vendor}"></script> -->
           <script src="/${assets.main}"></script>
         `}
 

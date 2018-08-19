@@ -38,7 +38,7 @@ function getMarkup(getMarkupArgs) {
 
   const app = (
     <StaticRouter location={location} context={context}>
-      <App {...props} setPageTitle={setPageTitle} />
+      <App posts={props.posts} setPageTitle={setPageTitle} />
     </StaticRouter>
   );
 

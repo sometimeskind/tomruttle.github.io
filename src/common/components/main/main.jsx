@@ -13,7 +13,7 @@ import { getRouteFromPath, getNewPathFromSwipe } from '../../routing-helpers';
 
 import { Wrapper, Container, TransitionAnimation } from './main.styles';
 
-export function swiped(history: RouterHistory, routes: SiteRoutes, currentRoute: CurrentRoute | null) {
+export function swiped(history: RouterHistory, routes: SiteRoutes, currentRoute: ?CurrentRoute) {
   return (e: SyntheticEvent<EventTarget>, deltaX: number, deltaY: number, isFlick: boolean) => {
     if (currentRoute && isFlick) {
       const newPath = getNewPathFromSwipe(routes, currentRoute, deltaX, deltaY);
@@ -27,6 +27,8 @@ export function swiped(history: RouterHistory, routes: SiteRoutes, currentRoute:
 
 type Props = {
   routes: SiteRoutes,
+  location: Location,
+  history: RouterHistory,
 };
 
 export default class Main extends Component<Props> {
@@ -39,9 +41,8 @@ export default class Main extends Component<Props> {
     />
   )
 
-  renderRoute = (routeProps: { location: Location, history: RouterHistory }) => {
-    const { routes } = this.props;
-    const { location, history } = routeProps;
+  render() {
+    const { routes, location, history } = this.props;
 
     const currentRoute = getRouteFromPath(routes, location.pathname);
 
@@ -67,8 +68,4 @@ export default class Main extends Component<Props> {
       </Wrapper>
     );
   }
-
-  render = () => (
-    <Route render={this.renderRoute} />
-  )
 }

@@ -24,7 +24,7 @@ export default class ClientWrapper extends Component<Props, State> {
     window.scrollTo(0, 0);
   }
 
-  render = () => {
+  render() {
     const { children } = this.props;
 
     return children;

@@ -9,7 +9,7 @@ const pkg = require('./package.json');
 module.exports = (env, argv) => ({
   entry: {
     server: './src/server/index.js',
-    main: ['babel-polyfill', './src/client/request-animation-frame-polyfill', './src/client/index.js'],
+    main: './src/client/index.js',
   },
 
   output: {
@@ -22,6 +22,8 @@ module.exports = (env, argv) => ({
   resolve: {
     extensions: ['.js', '.jsx', '.md', '.css', '.json'],
   },
+
+  devtool: argv.mode === 'development' ? 'inline-source-map' : '',
 
   module: {
     rules: [
@@ -73,9 +75,9 @@ module.exports = (env, argv) => ({
   plugins: [
     new CleanWebpackPlugin(['dist']),
 
-    ...(argv.mode === 'production' ? [
-      new webpack.HashedModuleIdsPlugin(),
-    ] : []),
+    // ...(argv.mode === 'production' ? [
+    //   new webpack.HashedModuleIdsPlugin(),
+    // ] : []),
 
     new StaticSiteGeneratorPlugin({
       crawl: true,

@@ -33,7 +33,7 @@ export default class Sidebar extends Component<Props> {
     );
   }
 
-  render = () => {
+  render() {
     const { currentRoute, routes } = this.props;
 
     if (currentRoute) {

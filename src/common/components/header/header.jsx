@@ -22,7 +22,7 @@ type Props = {
 };
 
 export default class Header extends Component<Props> {
-  getRoute = (route: SiteRoute) => {
+  getHeaderItem = (route: SiteRoute) => {
     const { path } = route;
 
     if (typeof path !== 'string') {
@@ -44,7 +44,7 @@ export default class Header extends Component<Props> {
     );
   }
 
-  render = () => {
+  render() {
     const { routes } = this.props;
 
     const homeRoute = getRouteFromKey(routes, routeKeys.HOME);
@@ -58,7 +58,7 @@ export default class Header extends Component<Props> {
 
         <nav>
           <HeaderList>
-            {routes.map(this.getRoute)}
+            {routes.map(this.getHeaderItem)}
           </HeaderList>
         </nav>
       </PaddedHeader>
