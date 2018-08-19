@@ -2,10 +2,10 @@
 
 import { Component } from 'react';
 
-import type { Element } from 'react';
+import type { Node } from 'react';
 
 type Props = {
-  children: Element<*>,
+  children: Node,
   logException: (error: mixed, info: mixed) => void,
 };
 
@@ -14,20 +14,19 @@ type State = {
 };
 
 export default class ClientWrapper extends Component<Props, State> {
-  state = {
-    hasError: false,
-  }
-
   componentDidCatch(error: mixed, info: mixed) {
-    this.setState({ hasError: true });
-    this.props.logException(error, info);
+    const { logException } = this.props;
+
+    logException(error, info);
   }
 
   componentDidUpdate() {
     window.scrollTo(0, 0);
   }
 
-  render() {
-    return this.props.children;
+  render = () => {
+    const { children } = this.props;
+
+    return children;
   }
 }

@@ -6,7 +6,7 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Swipeable from 'react-swipeable';
 
-import type { SiteRoutes, CurrentRoute } from '../../types';
+import type { SiteRoutes, CurrentRoute, SiteRoute } from '../../types';
 
 import Sidebar from '../sidebar/sidebar';
 import { getRouteFromPath, getNewPathFromSwipe } from '../../routing-helpers';
@@ -30,9 +30,7 @@ type Props = {
 };
 
 export default class Main extends Component<Props> {
-  getRoute = (route) => (
-    <Route {...route.toJS()} />
-  )
+  getRoute = (route: SiteRoute) => <Route {...route.toJS()} />;
 
   renderRoute = (routeProps: { location: Object, history: Object }) => {
     const { routes } = this.props;

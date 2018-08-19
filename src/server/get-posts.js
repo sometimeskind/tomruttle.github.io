@@ -18,7 +18,14 @@ export function parseMetadata({ fileName, words: raw }: ImportPost): Post {
     const metaString = words.substring(OPEN_METADATA.length, words.indexOf(CLOSE_METADATA));
 
     try {
-      parsedMetadata = yaml.safeLoad(metaString);
+      const loadedYaml = yaml.safeLoad(metaString);
+
+      if (typeof loadedYaml !== 'object' || loadedYaml === null) {
+        throw new Error('Invalid yaml loaded.');
+      }
+
+      parsedMetadata = (loadedYaml: any);
+
       words = words.substr(metaString.length + OPEN_METADATA.length + CLOSE_METADATA.length).trim();
     } catch (err) {
       // throw the error away.

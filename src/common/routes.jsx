@@ -26,6 +26,17 @@ class DangerousSection extends PureComponent<{ content: string }> {
   }
 }
 
+function getRoute(route) {
+  return (
+    <Route
+      key={route.key}
+      render={route.render}
+      exact={route.exact}
+      path={route.path}
+    />
+  );
+}
+
 export default function getRoutes(posts: Array<Post>, setPageTitle?: SetPageTitle = () => {}): SiteRoutes {
   function getPost(post) {
     return {
@@ -68,7 +79,7 @@ export default function getRoutes(posts: Array<Post>, setPageTitle?: SetPageTitl
       render() {
         return (
           <Switch>
-            {wordsRoutes.map((route) => <Route {...route} />)}
+            {wordsRoutes.map(getRoute)}
           </Switch>
         );
       },
