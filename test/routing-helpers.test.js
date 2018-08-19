@@ -1,37 +1,40 @@
 // @flow
 
-import { fromJS } from 'immutable';
-
 import * as routingHelpers from '../src/common/routing-helpers';
 
 describe('Routing Helpers', () => {
-  const routes = fromJS([
+  const routes = [
     {
       key: 'test',
+      exact: false,
       path: '/test/',
       title: 'Test',
       render() {},
     },
     {
       key: 'nest',
+      exact: false,
       path: '/nest/:name?',
       title: 'Nest',
       render() {},
       routes: [
         {
           key: 'nest-child',
+          exact: false,
           path: '/nest/child/',
           title: 'Child - Nest',
           render() {},
         },
         {
           key: 'nest-sibling',
+          exact: false,
           path: '/nest/sibling/',
           title: 'Sibling - Nest',
           render() {},
         },
         {
           key: 'nest-default',
+          exact: false,
           title: 'Default - Nest',
           render() {},
         },
@@ -39,10 +42,11 @@ describe('Routing Helpers', () => {
     },
     {
       key: 'default',
+      exact: false,
       title: 'Default',
       render() {},
     },
-  ]);
+  ];
 
   describe('getAllPaths', () => {
     it('gets an array of all paths', () => {
@@ -100,12 +104,12 @@ describe('Routing Helpers', () => {
   describe('getRouteFromKey', () => {
     it('finds a top-level route', () => {
       const route = routingHelpers.getRouteFromKey(routes, 'test');
-      expect(route).toBe(routes.get(0));
+      expect(route).toBe(routes[0]);
     });
 
     it('finds a nested route', () => {
       const route = routingHelpers.getRouteFromKey(routes, 'nest-sibling');
-      expect(route).toMatchObject(routes.get(1).get('routes').get(1));
+      expect(route).toMatchObject(routes[1].routes[1]);
     });
 
     it('returns null if route is non-existent', () => {

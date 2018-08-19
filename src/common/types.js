@@ -1,6 +1,5 @@
 // @flow
 
-import type { List, Map } from 'immutable';
 import type { Node } from 'react';
 
 type FileName = string;
@@ -29,23 +28,21 @@ export type AppProps = {|
   buildHash: string,
 |};
 
-export type Posts = List<Map<string, Metadata | Words>>;
+export type Posts = Array<{ [key: string]: (Metadata | Words) }>;
 
 export type SetPageTitle = (title: string) => void;
 
-export type RouteObj = {|
+export type SiteRoute = {|
   key: string,
   render: () => Node,
-  exact?: boolean,
+  exact: boolean,
   path?: string,
   title?: string,
-  routes?: Array<RouteObj>,
+  routes?: Array<SiteRoute>,
   sidebarHeader?: string,
 |};
 
-export type SiteRoute = Map<string, *>;
-
-export type SiteRoutes = List<SiteRoute>;
+export type SiteRoutes = Array<SiteRoute>;
 
 export type CurrentRoute = {|
   key: string,

@@ -20,15 +20,15 @@ type Props = {
 
 export default class Sidebar extends Component<Props> {
   getRoute = (route: SiteRoute) => {
-    const path = route.get('path');
+    const { path } = route;
 
-    if (!path) {
+    if (typeof path !== 'string') {
       return null;
     }
 
     return (
-      <ListItemSideMenu key={`sidebar-${route.get('key')}`}>
-        <ListLink activeClassName={activeClassName} to={route.get('path')}>{route.get('title')}</ListLink>
+      <ListItemSideMenu key={`sidebar-${route.key}`}>
+        <ListLink activeClassName={activeClassName} to={route.path}>{route.title}</ListLink>
       </ListItemSideMenu>
     );
   }
@@ -38,17 +38,17 @@ export default class Sidebar extends Component<Props> {
 
     if (currentRoute) {
       const topLevelIndex = currentRoute.parent ? currentRoute.parent.index : currentRoute.index;
-      const topLevelRoute = routes.get(topLevelIndex);
+      const topLevelRoute = routes[topLevelIndex];
 
       if (topLevelRoute) {
-        const subRoutes = topLevelRoute.get('routes');
+        const subRoutes = topLevelRoute.routes;
 
         if (subRoutes) {
           return (
             <SideMenu>
               <Header>
                 <hr className="pure-u-1-2" />
-                <h4>{topLevelRoute.get('sidebarHeader')}</h4>
+                <h4>{topLevelRoute.sidebarHeader}</h4>
               </Header>
 
               <nav>

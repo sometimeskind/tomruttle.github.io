@@ -7,7 +7,6 @@ When this site was a blog I never wrote anything on it, so now it's just somewhe
   - Automatic loading, reading, parsing, and inserting of Markdown files as posts
   - Flow, Eslint, Stylelint, Jest, Istanbul, Codacy for code quality
   - Build pipeline via hosted Travis CI
-  - Immutable.js
   - Exciting CDN, TLS, DNSSEC, and Caching things from Cloudflare
   - Offline/Progressive Web App technology (a Service worker and an App Manifest)
   - Other

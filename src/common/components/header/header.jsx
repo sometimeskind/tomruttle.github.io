@@ -23,22 +23,22 @@ type Props = {
 
 export default class Header extends Component<Props> {
   getRoute = (route: SiteRoute) => {
-    const path = route.get('path');
+    const { path } = route;
 
-    if (!path) {
+    if (typeof path !== 'string') {
       return null;
     }
 
     const absolutePath = getAbsolutePath(path);
 
     return (
-      <HeaderListItem key={`header-${route.get('key')}`}>
+      <HeaderListItem key={`header-${route.key}`}>
         <HeaderListLink
           exact={path === absolutePath}
           activeClassName={activeClassName}
           to={absolutePath}
         >
-          {route.get('title')}
+          {route.title}
         </HeaderListLink>
       </HeaderListItem>
     );
@@ -53,7 +53,7 @@ export default class Header extends Component<Props> {
       <PaddedHeader className="pure-u-1 pure-u-md-3-4 offset-md-1-4">
 
         {homeRoute ? (
-          <h2><TitleLink to={homeRoute.get('path')}>{DEFAULT_TITLE}</TitleLink></h2>
+          <h2><TitleLink to={homeRoute.path}>{DEFAULT_TITLE}</TitleLink></h2>
         ) : null}
 
         <nav>

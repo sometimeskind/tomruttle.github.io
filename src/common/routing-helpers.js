@@ -6,25 +6,24 @@ import { matchPath } from 'react-router';
 import type {
   SiteRoutes,
   SiteRoute,
-  RouteObj,
   CurrentRoute,
 } from './types';
 
 export function getAbsolutePath(pathname: string = ''): string {
-  const absolutePath: string = pathToRegexp.parse(pathname)[0];
+  const absolutePath = pathToRegexp.parse(pathname)[0];
   return `${absolutePath}${absolutePath && absolutePath.endsWith('/') ? '' : '/'}`;
 }
 
 export function getAllPaths(routes: SiteRoutes) {
   return routes.reduce((paths, route) => {
-    const newPaths: Array<string> = [];
+    const newPaths = [];
 
-    const path: ?string = route.get('path');
+    const { path } = route;
     if (typeof path === 'string') {
       newPaths.push(getAbsolutePath(path));
     }
 
-    const subRoutes: SiteRoutes = route.get('routes');
+    const subRoutes = route.routes;
     if (subRoutes) {
       newPaths.push(...getAllPaths(subRoutes));
     }
@@ -34,7 +33,7 @@ export function getAllPaths(routes: SiteRoutes) {
 }
 
 export function getRouteFromPath(routes: SiteRoutes, pathname: string): CurrentRoute | null {
-  function findRoute(searchRoutes: Array<RouteObj>, parent?: CurrentRoute) {
+  function findRoute(searchRoutes: Array<SiteRoute>, parent?: CurrentRoute) {
     return searchRoutes.reduce((key, route, index) => {
       if (typeof route.path === 'string') {
         const matched = matchPath(pathname, route.path);
@@ -60,17 +59,17 @@ export function getRouteFromPath(routes: SiteRoutes, pathname: string): CurrentR
     }, null);
   }
 
-  return findRoute(routes.toJS());
+  return findRoute(routes);
 }
 
 export function getRouteFromKey(routes: SiteRoutes, routeKey: string): SiteRoute | null {
   function findRoute(searchRoutes) {
     return searchRoutes.reduce((found, route) => {
-      if (route.get('key') === routeKey) {
+      if (route.key === routeKey) {
         return route;
       }
 
-      const subRoutes = route.get('routes');
+      const subRoutes = route.routes;
       if (subRoutes) {
         const foundSubRoute = findRoute(subRoutes);
 
@@ -87,11 +86,11 @@ export function getRouteFromKey(routes: SiteRoutes, routeKey: string): SiteRoute
 }
 
 function getNextPath(routes: SiteRoutes, currentRouteIndex: number, delta: number) {
-  const navigableRoutes: SiteRoutes = routes.filter((route) => route.get('path'));
+  const navigableRoutes = routes.filter((route) => route.path);
 
   let newIndex;
   if (delta > 0) {
-    const maxRouteIndex = navigableRoutes.size - 1;
+    const maxRouteIndex = navigableRoutes.length - 1;
     newIndex = currentRouteIndex + delta > maxRouteIndex ? maxRouteIndex : currentRouteIndex + delta;
   } else {
     newIndex = currentRouteIndex + delta < 0 ? 0 : currentRouteIndex + delta;
@@ -101,7 +100,7 @@ function getNextPath(routes: SiteRoutes, currentRouteIndex: number, delta: numbe
     return null;
   }
 
-  const nextPath: string = navigableRoutes.get(newIndex).get('path');
+  const nextPath = navigableRoutes[newIndex].path;
   return getAbsolutePath(nextPath);
 }
 

@@ -30,7 +30,14 @@ type Props = {
 };
 
 export default class Main extends Component<Props> {
-  getRoute = (route: SiteRoute) => <Route {...route.toJS()} />;
+  getRoute = (route: SiteRoute) => (
+    <Route
+      key={route.key}
+      render={route.render}
+      exact={route.exact}
+      path={route.path}
+    />
+  )
 
   renderRoute = (routeProps: { location: Location, history: RouterHistory }) => {
     const { routes } = this.props;

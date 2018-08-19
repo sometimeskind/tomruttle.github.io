@@ -2,10 +2,8 @@
 
 import React, { PureComponent } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { fromJS } from 'immutable';
 
 import type {
-  RouteObj,
   Post,
   SetPageTitle,
   SiteRoutes,
@@ -32,28 +30,27 @@ function getRoute(route) {
       key={route.key}
       render={route.render}
       exact={route.exact}
-      path={route.path}
+      path={typeof route.path === 'string' ? route.path : ''}
     />
   );
 }
 
 export default function getRoutes(posts: Array<Post>, setPageTitle?: SetPageTitle = () => {}): SiteRoutes {
-  function getPost(post) {
-    return {
+  const wordsRoutes = [
+    ...posts.map((post) => ({
       key: `words-${post.metadata.path}`,
+      exact: false,
       path: `/words/${post.metadata.path}/`,
       title: post.metadata.title,
       render() {
         setPageTitle(post.metadata.title);
         return <DangerousSection content={post.words} />;
       },
-    };
-  }
+    })),
 
-  const wordsRoutes: Array<RouteObj> = [
-    ...posts.map(getPost),
     {
       key: routeKeys.WORDS_INTRO,
+      exact: false,
       render() {
         setPageTitle('Words');
         return <DangerousSection content={wordsIntro} />;
@@ -61,7 +58,7 @@ export default function getRoutes(posts: Array<Post>, setPageTitle?: SetPageTitl
     },
   ];
 
-  const routes: Array<RouteObj> = [
+  return [
     {
       key: routeKeys.HOME,
       exact: true,
@@ -72,8 +69,10 @@ export default function getRoutes(posts: Array<Post>, setPageTitle?: SetPageTitl
         return <DangerousSection content={page} />;
       },
     },
+
     {
       key: routeKeys.WORDS,
+      exact: false,
       path: '/words/:path?',
       title: 'Words',
       render() {
@@ -86,14 +85,14 @@ export default function getRoutes(posts: Array<Post>, setPageTitle?: SetPageTitl
       sidebarHeader: 'Posts List',
       routes: wordsRoutes,
     },
+
     {
       key: routeKeys.NOT_FOUND,
+      exact: false,
       render() {
         setPageTitle('Page Not Found. :(');
         return <DangerousSection content={notFoundText} />;
       },
     },
   ];
-
-  return fromJS(routes);
 }
