@@ -1,6 +1,6 @@
 // @flow
 
-import type { RouterHistory, Location } from 'react-router';
+import type { Location } from 'react-router';
 
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
@@ -33,11 +33,11 @@ export default class App extends Component<Props> {
     this.routes = getRoutes(props.posts, props.setPageTitle);
   }
 
-  renderMain = (routeProps: { location: Location, history: RouterHistory }) => {
-    const { location, history } = routeProps;
+  renderMain = (routeProps: { location: Location }) => {
+    const { location } = routeProps;
 
     return (
-      <Main location={location} history={history} routes={this.routes} />
+      <Main location={location} routes={this.routes} />
     );
   }
 

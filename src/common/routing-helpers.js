@@ -84,35 +84,3 @@ export function getRouteFromKey(routes: SiteRoutes, routeKey: string): ?SiteRout
 
   return findRoute(routes);
 }
-
-function getNextPath(routes: SiteRoutes, currentRouteIndex: number, delta: number) {
-  const navigableRoutes = routes.filter((route) => route.path);
-
-  let newIndex;
-  if (delta > 0) {
-    const maxRouteIndex = navigableRoutes.length - 1;
-    newIndex = currentRouteIndex + delta > maxRouteIndex ? maxRouteIndex : currentRouteIndex + delta;
-  } else {
-    newIndex = currentRouteIndex + delta < 0 ? 0 : currentRouteIndex + delta;
-  }
-
-  if (newIndex === currentRouteIndex) {
-    return null;
-  }
-
-  const nextPath = navigableRoutes[newIndex].path;
-  return getAbsolutePath(nextPath);
-}
-
-export function getNewPathFromSwipe(routes: SiteRoutes, currentRoute: CurrentRoute, deltaX: number, deltaY: number) {
-  const currentPath = currentRoute.pathname;
-  const horizontal = Math.abs(deltaX) > Math.abs(deltaY);
-
-  if (horizontal) {
-    const delta = deltaX > 0 ? 1 : -1;
-    const currentRouteIndex = currentRoute.parent ? currentRoute.parent.index : currentRoute.index;
-    return getNextPath(routes, currentRouteIndex, delta) || currentPath;
-  }
-
-  return null;
-}
