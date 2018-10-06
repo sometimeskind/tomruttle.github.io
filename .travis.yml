@@ -1,8 +1,0 @@
-branches:
-  only:
-    - master
-deploy:
-  provider: pages
-  skip_cleanup: true
-  fqdn: www.tomruttle.com
-  github_token: $GITHUB_TOKEN
