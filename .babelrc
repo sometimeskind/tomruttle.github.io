@@ -1,8 +1,0 @@
-{
-  "env": {
-    "test": {
-      "presets": [["env", { "targets": { "node": "current" }, "modules": false }], "react"],
-      "plugins": ["transform-es2015-modules-commonjs", "transform-object-rest-spread", "transform-class-properties"]
-    }
-  }
-}
